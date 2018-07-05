@@ -2,7 +2,7 @@
 title: "Exploratory Data Analysis in R"
 author: "Ravin Poudel"
 ---
-Adapted from [Data Science for R](r4ds.had.co.nz) by Hadley Wichkam and Garrett Grolemund 
+Adapted from [R for Data Science](http://r4ds.had.co.nz/) by Hadley Wichkam and Garrett Grolemund 
 
 Download slides [here](Powerpoints/Exploratory Data Analysis.pdf)
 
