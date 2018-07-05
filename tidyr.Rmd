@@ -1,6 +1,6 @@
 ---
 title: "Data import and Tidy-ing"
-author: Kelsey Andersen
+author: "Kelsey Andersen"
 ---
 Adapted from [R for Data Science](http://r4ds.had.co.nz/) by Hadley Wichkam and Garrett Grolemund 
 
