@@ -3,7 +3,7 @@ title: "Dplyr and Writing Scripts"
 author: "Yanru Xing"
 ---
 
-*Adapted from [Data Science for R](r4ds.had.co.nz) by Hadley Wichkam and Garrett Grolemund*
+Adapted from [R for Data Science](http://r4ds.had.co.nz/) by Hadley Wichkam and Garrett Grolemund 
 
 Download slides [here](Powerpoints/dplyr.pdf)
 
