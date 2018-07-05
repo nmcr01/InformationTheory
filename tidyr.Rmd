@@ -76,41 +76,52 @@ FAOxls
 ### Read in other data types
 - Read in SPSS, Stata and SAS files using package **haven**
 
+\  
+
+\  
+
 
 
 
 # What is "tidy" data?  
 Let's take a look at three data sets (more info at [this Rstudio webinar!](https://www.youtube.com/watch?v=y9KJmUGc8SE))
 
-```{r}
+```{r, results='hide'}
 #devtools::install_github("rstudio/EDAWR") 
 library(EDAWR)
+stormsA <- EDAWR::storms ## so it doesn't get confused with built-in NOAA weather data!
 ```
-
-Each variable stored in its own cell:  
-
-  * Country is in a column  
-  * Year is in a row  
 \  
 
-
+#### Let's examine three built-in datasets:  
+\  
+First, 'cases':
 ```{r}
 cases
 ```
+Notice that each variable stored in its own cell:  
 
-Variables "amount of small particles" and "amount of large particles" are not in their own column. Therefore, doing math with them would be difficult!  
+  * Country is in a column  
+  * Year is in a row  
+
+\  
+Next, 'polution':
 ```{r}
 pollution
 ```
-
-
+In 'pollution', variables "amount of small particles" and "amount of large particles" are not in their own column. Therefore, doing math with them would be difficult!  
+\  
+Finally, 'stormsA':  
+```{r}
+stormsA
+```
 This format, where each variable is in it's own column, is much easier to work with!  
 
   * What if we want to make a ratio of pressure to wind?  
+
 ```{r}
-storms
-storms2 <- (storms$pressure / storms$wind)
-storms2
+stormsB <- (stormsA$pressure / stormsA$wind)
+stormsB
 ```
 \  
 \  
@@ -123,7 +134,7 @@ storms2
 * this package is similar to Reshape2 (cast and melt)  
 * Best practice to organize your data this way now, and avoid the pain of data cleaning later!
 
-#### In the book there are three data table examples. Which one is "tidy"?
+#### In the book (R for Data Science) there are three data table examples. Which one is "tidy"?
 
 
 ```{r}
@@ -133,7 +144,7 @@ table3
 ```
 
 #### Only table 1!  
-#### Notice that each column is a variable. 
+Notice that each column is a variable. 
 
 ```{r}
 table1
@@ -153,7 +164,7 @@ ggplot(table1, aes(year, cases)) +
   theme_minimal()
 ```
 
-#### Or, using our tidy FAO data, we can see how much acreage there was over time 
+#### Or, using our tidy FAO data, we can see how much area of Cassava changed over time in each country
 
 ```{r}
 FAO3 <- FAO2 %>% filter(Item == "Cassava")
@@ -164,9 +175,15 @@ ggplot(FAO3, aes(Year, Value)) +
   theme_minimal()
 ```
 
-### Getting un-tidy data into shape
+### Getting un-tidy data into shape  
+
 
 Let's look at the "cases" dataset from earlier  
+\  
+
+### Spreading and Gathering  
+\  
+
 
 
 
@@ -186,9 +203,11 @@ cases2
 cases3 <- cases %>% gather(key = "year", value = "n", "2011", "2012", "2013")
 ```
 
-#### Spreading 
+#### Spreading  
 
-Let's 'spread' the pollution dataset
+Let's 'spread' the pollution dataset  
+\  
+
 
 
 
@@ -197,17 +216,37 @@ pollution
 pollution2 <- spread(pollution, size, amount)
 pollution2
 ```
+\  
 
 
-#### Seperating and uniting
+#### Recap (adapted from G. Gromland)
+\  
+
+
+![](Images/Picture1.jpg)
+
+\  
+
+
+
+### Separating and uniting  
+\  
+
+#### separate() splits a column by a character string seperator   
+  + Let's look at the storms data!  
+  + Year, month and day are "hidden" variables
 
 ```{r}
-MessyFAO <- read_csv("FAOSTAT_data.csv")
-MessyFAO2 <- MessyFAO %>% unite(Area,Value,Unit, sep = "_") 
-MessyFAO2
-
-MessyFAO3 <- MessyFAO2 %>% separate(Area, into = c("Value", "Unit"))
-MessyFAO3
-
+stormsA
+stormsC <- separate(stormsA, date, into = c("year", "month", "day"), sep = "-")
+stormsC
 ```
 
+
+#### Unite() does the inverse of seperate! 
+  + Unites columns into a single variable
+  
+```{r}
+stormsD <- stormsC %>% unite("date", year, month, day, sep = "-")
+stormsD
+```

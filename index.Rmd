@@ -72,4 +72,13 @@ Participants who have completed this course will be able to…
 * explain and apply general epidemiological concepts, such as disease progress over time, pathogen dispersal, sampling strategies, and spatial analyses
 * broadly understand and discuss journal articles addressing plant disease epidemiology
 * design basic epidemiological studies, in designed experiments and observational studies
-* analyze basic epidemiological studies using R
+* analyze basic epidemiological studies using R  
+
+\  
+
+
+### Quizes!  
+If you are remote, please email answers to karengarrett@ufl.edu, andersenk@ufl.ed, yanruxing@ufl.edu with the Subject: Your Last Name, Quiz 1
+
+
+[Quiz 1](Powerpoints/dplyr.pdf)

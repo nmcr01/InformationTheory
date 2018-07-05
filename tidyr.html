@@ -453,6 +453,8 @@ FAOxls</code></pre></div>
 <ul>
 <li>Read in SPSS, Stata and SAS files using package <strong>haven</strong></li>
 </ul>
+<p> </p>
+<p> </p>
 </div>
 </div>
 </div>
@@ -469,19 +471,23 @@ FAOxls</code></pre></div>
 <pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
 ## 
 ##     population, who</code></pre>
-<p>Each variable stored in its own cell:</p>
-<ul>
-<li>Country is in a column<br />
-</li>
-<li>Year is in a row<br />
- </li>
-</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stormsA &lt;-<span class="st"> </span>EDAWR::storms ## so it doesn&#39;t get confused with built-in NOAA weather data!</code></pre></div>
+<p> </p>
+<div id="lets-examine-three-built-in-datasets" class="section level4">
+<h4>Let’s examine three built-in datasets:</h4>
+<p>  First, ‘cases’:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cases</code></pre></div>
 <pre><code>##   country  2011  2012  2013
 ## 1      FR  7000  6900  7000
 ## 2      DE  5800  6000  6200
 ## 3      US 15000 14000 13000</code></pre>
-<p>Variables “amount of small particles” and “amount of large particles” are not in their own column. Therefore, doing math with them would be difficult!</p>
+<p>Notice that each variable stored in its own cell:</p>
+<ul>
+<li>Country is in a column<br />
+</li>
+<li>Year is in a row</li>
+</ul>
+<p>  Next, ‘polution’:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pollution</code></pre></div>
 <pre><code>##       city  size amount
 ## 1 New York large     23
@@ -490,11 +496,9 @@ FAOxls</code></pre></div>
 ## 4   London small     16
 ## 5  Beijing large    121
 ## 6  Beijing small     56</code></pre>
-<p>This format, where each variable is in it’s own column, is much easier to work with!</p>
-<ul>
-<li>What if we want to make a ratio of pressure to wind?</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">storms</code></pre></div>
+<p>In ‘pollution’, variables “amount of small particles” and “amount of large particles” are not in their own column. Therefore, doing math with them would be difficult!<br />
+  Finally, ‘stormsA’:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stormsA</code></pre></div>
 <pre><code>## # tibble [6 × 4]
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;int&gt;    &lt;int&gt; &lt;date&gt;    
@@ -504,10 +508,15 @@ FAOxls</code></pre></div>
 ## 4 Ana        40     1013 1997-06-30
 ## 5 Arlene     50     1010 1999-06-11
 ## 6 Arthur     45     1010 1996-06-17</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">storms2 &lt;-<span class="st"> </span>(storms$pressure /<span class="st"> </span>storms$wind)
-storms2</code></pre></div>
+<p>This format, where each variable is in it’s own column, is much easier to work with!</p>
+<ul>
+<li>What if we want to make a ratio of pressure to wind?</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stormsB &lt;-<span class="st"> </span>(stormsA$pressure /<span class="st"> </span>stormsA$wind)
+stormsB</code></pre></div>
 <pre><code>## [1]  9.154545 22.422222 15.461538 25.325000 20.200000 22.444444</code></pre>
 <p>   </p>
+</div>
 </div>
 <div id="tidyr" class="section level1">
 <h1>Tidyr</h1>
@@ -520,8 +529,8 @@ storms2</code></pre></div>
 </li>
 <li>Best practice to organize your data this way now, and avoid the pain of data cleaning later!</li>
 </ul>
-<div id="in-the-book-there-are-three-data-table-examples.-which-one-is-tidy" class="section level4">
-<h4>In the book there are three data table examples. Which one is “tidy”?</h4>
+<div id="in-the-book-r-for-data-science-there-are-three-data-table-examples.-which-one-is-tidy" class="section level4">
+<h4>In the book (R for Data Science) there are three data table examples. Which one is “tidy”?</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table1</code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year  cases population
@@ -561,9 +570,7 @@ storms2</code></pre></div>
 </div>
 <div id="only-table-1" class="section level4">
 <h4>Only table 1!</h4>
-</div>
-<div id="notice-that-each-column-is-a-variable." class="section level4">
-<h4>Notice that each column is a variable.</h4>
+<p>Notice that each column is a variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table1</code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year  cases population
@@ -584,22 +591,27 @@ storms2</code></pre></div>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> country), <span class="dt">color =</span> <span class="st">&quot;gray30&quot;</span>) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> country)) +
 <span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
-<p><img src="tidyr_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="tidyr_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
-<div id="or-using-our-tidy-fao-data-we-can-see-how-much-acreage-there-was-over-time" class="section level4">
-<h4>Or, using our tidy FAO data, we can see how much acreage there was over time</h4>
+<div id="or-using-our-tidy-fao-data-we-can-see-how-much-area-of-cassava-changed-over-time-in-each-country" class="section level4">
+<h4>Or, using our tidy FAO data, we can see how much area of Cassava changed over time in each country</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FAO3 &lt;-<span class="st"> </span>FAO2 %&gt;%<span class="st"> </span><span class="kw">filter</span>(Item ==<span class="st"> &quot;Cassava&quot;</span>)
 <span class="kw">library</span>(ggplot2)
 <span class="kw">ggplot</span>(FAO3, <span class="kw">aes</span>(Year, Value)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Country)) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Area planted (ha)&quot;</span>) +
 <span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
-<p><img src="tidyr_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="tidyr_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 </div>
 <div id="getting-un-tidy-data-into-shape" class="section level3">
 <h3>Getting un-tidy data into shape</h3>
-<p>Let’s look at the “cases” dataset from earlier</p>
+<p>Let’s look at the “cases” dataset from earlier<br />
+ </p>
+</div>
+<div id="spreading-and-gathering" class="section level3">
+<h3>Spreading and Gathering</h3>
+<p> </p>
 <div id="gathering" class="section level4">
 <h4>Gathering</h4>
 <p>Let’s ‘gather’ the ‘cases’ dataset!</p>
@@ -634,7 +646,8 @@ cases2</code></pre></div>
 </div>
 <div id="spreading" class="section level4">
 <h4>Spreading</h4>
-<p>Let’s ‘spread’ the pollution dataset</p>
+<p>Let’s ‘spread’ the pollution dataset<br />
+ </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pollution</code></pre></div>
 <pre><code>##       city  size amount
 ## 1 New York large     23
@@ -649,51 +662,66 @@ pollution2</code></pre></div>
 ## 1  Beijing   121    56
 ## 2   London    22    16
 ## 3 New York    23    14</code></pre>
+<p> </p>
 </div>
-<div id="seperating-and-uniting" class="section level4">
-<h4>Seperating and uniting</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MessyFAO &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;FAOSTAT_data.csv&quot;</span>)</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   Country = col_character(),
-##   Element = col_character(),
-##   Item = col_character(),
-##   Year = col_integer(),
-##   Unit = col_character(),
-##   Value = col_integer()
-## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MessyFAO2 &lt;-<span class="st"> </span>MessyFAO %&gt;%<span class="st"> </span><span class="kw">unite</span>(Area,Value,Unit, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) 
-MessyFAO2</code></pre></div>
-<pre><code>## # A tibble: 40 x 5
-##    Country  Element        Item     Year Area    
-##    &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   
-##  1 Cambodia Area harvested Bananas  2007 30000_ha
-##  2 Cambodia Area harvested Bananas  2008 32000_ha
-##  3 Cambodia Area harvested Bananas  2009 33000_ha
-##  4 Cambodia Area harvested Bananas  2010 35002_ha
-##  5 Cambodia Area harvested Bananas  2011 32574_ha
-##  6 Cambodia Area harvested Bananas  2012 31844_ha
-##  7 Cambodia Area harvested Bananas  2013 31757_ha
-##  8 Cambodia Area harvested Bananas  2014 31741_ha
-##  9 Cambodia Area harvested Bananas  2015 31786_ha
-## 10 Cambodia Area harvested Bananas  2016 31875_ha
-## # ... with 30 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MessyFAO3 &lt;-<span class="st"> </span>MessyFAO2 %&gt;%<span class="st"> </span><span class="kw">separate</span>(Area, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;Value&quot;</span>, <span class="st">&quot;Unit&quot;</span>))
-MessyFAO3</code></pre></div>
-<pre><code>## # A tibble: 40 x 6
-##    Country  Element        Item     Year Value Unit 
-##    &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 Cambodia Area harvested Bananas  2007 30000 ha   
-##  2 Cambodia Area harvested Bananas  2008 32000 ha   
-##  3 Cambodia Area harvested Bananas  2009 33000 ha   
-##  4 Cambodia Area harvested Bananas  2010 35002 ha   
-##  5 Cambodia Area harvested Bananas  2011 32574 ha   
-##  6 Cambodia Area harvested Bananas  2012 31844 ha   
-##  7 Cambodia Area harvested Bananas  2013 31757 ha   
-##  8 Cambodia Area harvested Bananas  2014 31741 ha   
-##  9 Cambodia Area harvested Bananas  2015 31786 ha   
-## 10 Cambodia Area harvested Bananas  2016 31875 ha   
-## # ... with 30 more rows</code></pre>
+<div id="recap-adapted-from-g.-gromland" class="section level4">
+<h4>Recap (adapted from G. Gromland)</h4>
+<p> </p>
+<div class="figure">
+<img src="Images/Picture1.jpg" />
+
+</div>
+<p> </p>
+</div>
+</div>
+<div id="separating-and-uniting" class="section level3">
+<h3>Separating and uniting</h3>
+<p> </p>
+<div id="separate-splits-a-column-by-a-character-string-seperator" class="section level4">
+<h4>separate() splits a column by a character string seperator</h4>
+<ul>
+<li>Let’s look at the storms data!<br />
+</li>
+<li>Year, month and day are “hidden” variables</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stormsA</code></pre></div>
+<pre><code>## # tibble [6 × 4]
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;int&gt;    &lt;int&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stormsC &lt;-<span class="st"> </span><span class="kw">separate</span>(stormsA, date, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>)
+stormsC</code></pre></div>
+<pre><code>## # tibble [6 × 6]
+##   storm    wind pressure year  month day  
+##   &lt;chr&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 Alberto   110     1007 2000  08    03   
+## 2 Alex       45     1009 1998  07    27   
+## 3 Allison    65     1005 1995  06    03   
+## 4 Ana        40     1013 1997  06    30   
+## 5 Arlene     50     1010 1999  06    11   
+## 6 Arthur     45     1010 1996  06    17</code></pre>
+</div>
+<div id="unite-does-the-inverse-of-seperate" class="section level4">
+<h4>Unite() does the inverse of seperate!</h4>
+<ul>
+<li>Unites columns into a single variable</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stormsD &lt;-<span class="st"> </span>stormsC %&gt;%<span class="st"> </span><span class="kw">unite</span>(<span class="st">&quot;date&quot;</span>, year, month, day, <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>)
+stormsD</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt;     
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17</code></pre>
 </div>
 </div>
 </div>
