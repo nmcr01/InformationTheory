@@ -81,4 +81,4 @@ Participants who have completed this course will be able to…
 If you are remote, please email answers to karengarrett@ufl.edu, andersenk@ufl.ed, yanruxing@ufl.edu with the Subject: Your Last Name, Quiz 1
 
 
-[Quiz 1](Powerpoints/dplyr.pdf)
+[Quiz 1](Quizes/Quiz1.pdf)
