@@ -8,7 +8,7 @@ navbar:
   - text: R for Data Science
     menu:
     - text: Data Visualization
-      href: DataViz.html
+      href: robin.html
     - text: Dplyr and Scripts
       href: dplyr2.html
     - text: Exploratory Data Analysis in R

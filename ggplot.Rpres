@@ -1,0 +1,323 @@
+
+Workflow Basics and ggplot2 in R
+========================================================
+author: Robin Choudhury
+date: `r Sys.Date()`
+autosize: true
+transition: fade
+font-family: 'Helvetica'
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Workflow Basics in R
+========================================================
+![](console.png)
+
+For this Section we will be using RStudio
+
+
+Coding Basics 1
+========================================================
+R can work like a calculator...
+```{r, echo=T}
+1 / 200 * 30
+```
+
+```{r, echo=T}
+pi *3
+```
+Base R knows `pi` as the constant `3.14...`.
+
+
+Coding Basics 2
+========================================================
+R can also handle text...
+```{r, echo=T}
+print("Hello, World!")
+```
+
+And can mix text and calculations...
+```{r, echo=T}
+paste("The value of pi is", pi)
+```
+
+
+
+Coding Basics 3
+========================================================
+You can also create new objects with `<-`
+```{r}
+a <- 1 / 200 * 30; a
+```
+Then use those objects in subsequent calculations
+```{r}
+a*3
+```
+
+
+Coding Basics 4
+========================================================
+Object names must start with a letter, and needs to contain letters, numbers, **_**, and **.**
+
+You can make assignments with either **<-** or **=**, but most people prefer **<-**. Using **<-** originated when APL computers had a single <- key on them (see http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html for more info). 
+
+R is case sensitive, so **A** will not tell you the value of **a**
+
+ggplot2 and the Aesthetic of Graphics
+========================================================
+ggplot2 is part of a a suite of packages in R known colloquially as the 'Tidyverse'. ggplot2 was developed to build graphs by mapping aesthetics, allowing users to flexibly create beautiful publication-quality figures.
+
+```{r}
+library(tidyverse)
+library(datasets)
+```
+
+
+The Dataset 
+========================================================
+![](iris.jpg)
+
+I will be using the iris dataset:
+
+- Common example dataset
+- Fairly compact (150 obs. of 5 variables)
+- Flower measurement of 3 iris species
+```{r}
+data(iris)
+```
+
+
+ggplot2 Basics: Making the First Call
+========================================================
+class: small-code
+As mentioned earlier, ggplot2 works by layering on different aesthetics from a dataset. ggplot2 first needs to know what dataset you plan to use, and what will be plotted.
+
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width))
+```
+...pretty boring. Why?
+
+ggplot2 Basics: Adding Aesthetics
+========================================================
+class: small-code
+Now we want to use a scatterplot method to mark out these two variables. 
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width))+
+  geom_point()
+```
+
+ggplot2 Basics: Adding Smoothing Functions
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width))+
+  geom_point() + geom_smooth()
+```
+
+ggplot2 Basics: Color Points By Species
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width))+
+  geom_point(aes(color=Species)) + geom_smooth()
+```
+
+ggplot2 Basics: Size by Petal Length
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width))+
+  geom_point(aes(color=Species, size=Petal.Length)) + geom_smooth()
+```
+
+ggplot2 Basics: Color Lines and Points By Species
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width,color=Species))+
+  geom_point(aes(size=Petal.Length)) + geom_smooth()
+```
+
+ggplot2 Basics: Use Linear Smoothing
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width,color=Species))+
+  geom_point(aes(size=Petal.Length)) + geom_smooth(method="lm")
+```
+
+ggplot2 Basics: Different Line Types
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width,color=Species))+
+  geom_point(aes(size=Petal.Length)) + geom_smooth(aes( linetype=Species), method="lm")
+```
+
+ggplot2 Basics: Rug Really Ties the Room Together
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width,color=Species))+
+  geom_point(aes(size=Petal.Length)) + geom_smooth(aes( linetype=Species), method="lm") +
+  geom_rug()
+```
+
+ggplot2 Basics: Density
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width,color=Species))+
+  geom_point(aes(size=Petal.Length)) + 
+  geom_density2d()
+```
+
+ggplot2 Basics: Hex
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(x = Sepal.Length,y = Sepal.Width))+
+  geom_hex()
+```
+
+ggplot2 Basics: Histograms
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram()
+```
+
+ggplot2 Basics: Histograms with Dodge
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(position = "dodge")
+```
+
+ggplot2 Basics: Fill vs. Color
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(color="black")
+```
+
+ggplot2 Basics: Inside vs. Outside of Aes
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(aes(color="black"))
+```
+
+ggplot2 Basics: Alpha
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(aes(color="black"), alpha=0.5)
+```
+
+ggplot2 Basics: Theme
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(color="black")+
+  theme_bw()
+```
+
+ggplot2 Basics: Theme
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(color="black", alpha=0.5)+
+  theme_bw() + 
+  theme(legend.position="bottom")
+```
+
+ggplot2 Basics: Theme
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(color="black", alpha=0.5)+
+  theme_bw() + 
+  theme(legend.position="bottom",
+        axis.title=element_text(size=20, face="bold"))
+```
+
+ggplot2 Basics: Axis Labels
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+geom_histogram(color="black", alpha=0.5)+
+  theme_bw() + ylab("Count")+xlab("Sepal Length")+
+  theme(legend.position="bottom",
+        axis.title=element_text(size=20, face="bold"))
+```
+
+ggplot2 Basics: stat_ vs geom_
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length,fill=Species))+
+stat_bin()
+```
+
+
+ggplot2 Basics: Multiple Datasets
+========================================================
+class: small-code
+```{r}
+ggplot()+
+  geom_point(data=iris, aes(Sepal.Length, Sepal.Width))+
+  geom_smooth(data=iris, aes(Sepal.Length, Sepal.Width ))
+```
+
+ggplot2 Basics: Summarizing Data with Boxplots
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Species, Sepal.Width))+
+  geom_jitter(alpha=0.2)+ geom_boxplot()
+```
+ORDER MATTERS!
+
+ggplot2 Basics: Faceting Data
+========================================================
+class: small-code
+```{r}
+ggplot(data=iris, aes(Sepal.Length, Sepal.Width))+
+  geom_jitter(alpha=0.2)+ geom_smooth()+
+  facet_grid(Species~.)
+```
+
+ggplot2 Basics: Maps
+========================================================
+class: small-code
+```{r}
+nz <- map_data("nz")
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black")+
+  coord_cartesian()
+```
+
+ggplot2 Basics: Maps
+========================================================
+class: small-code
+```{r}
+data("world.cities") 
+nz.city <- world.cities %>% filter(country.etc=="New Zealand")
+ggplot(data=nz, aes(long, lat)) +
+  geom_polygon(aes(group = group),fill = "white", colour = "black") +
+  geom_point(data=nz.city, aes(long, lat, size = pop)) +
+  coord_cartesian()
+```
