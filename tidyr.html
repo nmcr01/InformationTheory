@@ -331,6 +331,15 @@ div.tocify {
 <p>Adapted from <a href="r4ds.had.co.nz">Data Science for R</a> by Hadley Wichkam and Garrett Grolemund</p>
 <p><br />
 </p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.4
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
+## ✔ tidyr   0.8.0     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="getting-data-into-r" class="section level1">
 <h1>Getting data into R!</h1>
 <p><em>Maybe the most important step?</em></p>
@@ -354,6 +363,7 @@ div.tocify {
 <ul>
 <li>up to 10x faster than <strong>read.csv()</strong></li>
 <li>reads in data directly as a tibble</li>
+<li>tibbles play better with your console window (pays attention to how wide your console window is) and is implemented through the dplyr package</li>
 </ul></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
@@ -444,19 +454,71 @@ FAOxls</code></pre></div>
 <li>Read in SPSS, Stata and SAS files using package <strong>haven</strong></li>
 </ul>
 </div>
-<div id="parsing" class="section level3">
-<h3>Parsing</h3>
-<p>????</p>
-<p>            ????</p>
 </div>
 </div>
+<div id="what-is-tidy-data" class="section level1">
+<h1>What is “tidy” data?</h1>
+<p>Let’s take a look at three data sets (more info at <a href="https://www.youtube.com/watch?v=y9KJmUGc8SE">this Rstudio webinar!</a>)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#devtools::install_github(&quot;rstudio/EDAWR&quot;) </span>
+<span class="kw">library</span>(EDAWR)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;EDAWR&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     storms</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     population, who</code></pre>
+<p>Each variable stored in its own cell:</p>
+<ul>
+<li>Country is in a column<br />
+</li>
+<li>Year is in a row<br />
+ </li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cases</code></pre></div>
+<pre><code>##   country  2011  2012  2013
+## 1      FR  7000  6900  7000
+## 2      DE  5800  6000  6200
+## 3      US 15000 14000 13000</code></pre>
+<p>Variables “amount of small particles” and “amount of large particles” are not in their own column. Therefore, doing math with them would be difficult!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pollution</code></pre></div>
+<pre><code>##       city  size amount
+## 1 New York large     23
+## 2 New York small     14
+## 3   London large     22
+## 4   London small     16
+## 5  Beijing large    121
+## 6  Beijing small     56</code></pre>
+<p>This format, where each variable is in it’s own column, is much easier to work with!</p>
+<ul>
+<li>What if we want to make a ratio of pressure to wind?</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">storms</code></pre></div>
+<pre><code>## # tibble [6 × 4]
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;int&gt;    &lt;int&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">storms2 &lt;-<span class="st"> </span>(storms$pressure /<span class="st"> </span>storms$wind)
+storms2</code></pre></div>
+<pre><code>## [1]  9.154545 22.422222 15.461538 25.325000 20.200000 22.444444</code></pre>
+<p>   </p>
 </div>
 <div id="tidyr" class="section level1">
 <h1>Tidyr</h1>
 <ul>
-<li>Tidy data has one variable per column</li>
-<li>Each observation has a row</li>
-<li>Each value in it’s own cell!</li>
+<li>Tidy data has each variable saved in it’s own column &amp;</li>
+<li>Each observation has a row &amp;</li>
+<li>Each value in it’s own cell!<br />
+</li>
+<li>this package is similar to Reshape2 (cast and melt)<br />
+</li>
+<li>Best practice to organize your data this way now, and avoid the pain of data cleaning later!</li>
 </ul>
 <div id="in-the-book-there-are-three-data-table-examples.-which-one-is-tidy" class="section level4">
 <h4>In the book there are three data table examples. Which one is “tidy”?</h4>
@@ -522,7 +584,7 @@ FAOxls</code></pre></div>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> country), <span class="dt">color =</span> <span class="st">&quot;gray30&quot;</span>) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> country)) +
 <span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
-<p><img src="tidyr_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="tidyr_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="or-using-our-tidy-fao-data-we-can-see-how-much-acreage-there-was-over-time" class="section level4">
 <h4>Or, using our tidy FAO data, we can see how much acreage there was over time</h4>
@@ -532,32 +594,61 @@ FAOxls</code></pre></div>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Country)) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Area planted (ha)&quot;</span>) +
 <span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
-<p><img src="tidyr_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="tidyr_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
 <div id="getting-un-tidy-data-into-shape" class="section level3">
 <h3>Getting un-tidy data into shape</h3>
-<div id="spreading-and-gathering" class="section level4">
-<h4>Spreading and gathering</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table4a</code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   country     `1999` `2000`
-## * &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
-## 1 Afghanistan    745   2666
-## 2 Brazil       37737  80488
-## 3 China       212258 213766</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table4a_2 &lt;-<span class="st"> </span>table4a %&gt;%<span class="st"> </span><span class="kw">gather</span> (<span class="st">&quot;1999&quot;</span>, <span class="st">&quot;2000&quot;</span>, <span class="dt">key =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">value=</span> <span class="st">&quot;cases&quot;</span>)
-table4a_2</code></pre></div>
-<pre><code>## # A tibble: 6 x 3
-##   country     year   cases
-##   &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
-## 1 Afghanistan 1999     745
-## 2 Brazil      1999   37737
-## 3 China       1999  212258
-## 4 Afghanistan 2000    2666
-## 5 Brazil      2000   80488
-## 6 China       2000  213766</code></pre>
-<p>spread</p>
+<p>Let’s look at the “cases” dataset from earlier</p>
+<div id="gathering" class="section level4">
+<h4>Gathering</h4>
+<p>Let’s ‘gather’ the ‘cases’ dataset!</p>
+<ul>
+<li>Function = <em>gather()</em>
+<ul>
+<li>Key column<br />
+</li>
+<li>Value column<br />
+</li>
+<li>Names of columns to collapse</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cases</code></pre></div>
+<pre><code>##   country  2011  2012  2013
+## 1      FR  7000  6900  7000
+## 2      DE  5800  6000  6200
+## 3      US 15000 14000 13000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cases2 &lt;-<span class="st"> </span><span class="kw">gather</span>(cases, <span class="dt">key =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;n&quot;</span>, <span class="dv">2</span>:<span class="dv">4</span>)
+cases2</code></pre></div>
+<pre><code>##   country year     n
+## 1      FR 2011  7000
+## 2      DE 2011  5800
+## 3      US 2011 15000
+## 4      FR 2012  6900
+## 5      DE 2012  6000
+## 6      US 2012 14000
+## 7      FR 2013  7000
+## 8      DE 2013  6200
+## 9      US 2013 13000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cases3 &lt;-<span class="st"> </span>cases %&gt;%<span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;n&quot;</span>, <span class="st">&quot;2011&quot;</span>, <span class="st">&quot;2012&quot;</span>, <span class="st">&quot;2013&quot;</span>)</code></pre></div>
+</div>
+<div id="spreading" class="section level4">
+<h4>Spreading</h4>
+<p>Let’s ‘spread’ the pollution dataset</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pollution</code></pre></div>
+<pre><code>##       city  size amount
+## 1 New York large     23
+## 2 New York small     14
+## 3   London large     22
+## 4   London small     16
+## 5  Beijing large    121
+## 6  Beijing small     56</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pollution2 &lt;-<span class="st"> </span><span class="kw">spread</span>(pollution, size, amount)
+pollution2</code></pre></div>
+<pre><code>##       city large small
+## 1  Beijing   121    56
+## 2   London    22    16
+## 3 New York    23    14</code></pre>
 </div>
 <div id="seperating-and-uniting" class="section level4">
 <h4>Seperating and uniting</h4>
