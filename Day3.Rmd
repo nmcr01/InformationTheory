@@ -1,0 +1,22 @@
+---
+title: "Disease progress & Dispersal"
+
+---
+
+####For today's (July 10th) discussion, remember to prepare these discussion points:  
+
++ Part 1: disease progress over time
+    * Describe how pathogen populations increase over time within a location  
+    * Ideally, reference a study about this pathogen (or related species) that evaluates pathogen population increase over time and relates the rate of increase to other factors (such as environmental factors, pathogen genotypes, host genotypes, etc.)  
++ Part 2: dispersal
+    * Describe how the pathogen disperses
+    * Ideally, reference a study about this pathogen (or related species) that evaluates pathogen   dispersal with estimates of dispersal gradients (i.e., how likely the pathogen is to disperse across a range of distances)  
+
+#### We will use tutorials found on the APS website for:  
++ [Disease progress over time](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/default.aspx)  
++ [Modeling Dispersal Gradients](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/ModelingDispersalGradients/Pages/default.aspx)  
+
+\  
+
+#### Slides
+Slides for today can be found [here](Powerpoints/Day3.pdf)
