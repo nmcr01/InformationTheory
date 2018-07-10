@@ -310,6 +310,9 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li>
+  <a href="Day3.html">Disease progress</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -343,16 +346,8 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;nycflights13&quot;)</span>
 <span class="co">#install.packages(&quot;tidyverse&quot;)</span>
 
-<span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.4
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
-## ✔ tidyr   0.8.0     ✔ stringr 1.2.0
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(nycflights13)
 
 nycflights13::flights <span class="co">#This data frame contains all 336,776 flights that departed from New York City in 2013</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19

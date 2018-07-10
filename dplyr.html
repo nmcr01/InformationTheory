@@ -309,6 +309,9 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li>
+  <a href="Day3.html">Disease progress</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -343,7 +346,7 @@ div.tocify {
 
 <span class="kw">library</span>(tidyverse)</code></pre></div>
 <pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.4
 ## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
 ## ✔ tidyr   0.8.0     ✔ stringr 1.2.0
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
@@ -1003,7 +1006,7 @@ delay &lt;-<span class="st"> </span><span class="kw">filter</span>(delay, count 
 <span class="kw">ggplot</span>(<span class="dt">data =</span> delay, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> dist, <span class="dt">y =</span> delay)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> count), <span class="dt">alpha =</span> <span class="dv">1</span>/<span class="dv">3</span>) +
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="dplyr_files/figure-html/pipe-1.png" width="672" /> ##### Where missing values represent cancelled flights, we could also tackle the problem by first removing the cancelled flights.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled &lt;-<span class="st"> </span>flights %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(dep_delay), !<span class="kw">is.na</span>(arr_delay))
