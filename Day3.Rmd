@@ -12,6 +12,9 @@ title: "Disease progress & Dispersal"
     * Describe how the pathogen disperses
     * Ideally, reference a study about this pathogen (or related species) that evaluates pathogen   dispersal with estimates of dispersal gradients (i.e., how likely the pathogen is to disperse across a range of distances)  
 
+\  
+
+
 #### We will use tutorials found on the APS website for:  
 + [Disease progress over time](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/default.aspx)  
 + [Modeling Dispersal Gradients](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/ModelingDispersalGradients/Pages/default.aspx)  
