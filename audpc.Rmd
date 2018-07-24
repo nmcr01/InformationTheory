@@ -1,0 +1,33 @@
+---
+title: "Introduction"
+---
+
+
+##Disease Progress over Time  
+###A.H. Sparks, P.D. Esker, M. Bates, W. Dall' Acqua, Z. Guo1, V. Segovia1, S.D. Silwal, S. Tolos, and K.A. Garrett  
+\  
+
+Sparks, A.H., P.D. Esker, M. Bates, W. Dall' Acqua, Z. Guo, V. Segovia, S.D. Silwal, S. Tolos, and K.A. Garrett, 2008. Ecology and Epidemiology in R: Disease Progress over Time. The Plant Health Instructor. DOI:10.1094/PHI-A-2008-0129-02.   
+\  
+
+
+###Introduction  
+Understanding how disease levels increase or decrease over time is one of the most basic elements of plant disease epidemiology and ecology. Statistical models are often applied in order to summarize and describe this complexity, so that disease processes can be more readily understood (Arneson 2006; Madden et al. 2007). For example, comparisons between patterns of disease progress for different diseases, cultivars, management strategies, or environmental settings can help in determining how plant diseases may best be managed. This document's purpose is to present and illustrate the mathematical and biological basis of disease progress over time. To do this we present several examples of published studies of disease progress and use the R programming environment to illustrate several ways to describe disease progress over time.  
+
+Using this document you will learn how to use R, freely available from http://www.cran.r-project.org/, to illustrate disease progress over time for different systems and gain a better understanding of how factors interact to cause disease. For more on using R, please refer to an introduction to R prepared to accompany this exercise, (Garrett et al. 2007).  
+
+We begin by looking at some basic examples of modeling relationships between variables and review mathematical tools that are useful for modeling disease progress. Examples of disease progress over time will then be presented for different plant pathosystems.  
+
+### Examples and discussion of disease progress over time  
+Understanding how populations of different types of plant pathogens increase in plant pathosystems is critical to developing appropriate management methods. Bacteria and viruses are capable of building up enormous populations in a very short time, only days or even hours under the right conditions. Fungi also can reproduce quickly, within days or weeks, which is important for fungal pathogens that cause polycyclic diseases, i.e., fungi that reproduce multiple times per season. Nematodes, meanwhile, often take a year or more to complete their reproductive cycle. These different characteristics will greatly influence disease progress over time.  
+
+The most useful measurement of disease progress depends upon both the host and the pathogen of interest. Disease incidence, or the number of diseased plants express as a proportion of the total number of plants assessed, is one common measurement. Disease incidence is often a useful measure for quantifying diseases for perennial crops, such as citrus, or for estimating crop losses due to a disease such as stalk rot in corn, where entire plant death from a single infection is possible. Disease severity, usually defined as the percentage (area) of diseased tissue present on an affected plant, is another common measure, particularly for evaluation of foliar diseases where the amount of disease present on the plant may be correlated to a yield loss estimate. Nematodes are typically quantified in terms of their population size, often the number of nematodes per volume of soil. Nematode damage is well correlated to population levels for several different crops. Despite differences in how a disease is measured, similar methods for describing and summarizing disease progress curves can be applied for a range of plant pathosystems. A measure of disease incidence or severity is typically plotted on the Y-axis as a function of time, which is plotted on the X-axis. Such disease progress curves provide a way of comparing disease across years or locations.  
+
+The next sections will examine different types of plant pathogens and how their populations or the disease they cause progress over time, using R to illustrate and model disease progress. We also present a number of approaches for summarizing and comparing disease progress curves. As you study the different methods, consider the following questions.  
+
++ What are the important features of a disease progress curve that you want to capture using models or other summaries?  
++ What features can you capture with a particular method and what does the method fail to capture?
+
+
+
+
