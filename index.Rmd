@@ -6,7 +6,15 @@ title: "Welcome!"
 
 ### Welcome!
  
-The workshop will take place on 2018-07-29 from 8am-12pm at the Hynes Convention Center Room 203
+The workshop will take place on 2018-07-29 from 8am-12pm at the Hynes Convention Center Room 203.
+
+You will need to download R (https://www.r-project.org/) and we will be using RStudio, which is an Integrated Development Environment for R, which you can find at https://www.rstudio.com/products/rstudio/download/. The free version should be good enough to do what you want.
+
+You will also need to download some packages for R. Enter into your R console:
+
+>install.packages("tidyverse", "broom", "DescTools", "philentropy", "infotheo")
+
+These packages all do different things: *tidyverse* and *broom* are useful for cleaning up data, *DescTools* is useful for descriptive statistics, and *philentropy* and *infotheo* are useful for calculating information theory metrics. 
 
 ### Prerequisites
 
