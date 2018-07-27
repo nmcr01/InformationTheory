@@ -1,22 +1,23 @@
-
-name: "ICPP 2018 Information Theory Workshop"
-output_dir: "."
+name: ICPP 2018 Information Theory Workshop
+output_dir: '.'
 navbar:
-  title: "Information Theory"
+  title: Information Theory
   left:
-    - text: "About"
-      href: about.html
-    - text: "Introduction to R"
-      href: IntrotoR.html
-    - text: "Information Theory Basics"
-      href: information_theory_workshop_1.html
-    - text: "Introduction to Bayesian Probability"
-      href: information_theory_workshop_2.html
+  - text: Introduction to R
+    href: IntrotoR.html
+  - text: Information Theory Basics
+    href: information_theory_workshop_1.html
+  - text: Introduction to Bayesian Probability
+    href: information_theory_workshop_2.html
+  - text: Further Reading
+    href: about.html
 output:
   html_document:
-    theme: paper
-    highlight: monochrome
-    css: 'styles.css'
-    toc: true  
-    toc_float: true  
+    theme: cerulean
+    highlight: tango
+    css: styles.css
+    toc: yes
+    toc_float: yes
+    lib_dir: site_libs
+    self_contained: no
 

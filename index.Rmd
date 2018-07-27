@@ -14,25 +14,19 @@ General knowledge of agricultural, ecological, or epidemiological systems
 
 ### Contacts
 
-Instructor: 
+####Instructor: 
 
 Dr. Neil McRoberts 
-
 Plant Pathology Department
-
 University of California, Davis
-
 Email: n m c r o b e r t s at uc davis dot edu
 
 
-Teaching Assistant: 
+####Teaching Assistant: 
 
 Dr. Robin Choudhury
-
 Department of Plant Pathology
-
 University of Florida
-
 Email: r a dot c h o u d h u r y at u f l dot edu
 
 ### Workshop overview
@@ -43,8 +37,8 @@ The use of information theoretic quantities to explain recipients' differential 
 
 Participants who have completed this course will be able to…
 
-"	broadly understand information theory in the context of plant disease epidemiology
++	broadly understand information theory in the context of plant disease epidemiology
 
-"	understand the uses of different metrics for how to assess the information of your system
++	understand the uses of different metrics for how to assess the information of your system
 
-"	analyze basic information theory problems using R
++	analyze basic information theory problems using R
