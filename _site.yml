@@ -6,8 +6,6 @@ navbar:
   left:
     - text: "About"
       href: index.html
-    - text: "Introduction to R"
-      href: IntrotoR.html
 output:
   html_document:
     theme: paper
