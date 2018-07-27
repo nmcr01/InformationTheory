@@ -6,6 +6,9 @@ title: "Introduction to R"
 
 First, set your working directory. This is a folder in which you will save this script, along with any files that will be used as part of your analyses. 
 
+```{r}
+library(tidyverse)
+```
 
 
 ### R is essentially a fancy calculator:
@@ -54,7 +57,9 @@ library(ggplot2)
 
 Now make sure to place your "StripeRust.csv" file in the working directory that we set, then load the data in using the "read.csv" *function*. 
 ```{r}
-RustData <- read.csv("StripeRust.csv", header = TRUE) 
+RustData <- data.frame(Year=rep(1990:1999, each=10),
+                       Severity=(rep(rnorm(10)+sqrt(1:10), 10))+rnorm(100, mean = 1, sd = .2),
+                       DAI=rep(seq(from=1, to=46, by = 5),10)) 
   #Header = TRUE lets R know that we have headings in the first row of our data set. 
 
 head(RustData) ## check the first few rows of the dataset
