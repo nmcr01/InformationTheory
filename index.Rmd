@@ -2,56 +2,38 @@
 title: "Welcome!"
 ---
 
-##Epidemiology and Data Science
+##Information Theory ICPP 2018 Workshop
 
-### Housekeeping
-PLP6905 
-
-> Gainesville: section 4H93  
-> Off-campus: section 41D3  
-> 2 credit hours
-
-Class meetings in 2018 Summer B: July 3-26 and August 7-9; Tuesday and Thursday, Periods 4 and 5 (12:30-1:45, 2:00-3:15); 2564 Fifield Hall
-
-NOTE: There are no class meetings July 31 and August 2 (during the International Congress of Plant Pathology).  These meeting times will be made up at other times acceptable to all class participants.
+### Welcome!
+ 
+The workshop will take place on 2018-07-29 from 8am-12pm at the Hynes Convention Center Room 203
 
 ### Prerequisites
 
-General knowledge of agricultural, ecological, or epidemiological systems, at least two undergraduate or graduate courses applying quantitative concepts and tools (such as statistics or quantitative ecology courses)
+General knowledge of agricultural, ecological, or epidemiological systems
 
 ### Contacts
 
-Instructor: Dr. Karen A. Garrett (garrettlab.com) 
-Plant Pathology, Institute for Sustainable Food Systems, Emerging Pathogens Institute
-Office: 2411 Fifield Hall
-Email: karengarrett@ufl.edu
-Phone: 352-273-4632
+Instructor: Dr. Neil McRoberts 
+Plant Pathology Department
+University of California, Davis
+Email: n m c r o b e r t s at uc davis dot edu
+
 
 Teaching Assistants: 
-Kelsey Andersen andersenk@ufl.edu 
-Yanru Xing yanruxing@ufl.edu 
+Dr. Robin Choudhury
+Department of Plant Pathology
+University of Florida
+Email: r a dot c h o u d h u r y at u f l dot edu
 
-Course materials access: http://elearning.ufl.edu/
+### Workshop overview
 
-### Office hours
-
-By appointment in advance, 3:30-4:30 Tuesday and Thursday, or additional times as needed
-
-### Course overview
-
-Plant disease epidemiology addresses how interactions among plants, pathogens, vectors, the abiotic environment, and human decision-making result in the occurrence and spread of plant disease.  Epidemiology also represents the interface between plant pathology and other disciplines, such as meteorology and social sciences.  
-
-This course addresses classical approaches to epidemiology as well as frontiers that make use of new big data opportunities.  The course provides an introduction to the R programming environment, data science applications in epidemiology and epidemiological analyses using R.  The course includes a combination of lectures to provide background information, discussion of current literature, computational analysis workshops to illustrate concepts, and individual projects to allow participants to apply ideas to systems that particularly interest them.  
-
-In the individual projects, each participant will select a disease of particular interest, assemble a portfolio of epidemiological information related to that disease, write a short proposal including an experimental design to collect important new data related to the disease, and evaluate regional management strategies for the disease in an epidemiological synthesis.
-
-The course emphasizes concepts and use of existing tools, while at the same time it will offer a basis for the development of new tools for participants interested in further steps.
+The use of information theoretic quantities to explain recipients' differential responses to decision support outputs was first proposed by McRoberts et al at the ICPP in Christchurch in 2003. In the intervening 15 years a set of information theoretic concepts for epidemiologists, diagnosticians, and decision-makers has been developed and summarized in a book by Hughes and several papers by Hughes, McRoberts and others. The workshop will combine lectures on concepts with practical computer exercises to allow participants to learn to calculate key information quantities that are important in understanding how DSS's and diagnostics work, fundamentally, by capturing information from the world and making it available for use in decision-making. Workshop materials will be prepared by McRoberts and Hughes and taught by McRoberts. All material will be available to participants to keep.
 
 ### Course learning objectives
 
 Participants who have completed this course will be able to…
 
-"	explain and apply general epidemiological concepts, such as disease progress over time, pathogen dispersal, sampling strategies, and spatial analyses
-"	broadly understand and discuss journal articles addressing plant disease epidemiology
-"	design basic epidemiological studies, in designed experiments and observational studies
-"	analyze basic epidemiological studies using R
+"	broadly understand information theory in the context of plant disease epidemiology
+"	understand the uses of different metrics for how to assess the information of your system
+"	analyze basic information theory problems using R
