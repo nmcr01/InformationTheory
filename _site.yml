@@ -7,7 +7,11 @@ navbar:
     - text: "About"
       href: about.html
     - text: "Introduction to R"
-      href: IntrotoR.html      
+      href: IntrotoR.html
+    - text: "Information Theory Basics"
+      href: information_theory_workshop_1.html
+    - text: "Introduction to Bayesian Probability"
+      href: information_theory_workshop_2.html
 output:
   html_document:
     theme: paper
