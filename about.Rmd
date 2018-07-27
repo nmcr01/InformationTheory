@@ -8,7 +8,6 @@ title: "Further Readings"
 *Applications of Information Theory to Epidemiology* by Dr. Gareth Hughes, https://apsjournals.apsnet.org/doi/book/10.1094/9780890544877
 
 
-
 ##Papers (in no particular order)
 
 McRoberts, N., Hall, C., Madden, L. V., & Hughes, G. (2011). Perceptions of disease risk: from social construction of subjective judgments to rational decision making. Phytopathology, 101(6), 654-665.
