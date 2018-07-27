@@ -5,7 +5,9 @@ navbar:
   title: "Epidem & Data Sci"
   left:
     - text: "About"
-      href: index.html
+      href: about.html
+    - text: "IntrotoR"
+      href: IntrotoR.html      
 output:
   html_document:
     theme: paper
