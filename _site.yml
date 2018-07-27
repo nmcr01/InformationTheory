@@ -1,12 +1,12 @@
 
-name: "Epidemiology and Data Science"
+name: "ICPP 2018 Information Theory Workshop"
 output_dir: "."
 navbar:
-  title: "Epidem & Data Sci"
+  title: "Information Theory"
   left:
     - text: "About"
       href: about.html
-    - text: "IntrotoR"
+    - text: "Introduction to R"
       href: IntrotoR.html      
 output:
   html_document:
