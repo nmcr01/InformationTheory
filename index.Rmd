@@ -12,9 +12,9 @@ You will need to download R (https://www.r-project.org/) and we will be using RS
 
 You will also need to download some packages for R. Enter into your R console:
 
->install.packages("tidyverse", "broom", "DescTools", "philentropy", "infotheo")
+>install.packages("tidyverse", "broom", "DescTools", "philentropy", "infotheo", "pROC")
 
-These packages all do different things: *tidyverse* and *broom* are useful for cleaning up data, *DescTools* is useful for descriptive statistics, and *philentropy* and *infotheo* are useful for calculating information theory metrics. 
+These packages all do different things: **tidyverse** and **broom** are useful for cleaning up data, **DescTools** is useful for descriptive statistics,  **philentropy** and **infotheo** are useful for calculating information theory metrics, and **pROC** calculates the partial reciever operating characteristic curve. 
 
 ### Prerequisites
 
