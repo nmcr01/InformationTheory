@@ -94,6 +94,7 @@ odds_p<-p/(1-p)
 priors<-c(0.05,0.1,0.25,0.5,0.75,0.8)
 plot(p,odds_p, ty="l", lwd=2, lty=3)
 ```
+
 ###Relationship Between Odds and Probability
 The plot shows us what the relationship between probability and odds looks like, but because the odds values cross orders of magnitude it's a bit difficult to see what is happening at the low end of the scale; taking logs reveals an interesting relationship.
 
