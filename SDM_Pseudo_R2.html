@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Gareth Hughes, Robin Choudhury, Neil McRoberts" />
+
+<meta name="date" content="2018-07-29" />
+
+<title>Spinach Downy Mildew Case Study and Summary Statistic Comparisons</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Information Theory</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Intro_R.html">Intro to R</a>
+</li>
+<li>
+  <a href="information_theory_workshop_1.html">Information Theory Basics</a>
+</li>
+<li>
+  <a href="information_theory_workshop_2.html">Bayesian Probability</a>
+</li>
+<li>
+  <a href="information_theory_workshop_3.html">Metrics</a>
+</li>
+<li>
+  <a href="sdm_spores.pdf">SDM Spores</a>
+</li>
+<li>
+  <a href="SDM_Pseudo_R2.html">SDM Predictivity</a>
+</li>
+<li>
+  <a href="about.html">Further Readings</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Spinach Downy Mildew Case Study and Summary Statistic Comparisons</h1>
+<h4 class="author"><em>Gareth Hughes, Robin Choudhury, Neil McRoberts</em></h4>
+<h4 class="date"><em>July 29, 2018</em></h4>
+
+</div>
+
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">echo =</span> <span class="ot">TRUE</span>) <span class="co">#change this to FALSE to suppress printing the code</span>
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.4.3</code></pre>
+<pre><code>## -- Attaching packages ------------------------------------ tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 2.2.1     v purrr   0.2.4
+## v tibble  1.4.2     v dplyr   0.7.4
+## v tidyr   0.8.0     v stringr 1.3.0
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## -- Conflicts --------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)</code></pre></div>
+<pre><code>## Warning: package &#39;broom&#39; was built under R version 3.4.3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)</code></pre></div>
+<pre><code>## Warning: package &#39;pROC&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;pROC&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     cov, smooth, var</code></pre>
+<p>Calculation of pseudo Rsq statistics from logistic regression. Analyses associated with ICPP2018 workhshop on Information Theory and a Letter to the Editor of Phytopathology. Analyses here based on data and original work from two sources:<br />
+1.Choudhury et al. (2016). Logistic regression for disease incidence increase subsequent to catches of <em>Peronospora effusa</em> DNA detected on rotating arm spore traps. 2. De Wolf et al. (2003), also used in Madden (2006) and McRoberts et al, (2011). Early data set used in constructing predictors of fusarium head blight (FHB) in wheat.</p>
+<p>For the two datasets the same set of analyses will be carried out. First, a logistic regression will be performed with a binary disease state as the dependent variable and a single continuous variable as the predictor. In the first example, the predictor is the natural logarithm of the estimated pathogen DNA copy number measured on spore traps prior to observations of disease state. In the second and third examples the explanatory variable is a composite “risk” indicator constructed from a number of weather variables which individually correlate with disease incidence. In the third example, the dependent binary disease variable was constructed by collapsing the original 5-point (0 to 4) ordinal disease intensity variable to two categories by combining the original 0 and 1 classes into a “low” disease class (designated 0) and the remaning classes, 2,3 and 4, into a “high” disease class (designated 1).</p>
+<p>Diagnostic plots for each analysis were produced showing (1) the binary disase state and fitted probability values together against the explanatory variable, and (2) a histogram of the fitted probability values classified by the binary disease state and binned according to system defaults.</p>
+<p>The analyses were run on R 3.3.3 for Windows under R Studio running on a Windows virtual machine on a remote application server accessed via Parallels Client for Chrome OS [ref for Parallels].</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;DescTools&quot;) Remove hashtag to run if needed, only need to run this once</span>
+<span class="co"># library(&quot;DescTools&quot;) #nice, wish I had seen this sooner rac</span>
+
+<span class="co"># Analysis 1 SDM data from Choudhury et al 2016.</span>
+<span class="co"># Get the data and take a look at the top of the data file</span>
+
+data&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;data/roc.test.csv&quot;</span>) <span class="co">#read.csv was throwing out some weird errors for me, so im using read_csv from the readr package contained within tidyverse</span></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Disease = col_integer(),
+##   Spore = col_double(),
+##   `Spore-1` = col_double(),
+##   `Spore-2` = col_double(),
+##   `Spore-3` = col_double(),
+##   `Spore-4` = col_double(),
+##   `Spore-5` = col_double(),
+##   `Spore-6` = col_double(),
+##   `Spore-7` = col_double(),
+##   `Spore-8` = col_double(),
+##   `Spore-9` = col_double()
+## )</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(data)
+<span class="kw">head</span>(data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Disease"],"name":[1],"type":["int"],"align":["right"]},{"label":["Spore"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Spore-1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Spore-2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Spore-3"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Spore-4"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Spore-5"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Spore-6"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Spore-7"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Spore-8"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Spore-9"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"6.537430","3":"7.035893","4":"5.437927","5":"0.000000","6":"5.869424","7":"5.272307","8":"6.195007","9":"4.363799","10":"7.061326","11":"6.854497"},{"1":"1","2":"8.891759","3":"11.473769","4":"6.197309","5":"6.537430","6":"7.035893","7":"5.437927","8":"0.000000","9":"5.869424","10":"5.272307","11":"6.195007"},{"1":"1","2":"7.677910","3":"9.731590","4":"8.331837","5":"10.220110","6":"8.199024","7":"8.891759","8":"11.473769","9":"6.197309","10":"6.537430","11":"7.035893"},{"1":"1","2":"9.195537","3":"11.229594","4":"10.395754","5":"7.677910","6":"9.731590","7":"8.331837","8":"10.220110","9":"8.199024","10":"8.891759","11":"11.473769"},{"1":"1","2":"6.091219","3":"8.259370","4":"7.538378","5":"7.692036","6":"8.510132","7":"6.708603","8":"4.847567","9":"5.291142","10":"5.104247","11":"8.013057"},{"1":"1","2":"10.430875","3":"NA","4":"9.099595","5":"7.769757","6":"8.944169","7":"7.204131","8":"4.593401","9":"6.091219","10":"8.259370","11":"7.538378"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit the basic logistic regression on Disease using Spore.4</span>
+
+dismodel1 &lt;-<span class="st"> </span><span class="kw">glm</span>(Disease<span class="op">~</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span>,<span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>), <span class="dt">data =</span> data) <span class="co">#I needed to put tics (`) around Spore-4 because when i loaded it with read_csv it read it as &#39;Spore-4&#39;, not &#39;Spore.4&#39; rac</span>
+<span class="kw">summary</span>(dismodel1)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Disease ~ `Spore-4`, family = binomial(link = &quot;logit&quot;), 
+##     data = data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.5702  -1.2047   0.8288   1.0275   1.7194  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept) -1.21930    0.62024  -1.966   0.0493 *
+## `Spore-4`    0.19279    0.08197   2.352   0.0187 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 114.76  on 82  degrees of freedom
+## Residual deviance: 108.55  on 81  degrees of freedom
+##   (4 observations deleted due to missingness)
+## AIC: 112.55
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(dismodel1) <span class="co">#rac tidy() and glance() are nice functions when you want to look at cleaner output</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.2192972","3":"0.62024074","4":"-1.965845","5":"0.04931652"},{"1":"`Spore-4`","2":"0.1927855","3":"0.08197352","4":"2.351803","5":"0.01868268"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state. Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal.</p>
+<div id="logistic-regression" class="section level3">
+<h3>Logistic Regression</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Take a look at the fitted probability values from the regression.</span>
+fits1&lt;-<span class="kw">as.numeric</span>(dismodel1<span class="op">$</span>fitted.values) <span class="co"># need this because fitted.values is a list and while hist understands what</span>
+                                           <span class="co"># to do with it if you don&#39;t monkey about with it, asking it to sub-divide</span>
+                                           <span class="co"># the vector of values using the logical == confuses it, so we have to </span>
+                                           <span class="co"># pull the numerical bit out of the list.</span>
+dis_state&lt;-<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">46</span>),<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">37</span>))
+dis_state2=dismodel1<span class="op">$</span>model<span class="op">$</span>Disease <span class="co">#this pulls it directly from the model rac</span>
+spore4_rac=dismodel1<span class="op">$</span>model<span class="op">$</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span> <span class="co">#this pulls it directly from the model rac</span>
+
+<span class="co">#I&#39;m going to redo this in ggplot/tidyr feel free to ignore RAC</span>
+SDM_rac=<span class="kw">data.frame</span>(<span class="dt">fits1=</span>fits1, <span class="dt">disease=</span>dis_state2, <span class="dt">spore4=</span>spore4_rac)
+SDM_rac1=SDM_rac <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(.,<span class="dt">status=</span><span class="kw">ifelse</span>(disease<span class="op">==</span><span class="dv">0</span>, <span class="st">&quot;Non-cases&quot;</span>, <span class="st">&quot;Cases&quot;</span>))</code></pre></div>
+<pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.4.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SDM_rac1<span class="op">$</span>status &lt;-<span class="st"> </span><span class="kw">factor</span>(SDM_rac1<span class="op">$</span>status, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Cases&quot;</span>,<span class="st">&quot;Non-cases&quot;</span>))
+
+<span class="kw">ggplot</span>(SDM_rac1, <span class="kw">aes</span>(fits1, <span class="dt">fill=</span>status))<span class="op">+</span>
+<span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">color=</span><span class="st">&quot;black&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(status<span class="op">~</span>., <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>)<span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Fitted Probability Value&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;grey20&quot;</span>, <span class="st">&quot;grey80&quot;</span>))<span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,
+        <span class="dt">legend.background =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face=</span><span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
+        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Status&quot;</span>))</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ggsave(filename = &quot;figures/sdm_dot_hist_facet.png&quot;)</span>
+
+
+  <span class="kw">ggplot</span>(SDM_rac1, <span class="kw">aes</span>(fits1, <span class="dt">fill=</span>status))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha=</span><span class="fl">0.4</span>, <span class="dt">position=</span><span class="st">&quot;identity&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="op">+</span>
+<span class="st">  </span><span class="co">#facet_grid(~status)+ </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Probability&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Counts&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of Fitted Probabilities, SDM Data&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">15</span>,.<span class="dv">8</span>),
+        <span class="dt">legend.background =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face=</span><span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
+        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Status&quot;</span>))</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co"># ggsave(filename = &quot;figures/sdm_hist_identity.png&quot;)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co"># Generate a plot of binary disease variable and fitted probabilities</span>
+<span class="co"># There are four NA values corresponding to zeros in the data.  Dump</span>
+<span class="co"># the NA values and make a reduced vector for plotting the results</span>
+<span class="co">#Spore4&lt;-na.omit(data$`Spore-4`) #couldnt get this to work rac</span>
+<span class="co">#plot(Spore4,dismodel1$fitted.values, xlab=&quot;ln(DNA copies)&quot;, ylab=&quot;Probability&quot;, col=&quot;dark blue&quot;,ylim=c(0,1))</span>
+<span class="co">#points(Spore.4,Disease, col=&quot;red&quot;)</span>
+
+SDM_rac_spore_melt=SDM_rac <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(est.type, disease, <span class="op">-</span>spore4)
+
+<span class="kw">ggplot</span>(SDM_rac_spore_melt, <span class="kw">aes</span>(spore4, disease, <span class="dt">color=</span>est.type))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Log of Spore Copy Number&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Probability&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="co">#not sure this is the right label? rac</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Fitted vs. Real Disease, SDM Data&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">2</span>,.<span class="dv">8</span>),
+        <span class="dt">legend.background =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face=</span><span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
+        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Estimate Type&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Disease Incidence&quot;</span>,<span class="st">&quot;Fitted Disease Data&quot;</span>))</code></pre></div>
+<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#ggsave(filename = &quot;figures/sdm_real_fit.png&quot;)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#build an ROC for the SDM data</span>
+sdm_data&lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/roc.test.csv&quot;</span>)</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Disease = col_integer(),
+##   Spore = col_double(),
+##   `Spore-1` = col_double(),
+##   `Spore-2` = col_double(),
+##   `Spore-3` = col_double(),
+##   `Spore-4` = col_double(),
+##   `Spore-5` = col_double(),
+##   `Spore-6` = col_double(),
+##   `Spore-7` = col_double(),
+##   `Spore-8` = col_double(),
+##   `Spore-9` = col_double()
+## )</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sdm_roc=<span class="kw">roc</span>(sdm_data<span class="op">$</span>Disease, sdm_data<span class="op">$</span>Spore<span class="op">-</span><span class="dv">4</span>)
+<span class="kw">summary</span>(sdm_roc)</code></pre></div>
+<pre><code>##                    Length Class  Mode     
+## percent             1     -none- logical  
+## sensitivities      79     -none- numeric  
+## specificities      79     -none- numeric  
+## thresholds         79     -none- numeric  
+## direction           1     -none- character
+## cases              45     -none- numeric  
+## controls           40     -none- numeric  
+## fun.sesp            1     -none- function 
+## auc                 1     auc    numeric  
+## call                3     -none- call     
+## original.predictor 87     -none- numeric  
+## original.response  87     -none- numeric  
+## predictor          85     -none- numeric  
+## response           85     -none- numeric  
+## levels              2     -none- character</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sdm_roc)</code></pre></div>
+<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>The difference between pROC and other software (e.g. - ROCR) can lead to differences between output ROCs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.0 (2017-04-21)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2    pROC_1.12.1     broom_0.4.3     forcats_0.3.0  
+##  [5] stringr_1.3.0   dplyr_0.7.4     purrr_0.2.4     readr_1.1.1    
+##  [9] tidyr_0.8.0     tibble_1.4.2    ggplot2_2.2.1   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.16     cellranger_1.1.0 pillar_1.2.1     compiler_3.4.0  
+##  [5] plyr_1.8.4       bindr_0.1.1      tools_3.4.0      digest_0.6.15   
+##  [9] lubridate_1.7.3  jsonlite_1.5     evaluate_0.10.1  nlme_3.1-131.1  
+## [13] gtable_0.2.0     lattice_0.20-35  pkgconfig_2.0.1  rlang_0.2.0     
+## [17] psych_1.8.4      cli_1.0.0        rstudioapi_0.7   yaml_2.2.0      
+## [21] parallel_3.4.0   haven_1.1.1      xml2_1.2.0       httr_1.3.1      
+## [25] knitr_1.20       hms_0.4.2        tidyselect_0.2.4 rprojroot_1.3-2 
+## [29] grid_3.4.0       glue_1.2.0       R6_2.2.2         readxl_1.0.0    
+## [33] foreign_0.8-67   rmarkdown_1.9    modelr_0.1.1     reshape2_1.4.3  
+## [37] magrittr_1.5     backports_1.1.2  scales_0.5.0     htmltools_0.3.6 
+## [41] rvest_0.3.2      assertthat_0.2.0 mnormt_1.5-5     colorspace_1.3-2
+## [45] labeling_0.3     stringi_1.1.7    lazyeval_0.2.1   munsell_0.4.3   
+## [49] crayon_1.3.4</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

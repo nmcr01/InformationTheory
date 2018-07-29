@@ -144,11 +144,13 @@ ggplot(SDM_rac_spore_melt, aes(spore4, disease, color=est.type))+
 
 ```{r}
 #build an ROC for the SDM data
+sdm_data<- read_csv("data/roc.test.csv")
 sdm_roc=roc(sdm_data$Disease, sdm_data$Spore-4)
 summary(sdm_roc)
 plot(sdm_roc)
 ```
 
+The difference between pROC and other software (e.g. - ROCR) can lead to differences between output ROCs.
 
 
 ```{r}
