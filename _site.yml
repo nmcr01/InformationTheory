@@ -12,7 +12,7 @@ navbar:
       href: information_theory_workshop_2.html
     - text: "Metrics"
       href: information_theory_workshop_3.html
-    - text: "Further Reading"
+    - text: "Further Readings"
       href: about.html
 output:
   html_document:
