@@ -29,7 +29,7 @@ To introduce the concept of Bayesian updating we will use a small set of data fr
  - numner of non-cases predicted to have disease = 12
  
 ###Sensitivity and Specificity
-From these numbers we can calculate the True Positive Proportion (also known as the _sensitivity_) as 27/44 = 0.6818 and the True Negative Proportion (also known as the _specificity_) as 27/39 = 0.6923.
+From these numbers we can calculate the True Positive Proportion (also known as the _sensitivity_) as 30/44 = 0.6818 and the True Negative Proportion (also known as the _specificity_) as 27/39 = 0.6923.
 
 The TPP is an estimate of the conditional probability of getting a prediction of disease, given that disease actually does occur, that is $Pr(T_{c}|D_{c})$. Specificity is an estimate of the conditional probability of getting a prediction of no disease given that disease actually does not occur, that is $Pr(T_{nc}|D_{nc})$.  Note that the False Postive Proportion, FPP, is 1- _specificity_ and is an estimate of $Pr(T{c}|D_{nc})$.
 

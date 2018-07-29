@@ -323,7 +323,7 @@ div.tocify {
   <a href="SDM_Pseudo_R2.html">SDM Predictivity</a>
 </li>
 <li>
-  <a href="about.html">Further Reading</a>
+  <a href="about.html">Further Readings</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -357,7 +357,7 @@ h(D_{1}|T_{1})=log\left(\frac{Pr(D_{1}|T_{1})}{Pr(D_{1})}  \right)\]</span> <spa
 <p>To introduce the concept of Bayesian updating we will use a small set of data from a study on the epidemiology of downy mildew of spinach conducted by Choudhury <em>et al.</em> (2016), that will be featured in later sections of the workshop. Briefly, the data come from observations on the abundance of pathogen DNA on spinning arm spore traps and subsequent development of disease. The authors looked at various threshold DNA levels and prediction intervals and one combination resulted in the following set of data: - number of observations: N = 83 - number of observations in which disease developed (cases) = 44 - number of observations in which no disease developed (non-cases) = 39 - number of cases predicted to have disease = 30 - number of cases predicted to have no disease = 14 - number of non-cases predicted to have no disease = 27 - numner of non-cases predicted to have disease = 12</p>
 <div id="sensitivity-and-specificity" class="section level3">
 <h3>Sensitivity and Specificity</h3>
-<p>From these numbers we can calculate the True Positive Proportion (also known as the <em>sensitivity</em>) as 27/44 = 0.6818 and the True Negative Proportion (also known as the <em>specificity</em>) as 27/39 = 0.6923.</p>
+<p>From these numbers we can calculate the True Positive Proportion (also known as the <em>sensitivity</em>) as 30/44 = 0.6818 and the True Negative Proportion (also known as the <em>specificity</em>) as 27/39 = 0.6923.</p>
 <p>The TPP is an estimate of the conditional probability of getting a prediction of disease, given that disease actually does occur, that is <span class="math inline">\(Pr(T_{c}|D_{c})\)</span>. Specificity is an estimate of the conditional probability of getting a prediction of no disease given that disease actually does not occur, that is <span class="math inline">\(Pr(T_{nc}|D_{nc})\)</span>. Note that the False Postive Proportion, FPP, is 1- <em>specificity</em> and is an estimate of <span class="math inline">\(Pr(T{c}|D_{nc})\)</span>.</p>
 </div>
 <div id="likelihood-ratios" class="section level3">
