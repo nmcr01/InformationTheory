@@ -424,8 +424,8 @@ posteriors&lt;-posterior_odds<span class="op">/</span>(<span class="dv">1</span>
 <p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 </div>
-<div id="the-relationship-between-priors-posteriors" class="section level3">
-<h3>The Relationship Between Priors Posteriors</h3>
+<div id="the-relationship-between-priors-and-posteriors" class="section level3">
+<h3>The Relationship Between Priors and Posteriors</h3>
 <p>In the previous figure we can see that the impact of the <span class="math inline">\(LR\)</span> on the prior changes with the prior; this is apparent from the equation, but at the same time perhaps surprising the first time we encounter the results. Thinking about the updating process informally helps to see what is happening with the formal analysis. When the prior is very low, the message that disease is forecast contains a large amount of information, but the low prior means that the posterior still isn’t very high. At the opposite end of the probability scale, the message that disease is forecast contains very little information and so the posterior is not very different from the prior. In the middle of the probability scale there is maximum uncertainty prior to receipt of the message and so the information in the <span class="math inline">\(LR\)</span> has a big impact.</p>
 <p>We can use the Bayesian updating equation to specify how much information the <span class="math inline">\(LR\)</span> would need to contain in order to produce a given posterior from different prior values. Re-arranging the Bayesian updating equation we can write:<span class="math display">\[
 log\left(LR_{*}\right) = log\left(odds(D_{*}|T_{*})\right)-log\left(odds(D_{*})\right)\]</span></p>

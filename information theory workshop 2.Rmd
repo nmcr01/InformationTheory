@@ -114,7 +114,7 @@ plot(p,log_odds_p, ty="l", lwd=2, lty=3, xlab="probability of disease",
 
 ```
 
-###The Relationship Between Priors Posteriors 
+###The Relationship Between Priors and Posteriors 
 In the previous figure we can see that the impact of the $LR$ on the prior changes with the prior; this is apparent from the equation, but at the same time perhaps surprising the first time we encounter the results. Thinking about the updating process informally helps to see what is happening with the formal analysis.  When the prior is very low, the message that disease is forecast contains a large amount of information, but the low prior means that the posterior still isn't very high.  At the opposite end of the probability scale, the message that disease is forecast contains very little information and so the posterior is not very different from the prior.  In the middle of the probability scale there is maximum uncertainty prior to receipt of the message and so the information in the $LR$ has a big impact.
 
 We can use the Bayesian updating equation to specify how much information the $LR$ would need to contain in order to produce a given posterior from different prior values.  Re-arranging the Bayesian updating equation we can write:$$
