@@ -4,12 +4,14 @@ output_dir: "."
 navbar:
   title: "Information Theory"
   left:
-    - text: "Introduction to R"
+    - text: "Intro to R"
       href: IntrotoR.html
     - text: "Information Theory Basics"
       href: information_theory_workshop_1.html
-    - text: "Introduction to Bayesian Probability"
+    - text: "Bayesian Probability"
       href: information_theory_workshop_2.html
+    - text: "Metrics"
+      href: information_theory_workshop_3.html
     - text: "Further Reading"
       href: about.html
 output:

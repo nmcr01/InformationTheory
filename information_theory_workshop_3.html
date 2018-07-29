@@ -305,13 +305,16 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="IntrotoR.html">Introduction to R</a>
+  <a href="IntrotoR.html">Intro to R</a>
 </li>
 <li>
   <a href="information_theory_workshop_1.html">Information Theory Basics</a>
 </li>
 <li>
-  <a href="information_theory_workshop_2.html">Introduction to Bayesian Probability</a>
+  <a href="information_theory_workshop_2.html">Bayesian Probability</a>
+</li>
+<li>
+  <a href="information_theory_workshop_3.html">Metrics</a>
 </li>
 <li>
   <a href="about.html">Further Reading</a>
@@ -337,26 +340,28 @@ div.tocify {
 <h2>Some further information quantities of interest</h2>
 <p>In the previous section we saw that <span class="math inline">\(LR\)</span> can be interpreted as information quantities. We also saw that the quantity of information contained in an indefinite message (such as a prediction of disease resulting from an imperfect forecaster) causes a separation of prior and posterior probabilities if we use the <span class="math inline">\(LR\)</span> within the framework of Bayesian probability updating. This section of the workshop introduces some information quantities that unite these ideas and are central in the information theoretic interpretation of forecasting and decision-making. The introduction here will be brief and you are referred to Hughes (2012) for a more detailed and technical description of the inter-connections among these quantities.</p>
 <p>Specifically, we will be interested in the <em>relative entropy</em>, the <em>expected mutual information</em>, and the <em>specific information</em>.</p>
-<div id="relative-entropy" class="section level4">
-<h4>Relative Entropy</h4>
+<div id="relative-entropy" class="section level3">
+<h3>Relative Entropy</h3>
 <p>The <em>relative entropy</em> is also known as the Kullback-Leibler divergence. Informally, it can be thought of as a measure of the discrepancy (or distance) between two probability distributions. It is also the weighted average of the information contents about outcomes <span class="math inline">\(D_{j}\)</span> resulting from a particular message, <span class="math inline">\(T\)</span>, where the weights are the posterior probabilities of <span class="math inline">\(D_{j}\)</span> given <span class="math inline">\(T\)</span>:</p>
 <p><span class="math display">\[
 I(T)= \sum_{j=1}^{m}Pr(D_{j}|T) log\left[ \frac{Pr(D_{j}|T)}{Pr(D_{J})} \right]
 \]</span></p>
 <p>By now the log term on the r.h.s. of the equation will be familiar as an information quantity. The fact that the information terms are weighted by the probabilities that the corresponding outcomes occur, shows that <span class="math inline">\(I(T)\)</span> is an expected value. We saw in the last section that, in the context of disease forecasting, the separation between prior and posterior distributions depends on the likelihood ratios associated with the forecaster being used. The relationship is a direct one; <span class="math inline">\(I(T)\)</span> is the expected value of the log likelihood ratios. It is the average reduction in uncertainty (over all outcomes) resulting from the use of the forecaster.</p>
 </div>
-<div id="expected-mutual-information" class="section level4">
-<h4>Expected Mutual Information</h4>
+<div id="expected-mutual-information" class="section level3">
+<h3>Expected Mutual Information</h3>
 <p>Mutual Information <span class="math inline">\(I_{M}\)</span> can be thought of as a general measure of the reduction in uncertainty about one variable that arises from knowing the values of another; in an informal sense it can be thought of as a generalized measure of correlation between two variables. It is strictly positive and equals 0 only when the two variables are independent. In the context of forecasting, the two variables can be the forecast situations and the actual disease outcomes and we can specify it as:<span class="math display">\[
 I_{M}=\sum_{i=1}^{n} \sum_{j=1}^{m} Pr(T_{i}\cap D_{j})log\left[\frac{Pr(T_{i}\cap D_{j})}{Pr(T_{i})Pr(D_{j})}\right]\]</span> <span class="math inline">\(I_{M}\)</span> is the expected value of <span class="math inline">\(I(T)\)</span> and both of these quantities are strictly positive, but <span class="math inline">\(I_{M}\)</span> is also the expected value of another important information quantity — the <em>specific information</em>.</p>
 </div>
-<div id="specific-information" class="section level4">
-<h4>Specific Information</h4>
+<div id="specific-information" class="section level3">
+<h3>Specific Information</h3>
 <p>The specific information <span class="math inline">\(I{_s}(T_{i})\)</span> measures the information content of an indefinite message in a single context. For example the specific information associated with a prediction of no disease would be:<span class="math display">\[
 I_{s}(T_{i})=\sum_{j=1}^{m}Pr(D_{j})log\left[\frac{1}{Pr(D_{j})} \right]-\sum_{j=1}^{m}Pr(D_{j}|T_{i})log\left[\frac{1}{Pr(D_{j}|T_{i})} \right]\]</span></p>
 <p>The first term on the r,h,s. is the entropy for disease outcomes in the absence of a forecast, <span class="math inline">\(H(D)\)</span>. The second term is the entropy of disease outcomes given a particular forecast, <span class="math inline">\(H(D|T_{i})\)</span>. Thus, unlike the relative entropy and the expected mutual information, the specific information may be positive or negative. Situations in which it is negative arise when the uncertainty following a forecast is greater than before the forecast. We consider a specific hypothetical example. The example was first introduced by McRoberts et al. (2003) as a <em>gedankenexperiment</em> on the interaction between evidence and uncertainty in decision-making about disease management. At that time, we had not encountered the idea of <em>specific information</em> and so the original presentation of the idea was incomplete. The presentation given here follows the later version given in Hughes (2012), after Gareth had done the hard work of researching and teasing out the relationship between the entropy, relative entropy, specific information and expected mutual information.</p>
-<div id="decision-making-gedankenexperiment" class="section level5">
-<h5>Decision-making <em>gedankenexperiment</em></h5>
+</div>
+</div>
+<div id="decision-making-gedankenexperiment" class="section level2">
+<h2>Decision-making <em>gedankenexperiment</em></h2>
 <p>Consider two farmers, A and B, who face the problem of trying to decide if they should apply a costly pesticide treatment for a disease that only occurs sporadically, but is damaging when it does. The local university has developed a prediction system for the disease based on a simple set of weather and crop establishment variables that are familiar to the growers; they understand the relationship between the risk factors and the forecasts from the model, and only have to decide what to do on the basis of the forecast for their own crops. Farmer A is an optimist whose subjective prior for the disease to be damaging is 20%. Farmer B is a pessimist who believes the chances of disease (before the forecast) are 80%. Both farmers use their copies of the smartphone app developed by the university and both receive the forecast that disease will occur this season. Behind the scenes this forecast is based on a logistic regression model with a positive <span class="math inline">\(LR\)</span> for disease of 7.0. The question for us to examine are (1) what is the posterior probability of disease for each farmer, assuming that they update their priors according to Bayesian principles, and (2) what are the corresponding entropies?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Analysis for question 1</span>
 <span class="co"># Do the Bayesian updating based on the priors, forecast and LRc</span>
@@ -443,8 +448,6 @@ Farmer_info_summary</code></pre></div>
 ## Specicific information -0.1550794 0.3504075</code></pre>
 <p>Summarizing the thought experiment informally in economic terms, if we were selling forecasts of disease as a service to the two farmers at the same fee per use, we can see that Farmer A has purchased more information than Farmer B (0.4498&gt;0.1209, the ratio is 3.72) but it has come at the price of greater, not less, certainty about disease status (<span class="math inline">\(I_{s}(T)\)</span>&lt;0 for Farmer A); Farmer B, in contrast has purchased more certainty (<span class="math inline">\(I_{s}(T)\)</span>&gt;0) with much less information. This effect happens whenever the outcome of a prediction moves the prior in the direction of its complement, but fails to reach it.</p>
 <p>In the analyses we have looked at up to this point we have assumed the existence of a forecasting system (i.e. a disease or disease risk predictor). In the final section of the workshop we give a brief introduction to the use of logistic regression to extract predictors from observational data, and we show how to interpret two of the common pseudo <span class="math inline">\(R^{2}\)</span> values reported for logistic regression analyses by using some information theoretic concepts.</p>
-</div>
-</div>
 </div>
 
 

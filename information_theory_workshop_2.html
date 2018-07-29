@@ -305,13 +305,16 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="IntrotoR.html">Introduction to R</a>
+  <a href="IntrotoR.html">Intro to R</a>
 </li>
 <li>
   <a href="information_theory_workshop_1.html">Information Theory Basics</a>
 </li>
 <li>
-  <a href="information_theory_workshop_2.html">Introduction to Bayesian Probability</a>
+  <a href="information_theory_workshop_2.html">Bayesian Probability</a>
+</li>
+<li>
+  <a href="information_theory_workshop_3.html">Metrics</a>
 </li>
 <li>
   <a href="about.html">Further Reading</a>
@@ -336,12 +339,23 @@ div.tocify {
 <div id="the-basics-of-bayesian-probability-updating-with-uncertain-messages" class="section level2">
 <h2>The basics of Bayesian probability updating with uncertain messages</h2>
 <p>In the introductory section of the workshop we looked at some basic information theory quantities and their relationship with probabilities. All of the examples assumed that a definite message would be available about uncertain events, so that after receipt of the message no uncertainty as to the outcome of the event would remain. With modern diagnostic methods in a laboratory setting we can often approach certainty with diagnosis, which is equivalent to receipt of a definite message. In the field diagnosis is much less often completely certain, and disease forecasting almost never is. In these cases we are dealing with uncertain messages and the best we can do is update a <em>prior</em> belief about the probable events to a <em>posterior</em> belief in light of the (uncertain) evidence.</p>
+<div id="information-content-of-a-message" class="section level3">
+<h3>Information Content of a Message</h3>
 <p>The information content of uncertain messages is found by generalizing the equation for the information content of a definite message given in the previous section; for an indefinite message, the information content is:<span class="math display">\[
 information = log\left(\frac{Pr(\text{after message received})}{Pr(\text{before message received})}\right)\]</span> Returning to the example given in the first section, following Hughes (2012), suppose we receive a message (in the form of a an uncertain forecast), <span class="math inline">\(T_{1}\)</span> that disease state, <span class="math inline">\(D_{1}\)</span> will occur. The information content of this message is:<span class="math display">\[
 h(D_{1}|T_{1})=log\left(\frac{Pr(D_{1}|T_{1})}{Pr(D_{1})}  \right)\]</span> <span class="math display">\[=log(Pr(D_{1}|T_{1})-log(Pr(D_{1}))\]</span> <span class="math display">\[= h(Pr(D_{1}))-h(Pr(D_{1}|T_{1}))\]</span> This says the information content of the indefinite message, <span class="math inline">\(T_{1}\)</span> that disease state <span class="math inline">\(D_{1}\)</span> has occurred is the difference in log probabilities before and afer receipt of the message, and since (as we now know) log probabilities <em>are</em> information, this is equivalent to saying that the information in a message about an event is simply the difference in the information you have before the message and after you receive it. This introduces the question of how to change ( <em>i.e.</em> update) probabilities based on information? To answer that question we need a brief introduction to Bayesian analysis in the context of forecasting.</p>
+</div>
+</div>
+<div id="case-study-spinach-downy-mildew" class="section level2">
+<h2>Case Study: Spinach Downy Mildew</h2>
 <p>To introduce the concept of Bayesian updating we will use a small set of data from a study on the epidemiology of downy mildew of spinach conducted by Choudhury <em>et al.</em> (2016), that will be featured in later sections of the workshop. Briefly, the data come from observations on the abundance of pathogen DNA on spinning arm spore traps and subsequent development of disease. The authors looked at various threshold DNA levels and prediction intervals and one combination resulted in the following set of data: - number of observations: N = 83 - number of observations in which disease developed (cases) = 44 - number of observations in which no disease developed (non-cases) = 39 - number of cases predicted to have disease = 30 - number of cases predicted to have no disease = 14 - number of non-cases predicted to have no disease = 27 - numner of non-cases predicted to have disease = 12</p>
+<div id="sensitivity-and-specificity" class="section level3">
+<h3>Sensitivity and Specificity</h3>
 <p>From these numbers we can calculate the True Positive Proportion (also known as the <em>sensitivity</em>) as 27/44 = 0.6818 and the True Negative Proportion (also known as the <em>specificity</em>) as 27/39 = 0.6923.</p>
 <p>The TPP is an estimate of the conditional probability of getting a prediction of disease, given that disease actually does occur, that is <span class="math inline">\(Pr(T_{c}|D_{c})\)</span>. Specificity is an estimate of the conditional probability of getting a prediction of no disease given that disease actually does not occur, that is <span class="math inline">\(Pr(T_{nc}|D_{nc})\)</span>. Note that the False Postive Proportion, FPP, is 1- <em>specificity</em> and is an estimate of <span class="math inline">\(Pr(T{c}|D_{nc})\)</span>.</p>
+</div>
+<div id="likelihood-ratios" class="section level3">
+<h3>Likelihood Ratios</h3>
 <p>With the results avaiable for the predictions and outcomes we can calculate the <em>likelihood ratios</em> (LR) for the predictions. Considering both cases and non-cases, for a binary test and two outcome categories there are 4 LR’s in all. For now, we will focus on the the LR associated with positive predictions of disease, <span class="math inline">\(LR_{c}\)</span>: <span class="math display">\[
 LR_{c}= \frac{Pr(T{c}|D_{c})}{Pr(T_{c}|D_{nc})}= \frac{TPP}{FPP}\]</span> Note that the conditionality in the probability terms in the <span class="math inline">\(LR_{c}\)</span> is such that they express the chances of obtaining a positive prediction of disease <em>given</em> that the disease status of the test subject is known to be a case or a non-case. what we would like to know, for the purposes of disease prediction, is the probability with the conditionality reversed; <em>i.e.</em> <span class="math inline">\(Pr(D_{*}|T_{*})\)</span>; Bayesian updating achieves the switching of the conitionality while also updating the <em>prior</em> probability of the disease status of the test subject in light of the information contained in the forecast.</p>
 <p>The updating process is easier if we work in <em>odds</em> rather than probabilities. As a reminder, for any event, <span class="math inline">\(E\)</span> which occurs with probabiity <span class="math inline">\(Pr(E)\)</span>, the odds of <span class="math inline">\(E\)</span> are<span class="math display">\[
@@ -388,9 +402,8 @@ LRneg_y&lt;-<span class="kw">c</span>(TPP,<span class="dv">1</span>)
 odds_p&lt;-p<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>p)
 priors&lt;-<span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.1</span>,<span class="fl">0.25</span>,<span class="fl">0.5</span>,<span class="fl">0.75</span>,<span class="fl">0.8</span>)
 <span class="kw">plot</span>(p,odds_p, <span class="dt">ty=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The plot shows us what the relationship between probability and odds looks like, but because the odds values cross orders of magnitude it&#39;s a bit difficult to see what is happening at the low end of the scale; taking logs reveals an interesting relationship.</span>
-log_odds_p&lt;-<span class="kw">log</span>(odds_p)
+<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-2-1.png" width="672" /> ###Relationship Between Odds and Probability The plot shows us what the relationship between probability and odds looks like, but because the odds values cross orders of magnitude it’s a bit difficult to see what is happening at the low end of the scale; taking logs reveals an interesting relationship.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">log_odds_p&lt;-<span class="kw">log</span>(odds_p)
 prior_odds&lt;-priors<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>priors)
 log_prior_odds&lt;-<span class="kw">log</span>(prior_odds)
 LR_c&lt;-TPP<span class="op">/</span>FPP <span class="co"># We calculate the positive LR from the downy mildew example</span>
@@ -402,10 +415,20 @@ posteriors&lt;-posterior_odds<span class="op">/</span>(<span class="dv">1</span>
      <span class="dt">ylab=</span><span class="st">&quot;log odds of disease&quot;</span>)
   <span class="kw">points</span>(priors,log_prior_odds, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">cex=</span><span class="fl">1.5</span>)
   <span class="kw">points</span>(posteriors,log_posterior_odds, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
-<p>Looking at the relationship between priors and the posteriors in the previous figure we can see that the impact of the <span class="math inline">\(LR\)</span> on the prior changes with the prior; this is apparent from the equation, but at the same time perhaps surprising the first time we encounter the results. Thinking about the updating process informally helps to see what is happening with the formal analysis. When the prior is very low, the message that disease is forecast contains a large amount of information, but the low prior means that the posterior still isn’t very high. At the opposite end of the probability scale, the message that disease is forecast contains very little information and so the posterior is not very different from the prior. In the middle of the probability scale there is maximum uncertainty prior to receipt of the message and so the information in the <span class="math inline">\(LR\)</span> has a big impact.</p>
+<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>
+<div id="the-relationship-between-priors-posteriors" class="section level3">
+<h3>The Relationship Between Priors Posteriors</h3>
+<p>In the previous figure we can see that the impact of the <span class="math inline">\(LR\)</span> on the prior changes with the prior; this is apparent from the equation, but at the same time perhaps surprising the first time we encounter the results. Thinking about the updating process informally helps to see what is happening with the formal analysis. When the prior is very low, the message that disease is forecast contains a large amount of information, but the low prior means that the posterior still isn’t very high. At the opposite end of the probability scale, the message that disease is forecast contains very little information and so the posterior is not very different from the prior. In the middle of the probability scale there is maximum uncertainty prior to receipt of the message and so the information in the <span class="math inline">\(LR\)</span> has a big impact.</p>
 <p>We can use the Bayesian updating equation to specify how much information the <span class="math inline">\(LR\)</span> would need to contain in order to produce a given posterior from different prior values. Re-arranging the Bayesian updating equation we can write:<span class="math display">\[
-log\left(LR_{*}\right) = log\left(odds(D_{*}|T_{*})\right)-log\left(odds(D_{*})\right)\]</span> Suppose we are considering deploying a disease forecaster with group of growers in a situation where they are confronting a new disease problem, which has not previously needed action. The available treatments are relatively expensive and the diseasee occurs sporadically. We do some discussion sessions with the growers and the consensus is that if the probability of disease is 80% or higher, they would be willing to invest in treatments. The discssions also reveal that, not unexpectedly, there is a range of opinion about the probability that disease will occur in any given season. A little further elicitation work reveals that the priors aming the growers range from 0.01 to 0.4. The following code chunk shows how to work out the <span class="math inline">\(LR\)</span> needed to move that range of priors to a posterior of 0.8.</p>
+log\left(LR_{*}\right) = log\left(odds(D_{*}|T_{*})\right)-log\left(odds(D_{*})\right)\]</span></p>
+</div>
+<div id="challenges-of-a-disease-forecaster" class="section level3">
+<h3>Challenges of a Disease Forecaster</h3>
+<div id="predictions-are-hard-especially-about-the-future---yogi-berra" class="section level4">
+<h4>“Predictions are hard, especially about the future - Yogi Berra”</h4>
+<p>Suppose we are considering deploying a disease forecaster with group of growers in a situation where they are confronting a new disease problem, which has not previously needed action. The available treatments are relatively expensive and the diseasee occurs sporadically. We do some discussion sessions with the growers and the consensus is that if the probability of disease is 80% or higher, they would be willing to invest in treatments. The discssions also reveal that, not unexpectedly, there is a range of opinion about the probability that disease will occur in any given season. A little further elicitation work reveals that the priors aming the growers range from 0.01 to 0.4. The following code chunk shows how to work out the <span class="math inline">\(LR\)</span> needed to move that range of priors to a posterior of 0.8.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">low_priors&lt;-<span class="kw">seq</span>(<span class="fl">0.01</span>,<span class="fl">0.4</span>,<span class="fl">0.01</span>)
 low_prior_odds&lt;-(low_priors)<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>low_priors)
 log_low_odds&lt;-<span class="kw">log</span>(low_prior_odds)
@@ -416,15 +439,16 @@ log_req_LR&lt;-log_req_odds<span class="op">-</span>log_low_odds
 req_LR&lt;-<span class="kw">exp</span>(log_req_LR)
 <span class="kw">plot</span>(low_priors,req_LR, <span class="dt">ty=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">1</span>, <span class="dt">xlab=</span><span class="st">&quot;prior probability&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;required LR&quot;</span>)
   <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">10</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-3-1.png" width="672" /> The horizontal dashed line in the figure is drawn at <span class="math inline">\(LR=10\)</span>. All the prior values to the left of the intersection between the horizontal line and the LR curve would not reach the posterior probabilty of 0.8 required to trigger treatment. To put this in perspective, very few (if any) current disease forecasters based on typical risk factors have a positive LR as high as 10; they literally do not contain enough information to achieve the required effect in a single interaction with users in that range of priors.</p>
+<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-4-1.png" width="672" /> The horizontal dashed line in the figure is drawn at <span class="math inline">\(LR=10\)</span>. All the prior values to the left of the intersection between the horizontal line and the LR curve would not reach the posterior probabilty of 0.8 required to trigger treatment. To put this in perspective, very few (if any) current disease forecasters based on typical risk factors have a positive LR as high as 10; they literally do not contain enough information to achieve the required effect in a single interaction with users in that range of priors.</p>
 </div>
-<div id="exercises" class="section level4">
-<h4>Exercises</h4>
+</div>
+</div>
+<div id="exercises" class="section level2">
+<h2>Exercises</h2>
 <ul>
 <li>If you have developed a forecaster and characterized it in terms of its LR’s carry out an analysis like the one above to explore the range of priors it will be likely to reach.</li>
 <li>How would you go about the corresponding analysis where the user-base has generally high priors and your forecaster is mainly intended to show situations where treatments are <em>not required</em> in an effort to reduce pesticide use.</li>
 </ul>
-</div>
 </div>
 
 

@@ -11,7 +11,7 @@ In the previous section we saw that $LR$ can be interpreted as information quant
 
 Specifically, we will be interested in the _relative entropy_, the _expected mutual information_, and the _specific information_.
 
-#### Relative Entropy
+### Relative Entropy
 The _relative entropy_ is also known as the Kullback-Leibler divergence.  Informally, it can be thought of as a measure of the discrepancy (or distance) between two probability distributions.  It is also the weighted average of the information contents about outcomes $D_{j}$ resulting from a particular message, $T$, where the weights are the posterior probabilities of $D_{j}$ given $T$: 
 
 $$
@@ -21,18 +21,18 @@ $$
 
 By now the log term on the r.h.s. of the equation will be familiar as an information quantity.  The fact that the information terms are weighted by the probabilities that the corresponding outcomes occur, shows that $I(T)$ is an expected value.  We saw in the last section that, in the context of disease forecasting, the separation between prior and posterior distributions depends on the likelihood ratios associated with the forecaster being used.  The relationship is a direct one; $I(T)$ is the expected value of the log likelihood ratios.  It is the average reduction in uncertainty (over all outcomes) resulting from the use of the forecaster.
 
-#### Expected Mutual Information
+### Expected Mutual Information
 Mutual Information $I_{M}$ can be thought of as a general measure of the reduction in uncertainty about one variable that arises from knowing the values of another; in an informal sense it can be thought of as a generalized measure of correlation between two variables.  It is strictly positive and equals 0 only when the two variables are independent.  In the context of forecasting, the two variables can be the forecast situations and the actual disease outcomes and we can specify it as:$$
 I_{M}=\sum_{i=1}^{n} \sum_{j=1}^{m} Pr(T_{i}\cap D_{j})log\left[\frac{Pr(T_{i}\cap D_{j})}{Pr(T_{i})Pr(D_{j})}\right]$$
 $I_{M}$ is the expected value of $I(T)$ and both of these quantities are strictly positive, but $I_{M}$ is also the expected value of another important information quantity --- the _specific information_.
 
-#### Specific Information
+### Specific Information
 The specific information $I{_s}(T_{i})$ measures the information content of an indefinite message in a single context.  For example the specific information associated with a prediction of no disease would be:$$
 I_{s}(T_{i})=\sum_{j=1}^{m}Pr(D_{j})log\left[\frac{1}{Pr(D_{j})} \right]-\sum_{j=1}^{m}Pr(D_{j}|T_{i})log\left[\frac{1}{Pr(D_{j}|T_{i})} \right]$$
 
 The first term on the r,h,s. is the entropy for disease outcomes in the absence of a forecast, $H(D)$. The second term is the entropy of disease outcomes given a particular forecast, $H(D|T_{i})$.  Thus, unlike the relative entropy and the expected mutual information, the specific information may be positive or negative.  Situations in which it is negative arise when the uncertainty following a forecast is greater than before the forecast.  We consider a specific hypothetical example.  The example was first introduced by McRoberts et al. (2003) as a _gedankenexperiment_ on the interaction between evidence and uncertainty in decision-making about disease management.  At that time, we had not encountered the idea of _specific information_ and so the original presentation of the idea was incomplete. The presentation given here follows the later version given in Hughes (2012), after Gareth had done the hard work of researching and teasing out the relationship between the entropy, relative entropy, specific information and expected mutual information.
 
-##### Decision-making _gedankenexperiment_
+## Decision-making _gedankenexperiment_
 
 Consider two farmers, A and B, who face the problem of trying to decide if they should apply a costly pesticide treatment for a disease that only occurs sporadically, but is damaging when it does.  The local university has developed a prediction system for the disease based on a simple set of weather and crop establishment variables that are familiar to the growers; they understand the relationship between the risk factors and the forecasts from the model, and only have to decide what to do on the basis of the forecast for their own crops.  Farmer A is an optimist whose subjective prior for the disease to be damaging is 20%.  Farmer B is a pessimist who believes the chances of disease (before the forecast) are 80%.  Both farmers use their copies of the smartphone app developed by the university and both receive the forecast that disease will occur this season.  Behind the scenes this forecast is based on a logistic regression model with a positive $LR$ for disease of 7.0. The question for us to examine are (1) what is the posterior probability of disease for each farmer, assuming that they update their priors according to Bayesian principles, and (2) what are the corresponding entropies?
 
