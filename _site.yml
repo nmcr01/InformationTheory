@@ -16,7 +16,7 @@ navbar:
       href: sdm_spores.pdf
     - text: "SDM Predictivity"
       href: SDM_Pseudo_R2.html
-    - text: "Further Reading"
+    - text: "Further Readings"
       href: about.html
 output:
   html_document:
