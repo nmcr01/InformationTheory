@@ -96,7 +96,7 @@ ggplot(SDM_rac1, aes(fits1, fill=status))+
         plot.title = element_text(size = 16, face = "bold"))+
   guides(fill=guide_legend(title = "Status"))
  
-ggsave(filename = "figures/sdm_dot_hist_facet.png")
+#ggsave(filename = "figures/sdm_dot_hist_facet.png")
 
 
   ggplot(SDM_rac1, aes(fits1, fill=status))+
@@ -116,7 +116,7 @@ ggsave(filename = "figures/sdm_dot_hist_facet.png")
         plot.title = element_text(size = 16, face = "bold"))+
   guides(fill=guide_legend(title = "Status"))
   
-  ggsave(filename = "figures/sdm_hist_identity.png")
+ # ggsave(filename = "figures/sdm_hist_identity.png")
 ```
 
 ```{r}
@@ -145,7 +145,7 @@ ggplot(SDM_rac_spore_melt, aes(spore4, disease, color=est.type))+
         plot.title = element_text(size = 16, face = "bold"))+
   guides(color=guide_legend(title = "Estimate Type"))+
   scale_color_discrete(labels=c("Disease Incidence","Fitted Disease Data"))
-  ggsave(filename = "figures/sdm_real_fit.png")
+  #ggsave(filename = "figures/sdm_real_fit.png")
 
 
 ```
@@ -159,7 +159,7 @@ We run through the same steps with the FHB data.
 ```{r}
 # Analysis 2 The De Wolf et al fhb dataset
 
-data2<-read.csv("fhb data set - Data.csv", head=TRUE)
+data2<-read.csv("data/fhb data set - Data.csv", head=TRUE)
 attach(data2)
 head(data2)
 ```

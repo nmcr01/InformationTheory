@@ -5,14 +5,18 @@ navbar:
   title: "Information Theory"
   left:
     - text: "Intro to R"
-      href: IntrotoR.html
+      href: Intro_R.html
     - text: "Information Theory Basics"
       href: information_theory_workshop_1.html
     - text: "Bayesian Probability"
       href: information_theory_workshop_2.html
     - text: "Metrics"
       href: information_theory_workshop_3.html
-    - text: "Further Readings"
+    - text: "SDM Spores"
+      href: sdm_spores.pdf
+    - text: "SDM Predictivity"
+      href: SDM_Pseudo_R2.html
+    - text: "Further Reading"
       href: about.html
 output:
   html_document:
