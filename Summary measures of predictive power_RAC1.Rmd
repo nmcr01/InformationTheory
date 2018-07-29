@@ -1,0 +1,259 @@
+---
+title: Summary Measures of Predictive Power for Logistic Regression Models of Disease
+  risk
+author: "Gareth Hughes, Robin Choudhury, Neil McRoberts"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=T}
+knitr::opts_chunk$set(echo = TRUE) #change this to FALSE to suppress printing the code
+library(tidyverse)
+library(broom)
+library(DescTools)
+```
+
+Calculation of pseudo Rsq statistics from logistic regression. Analyses associated with ICPP2018 workhshop on Information Theory and a Letter to the Editor of Phytopathology. Analyses here based on data and original work from two sources:  
+1.Choudhury et al. (2016). Logistic regression for disease incidence increase subsequent to catches of *Peronospora effusa* DNA detected on rotating arm spore traps.
+2. De Wolf et al. (2003), also used in Madden (2006) and McRoberts et al, (2011).  Early data set used in constructing predictors of fusarium head blight (FHB) in wheat.
+
+
+For the two datasets the same set of analyses will be carried out. First, a logistic regression will be performed with a binary disease state as the dependent variable and a single continuous variable as the predictor.  In the first example, the predictor is the natural logarithm of the estimated pathogen DNA copy number measured on spore traps prior to observations of disease state.  In the second and third examples the explanatory variable is a composite "risk" indicator constructed from a number of weather variables which individually correlate with disease incidence.  In the third example, the dependent binary disease variable was constructed by collapsing the original 5-point (0 to 4) ordinal disease intensity variable to two categories by combining the original 0 and 1 classes into a "low" disease class (designated 0) and the remaning classes, 2,3 and 4, into a "high" disease class (designated 1).
+
+The logistic regression models were fitted using the glm function in the R base installation with a binomial model and logistic link function. The model object from each analysis was passed to the PseudoR2 function from the DescTools package, with McFadden, Naglekerke, and Tjur specified as the desired values to calculate.
+
+Diagnostic plots for each analysis were produced showing (1) the binary disase state and fitted probability values together against the explanatory variable, and (2) a histogram of the fitted probability values classified by the binary disease state and binned according to system defaults.
+
+
+The analyses were run on R 3.3.3 for Windows under R Studio running on a Windows virtual machine on a remote application server accessed via Parallels Client for Chrome OS [ref for Parallels].  
+
+
+```{r}
+# install.packages("DescTools") Remove hashtag to run if needed, only need to run this once
+# library("DescTools") #nice, wish I had seen this sooner rac
+
+# Analysis 1 SDM data from Choudhury et al 2016.
+# Get the data and take a look at the top of the data file
+
+data<-read_csv("data/roc.test.csv") #read.csv was throwing out some weird errors for me, so im using read_csv from the readr package contained within tidyverse
+attach(data)
+head(data)
+
+# Fit the basic logistic regression on Disease using Spore.4
+
+dismodel1 <- glm(Disease~`Spore-4`,family=binomial(link='logit'), data = data) #I needed to put tics (`) around Spore-4 because when i loaded it with read_csv it read it as 'Spore-4', not 'Spore.4' rac
+summary(dismodel1)
+tidy(dismodel1) #rac tidy() and glance() are nice functions when you want to look at cleaner output
+```
+
+
+The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state.  Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal.  This is the sort of situation where having a richer diagnosis of what the fitted model is doing would be useful.  To that end, we ask for McFadden's, Nagelkerke's and Tjur's pseudo Rsq values for the model:
+
+```{r}
+# Call the pseudoR2 function and tell it to calculate McFadden,
+# Nagelkerke and Tjur pR2 values; print them out.
+# This seems to call DescTools although there are several functions called 'PseudoR2' rac
+pseuds<-PseudoR2(dismodel1, c("McFadden","Nagel","Tjur")) #
+pseuds
+```
+
+
+Looking at the three values together tells us that the model explains a rather modest proportion of the observed variation (Nagelkerke), has low discrimination capacity (Tjur) and would (consequently?) have a modest impact in probability updating (McFadden). We can look at the diagnostic plots to look at data, fitted model and "Tjur" histogram of the fitted probabilities.
+
+
+```{r}
+# Take a look at the fitted probability values from the regression.
+fits1<-as.numeric(dismodel1$fitted.values) # need this because fitted.values is a list and while hist understands what
+                                           # to do with it if you don't monkey about with it, asking it to sub-divide
+                                           # the vector of values using the logical == confuses it, so we have to 
+                                           # pull the numerical bit out of the list.
+dis_state<-c(rep(1,46),rep(0,37))
+dis_state2=dismodel1$model$Disease #this pulls it directly from the model rac
+spore4_rac=dismodel1$model$`Spore-4` #this pulls it directly from the model rac
+
+#I'm going to redo this in ggplot/tidyr feel free to ignore RAC
+SDM_rac=data.frame(fits1=fits1, disease=dis_state2, spore4=spore4_rac)
+SDM_rac1=SDM_rac %>%
+  mutate(.,status=ifelse(disease==0, "Non-cases", "Cases"))
+
+SDM_rac1$status <- factor(SDM_rac1$status, levels = c("Cases","Non-cases"))
+
+ggplot(SDM_rac1, aes(fits1, fill=status))+
+ geom_histogram(color="black")+
+  scale_x_continuous(limits=c(0,1))+
+  facet_grid(status~., scales = "free_y")+ 
+  xlab("Fitted Probability Value")+
+  scale_fill_manual(values = c("grey20", "grey80"))+
+    theme_bw()+
+  theme(legend.position = "none",
+        legend.background = element_blank(),
+        strip.text = element_text(face="bold", size = 16),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 16, face = "bold"))+
+  guides(fill=guide_legend(title = "Status"))
+ 
+ggsave(filename = "figures/sdm_dot_hist_facet.png")
+
+
+  ggplot(SDM_rac1, aes(fits1, fill=status))+
+  geom_histogram(alpha=0.4, position="identity")+
+  scale_x_continuous(limits=c(0,1))+
+  #facet_grid(~status)+ 
+  xlab("Probability")+
+  ylab("Counts")+
+  ggtitle("Histogram of Fitted Probabilities, SDM Data")+
+  theme(legend.position = c(.15,.8),
+        legend.background = element_blank(),
+        strip.text = element_text(face="bold", size = 16),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 16, face = "bold"))+
+  guides(fill=guide_legend(title = "Status"))
+  
+  ggsave(filename = "figures/sdm_hist_identity.png")
+```
+
+```{r}
+  # Generate a plot of binary disease variable and fitted probabilities
+# There are four NA values corresponding to zeros in the data.  Dump
+# the NA values and make a reduced vector for plotting the results
+#Spore4<-na.omit(data$`Spore-4`) #couldnt get this to work rac
+#plot(Spore4,dismodel1$fitted.values, xlab="ln(DNA copies)", ylab="Probability", col="dark blue",ylim=c(0,1))
+#points(Spore.4,Disease, col="red")
+
+SDM_rac_spore_melt=SDM_rac %>%
+  gather(est.type, disease, -spore4)
+
+ggplot(SDM_rac_spore_melt, aes(spore4, disease, color=est.type))+
+  geom_point()+
+  xlab("Log of Spore Copy Number")+
+  ylab("Probability")+ #not sure this is the right label? rac
+  ggtitle("Fitted vs. Real Disease, SDM Data")+
+  theme(legend.position = c(.2,.8),
+        legend.background = element_blank(),
+        strip.text = element_text(face="bold", size = 16),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 16, face = "bold"))+
+  guides(color=guide_legend(title = "Estimate Type"))+
+  scale_color_discrete(labels=c("Disease Incidence","Fitted Disease Data"))
+  ggsave(filename = "figures/sdm_real_fit.png")
+
+
+```
+
+
+
+##Example 2: Fusarium Head Blight data
+
+We run through the same steps with the FHB data.
+
+```{r}
+# Analysis 2 The De Wolf et al fhb dataset
+
+data2<-read.csv("fhb data set - Data.csv", head=TRUE)
+attach(data2)
+head(data2)
+```
+```{r}
+# Fit the basic logistic regression on Disease using Spore.4
+
+dismodel2 <- glm(disease_category~TRH90,family=binomial(link='logit'))
+summary(dismodel2)
+tidy(dismodel2)
+```
+
+
+```{r}
+# Get the pseudo R2 values
+pseuds2<-PseudoR2(dismodel2, c("McFadden","Nagel","Tjur"))
+pseuds2
+```
+
+
+The model accounts for more than half the observed variation (Nagelkerke), has much better than discrimination ability compared with the SDM example (Tjur) and has appreciable impact on the posterior probabilities given prediction (McFadden).  Assuming, that the various pseudo Rsq values can be directly compared by numerical value, it appears that the FHB indicator is slightly more efficient at discrimination than on resolution.
+The diagnostic plots look like this:
+
+
+```{r}
+# Print out the fitted probabilities from the model
+dismodel2$fitted.values
+fits2<-as.numeric(dismodel2$fitted.values)
+
+
+
+#Tidy version rac
+
+dis_state2=dismodel2$model$disease_category #this pulls it directly from the model rac
+trh90_rac=dismodel2$model$TRH90 #this pulls it directly from the model rac
+#I'm going to redo this in ggplot/tidyr feel free to ignore RAC
+FHB_rac=data.frame(fits2=fits2, disease=dis_state2, trh90=trh90_rac)
+FHB_rac1=FHB_rac %>%
+  mutate(.,status=ifelse(disease==0, "Controls", "Cases"))
+
+FHB_rac1$status <- factor(FHB_rac1$status, levels = c("Controls","Cases"))
+
+  ggplot(FHB_rac1, aes(fits2, fill=status))+
+  geom_histogram(alpha=0.4, position="identity")+
+  scale_x_continuous(limits=c(0,1))+
+  #facet_grid(~status)+ 
+  xlab("Probability")+
+  ylab("Counts")+
+  ggtitle("Histogram of Fitted Probabilities, FHB Data")+
+  theme(legend.position = c(.25,.8),
+        legend.background = element_blank(),
+        strip.text = element_text(face="bold", size = 16),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 14, face = "bold"))+
+  guides(fill=guide_legend(title = "Status"))
+  
+  ggsave(filename = "figures/fhb_hist_identity.png")
+```
+
+
+
+```{r}
+#tidy version rac
+FHB_rac_spore_melt=FHB_rac %>%
+  gather(est.type, disease, -trh90)
+
+ggplot(FHB_rac_spore_melt, aes(trh90, disease, color=est.type))+
+  geom_point()+
+  xlab("FHB Risk Score")+
+  ylab("Probability")+ #not sure this is the right label? rac
+  ggtitle("Fitted vs. Real Disease, FHB Data")+
+  theme(legend.position = c(.2,.8),
+        legend.background = element_blank(),
+        strip.text = element_text(face="bold", size = 16),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 16, face = "bold"))+
+  guides(color=guide_legend(title = "Estimate Type"))+
+  scale_color_discrete(labels=c("Disease Incidence","Fitted Disease Data"))
+  ggsave(filename = "figures/fhb_real_fit.png")
+
+```
+
+
+The shape of the logistic function for the fitted probabilities is much closer to the limit (step function) for a perfect predictor, and the discrimination of the cases and controls along the explanatory variable is apparent in this plot and the binned histogram.  A question occurs: Will McFadden always lag Tjur until we approach the limit of discrimination, since updating approaches certainty asymptotically?
+
+
+```{r}
+sessionInfo()
+```
+
+

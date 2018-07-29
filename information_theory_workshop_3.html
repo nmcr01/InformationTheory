@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Information Theory Workshop III</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Information Theory</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="IntrotoR.html">Introduction to R</a>
+</li>
+<li>
+  <a href="information_theory_workshop_1.html">Information Theory Basics</a>
+</li>
+<li>
+  <a href="information_theory_workshop_2.html">Introduction to Bayesian Probability</a>
+</li>
+<li>
+  <a href="about.html">Further Reading</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Information Theory Workshop III</h1>
+
+</div>
+
+
+<div id="some-further-information-quantities-of-interest" class="section level2">
+<h2>Some further information quantities of interest</h2>
+<p>In the previous section we saw that <span class="math inline">\(LR\)</span> can be interpreted as information quantities. We also saw that the quantity of information contained in an indefinite message (such as a prediction of disease resulting from an imperfect forecaster) causes a separation of prior and posterior probabilities if we use the <span class="math inline">\(LR\)</span> within the framework of Bayesian probability updating. This section of the workshop introduces some information quantities that unite these ideas and are central in the information theoretic interpretation of forecasting and decision-making. The introduction here will be brief and you are referred to Hughes (2012) for a more detailed and technical description of the inter-connections among these quantities.</p>
+<p>Specifically, we will be interested in the <em>relative entropy</em>, the <em>expected mutual information</em>, and the <em>specific information</em>.</p>
+<div id="relative-entropy" class="section level4">
+<h4>Relative Entropy</h4>
+<p>The <em>relative entropy</em> is also known as the Kullback-Leibler divergence. Informally, it can be thought of as a measure of the discrepancy (or distance) between two probability distributions. It is also the weighted average of the information contents about outcomes <span class="math inline">\(D_{j}\)</span> resulting from a particular message, <span class="math inline">\(T\)</span>, where the weights are the posterior probabilities of <span class="math inline">\(D_{j}\)</span> given <span class="math inline">\(T\)</span>:</p>
+<p><span class="math display">\[
+I(T)= \sum_{j=1}^{m}Pr(D_{j}|T) log\left[ \frac{Pr(D_{j}|T)}{Pr(D_{J})} \right]
+\]</span></p>
+<p>By now the log term on the r.h.s. of the equation will be familiar as an information quantity. The fact that the information terms are weighted by the probabilities that the corresponding outcomes occur, shows that <span class="math inline">\(I(T)\)</span> is an expected value. We saw in the last section that, in the context of disease forecasting, the separation between prior and posterior distributions depends on the likelihood ratios associated with the forecaster being used. The relationship is a direct one; <span class="math inline">\(I(T)\)</span> is the expected value of the log likelihood ratios. It is the average reduction in uncertainty (over all outcomes) resulting from the use of the forecaster.</p>
+</div>
+<div id="expected-mutual-information" class="section level4">
+<h4>Expected Mutual Information</h4>
+<p>Mutual Information <span class="math inline">\(I_{M}\)</span> can be thought of as a general measure of the reduction in uncertainty about one variable that arises from knowing the values of another; in an informal sense it can be thought of as a generalized measure of correlation between two variables. It is strictly positive and equals 0 only when the two variables are independent. In the context of forecasting, the two variables can be the forecast situations and the actual disease outcomes and we can specify it as:<span class="math display">\[
+I_{M}=\sum_{i=1}^{n} \sum_{j=1}^{m} Pr(T_{i}\cap D_{j})log\left[\frac{Pr(T_{i}\cap D_{j})}{Pr(T_{i})Pr(D_{j})}\right]\]</span> <span class="math inline">\(I_{M}\)</span> is the expected value of <span class="math inline">\(I(T)\)</span> and both of these quantities are strictly positive, but <span class="math inline">\(I_{M}\)</span> is also the expected value of another important information quantity — the <em>specific information</em>.</p>
+</div>
+<div id="specific-information" class="section level4">
+<h4>Specific Information</h4>
+<p>The specific information <span class="math inline">\(I{_s}(T_{i})\)</span> measures the information content of an indefinite message in a single context. For example the specific information associated with a prediction of no disease would be:<span class="math display">\[
+I_{s}(T_{i})=\sum_{j=1}^{m}Pr(D_{j})log\left[\frac{1}{Pr(D_{j})} \right]-\sum_{j=1}^{m}Pr(D_{j}|T_{i})log\left[\frac{1}{Pr(D_{j}|T_{i})} \right]\]</span></p>
+<p>The first term on the r,h,s. is the entropy for disease outcomes in the absence of a forecast, <span class="math inline">\(H(D)\)</span>. The second term is the entropy of disease outcomes given a particular forecast, <span class="math inline">\(H(D|T_{i})\)</span>. Thus, unlike the relative entropy and the expected mutual information, the specific information may be positive or negative. Situations in which it is negative arise when the uncertainty following a forecast is greater than before the forecast. We consider a specific hypothetical example. The example was first introduced by McRoberts et al. (2003) as a <em>gedankenexperiment</em> on the interaction between evidence and uncertainty in decision-making about disease management. At that time, we had not encountered the idea of <em>specific information</em> and so the original presentation of the idea was incomplete. The presentation given here follows the later version given in Hughes (2012), after Gareth had done the hard work of researching and teasing out the relationship between the entropy, relative entropy, specific information and expected mutual information.</p>
+<div id="decision-making-gedankenexperiment" class="section level5">
+<h5>Decision-making <em>gedankenexperiment</em></h5>
+<p>Consider two farmers, A and B, who face the problem of trying to decide if they should apply a costly pesticide treatment for a disease that only occurs sporadically, but is damaging when it does. The local university has developed a prediction system for the disease based on a simple set of weather and crop establishment variables that are familiar to the growers; they understand the relationship between the risk factors and the forecasts from the model, and only have to decide what to do on the basis of the forecast for their own crops. Farmer A is an optimist whose subjective prior for the disease to be damaging is 20%. Farmer B is a pessimist who believes the chances of disease (before the forecast) are 80%. Both farmers use their copies of the smartphone app developed by the university and both receive the forecast that disease will occur this season. Behind the scenes this forecast is based on a logistic regression model with a positive <span class="math inline">\(LR\)</span> for disease of 7.0. The question for us to examine are (1) what is the posterior probability of disease for each farmer, assuming that they update their priors according to Bayesian principles, and (2) what are the corresponding entropies?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Analysis for question 1</span>
+<span class="co"># Do the Bayesian updating based on the priors, forecast and LRc</span>
+A_prior &lt;-<span class="fl">0.2</span>
+B_prior &lt;-<span class="fl">0.8</span>
+A_prior_odds &lt;-A_prior<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>A_prior)
+B_prior_odds &lt;-B_prior<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>B_prior)
+
+LRc &lt;-<span class="dv">7</span>
+logA_posterior_odds &lt;-<span class="kw">log</span>(A_prior_odds)<span class="op">+</span><span class="kw">log</span>(LRc)
+logB_posterior_odds &lt;-<span class="kw">log</span>(B_prior_odds)<span class="op">+</span><span class="kw">log</span>(LRc)
+
+A_posterior_odds &lt;-<span class="kw">exp</span>(logA_posterior_odds)
+B_posterior_odds &lt;-<span class="kw">exp</span>(logB_posterior_odds)
+A_posterior &lt;-A_posterior_odds<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>A_posterior_odds)
+B_posterior &lt;-B_posterior_odds<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>B_posterior_odds)
+
+<span class="co"># Analysis for question 2</span>
+<span class="co"># Calculate the prior expected information (entropy) and conditional posterior expected information values</span>
+H_A_prior &lt;-<span class="st"> </span><span class="op">-</span>((A_prior<span class="op">*</span><span class="kw">log</span>(A_prior))<span class="op">+</span>((<span class="dv">1</span><span class="op">-</span>A_prior)<span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>A_prior)))
+H_A_posterior &lt;-<span class="st"> </span><span class="op">-</span>((A_posterior<span class="op">*</span><span class="kw">log</span>(A_posterior))<span class="op">+</span>((<span class="dv">1</span><span class="op">-</span>A_posterior)<span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>A_posterior)))
+
+H_B_prior &lt;-<span class="st"> </span><span class="op">-</span>((B_prior<span class="op">*</span><span class="kw">log</span>(B_prior))<span class="op">+</span>((<span class="dv">1</span><span class="op">-</span>B_prior)<span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>B_prior)))
+H_B_posterior &lt;-<span class="st"> </span><span class="op">-</span>((B_posterior<span class="op">*</span><span class="kw">log</span>(B_posterior))<span class="op">+</span>((<span class="dv">1</span><span class="op">-</span>B_posterior)<span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>B_posterior)))
+
+p &lt;-<span class="kw">seq</span>(<span class="fl">0.01</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)
+compl_p &lt;-<span class="dv">1</span><span class="op">-</span>p
+logp &lt;-<span class="st"> </span><span class="kw">log</span>(p)
+log_compl_p &lt;-<span class="kw">log</span>(compl_p)
+sum_terms &lt;-(p<span class="op">*</span>logp)<span class="op">+</span>(compl_p<span class="op">*</span>log_compl_p)
+H_p &lt;-<span class="st"> </span><span class="op">-</span>sum_terms
+<span class="kw">plot</span>(p,H_p, <span class="dt">ty=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">ylab=</span><span class="st">&quot;Expected information (nits)&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;prior or posterior probability&quot;</span>)
+ <span class="kw">points</span>(A_prior, H_A_prior, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>)
+ <span class="kw">points</span>(B_prior, H_B_prior, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>)
+ <span class="kw">points</span>(A_posterior, H_A_posterior, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)
+ <span class="kw">points</span>(B_posterior, H_B_posterior, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="information_theory_workshop_3_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look the results in terms of change in log(odds)</span>
+odds_p &lt;-p<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>p)
+log_odds_p &lt;-<span class="kw">log</span>(odds_p)
+<span class="kw">plot</span>(p,log_odds_p, <span class="dt">ty=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">ylab=</span><span class="st">&quot;log(odds) disease&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;prior or posterior probability&quot;</span>)
+ <span class="kw">points</span>(A_prior, <span class="kw">log</span>(A_prior_odds), <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>)
+ <span class="kw">points</span>(B_prior, <span class="kw">log</span>(B_prior_odds), <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>)
+ <span class="kw">points</span>(A_posterior, logA_posterior_odds, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)
+ <span class="kw">points</span>(B_posterior, logB_posterior_odds, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="information_theory_workshop_3_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate the relative entropy and specific information of the message for each farmer</span>
+<span class="co"># Farmer A</span>
+<span class="co"># Relative entropy</span>
+A_prior_compl &lt;-<span class="dv">1</span><span class="op">-</span>A_prior
+A_compl_odds &lt;-(<span class="dv">1</span><span class="op">-</span>A_prior)<span class="op">/</span>A_prior
+A_compl_post_log_odds &lt;-<span class="kw">log</span>(A_compl_odds)<span class="op">+</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">/</span>LRc)
+A_compl_post_odds &lt;-<span class="kw">exp</span>(A_compl_post_log_odds)
+A_compl_post &lt;-A_compl_post_odds<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>A_compl_post_odds)
+D_KL_A &lt;-(A_posterior<span class="op">*</span>(<span class="kw">log</span>(A_posterior)<span class="op">-</span><span class="kw">log</span>(A_prior)))<span class="op">+</span>(A_compl_post<span class="op">*</span>(<span class="kw">log</span>(A_compl_post)<span class="op">-</span><span class="kw">log</span>(A_prior_compl)))
+
+<span class="co"># Specific Information</span>
+I_s_T_A &lt;-H_A_prior<span class="op">-</span>H_A_posterior
+
+<span class="co"># Farmer B</span>
+<span class="co"># Relative entropy (Kullback--Leibler divergence)</span>
+B_prior_compl &lt;-<span class="dv">1</span><span class="op">-</span>B_prior
+B_compl_odds &lt;-(<span class="dv">1</span><span class="op">-</span>B_prior)<span class="op">/</span>B_prior
+B_compl_post_log_odds &lt;-<span class="kw">log</span>(B_compl_odds)<span class="op">+</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">/</span>LRc)
+B_compl_post_odds &lt;-<span class="kw">exp</span>(B_compl_post_log_odds)
+B_compl_post &lt;-B_compl_post_odds<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>B_compl_post_odds)
+D_KL_B &lt;-(B_posterior<span class="op">*</span>(<span class="kw">log</span>(B_posterior)<span class="op">-</span><span class="kw">log</span>(B_prior)))<span class="op">+</span>(B_compl_post<span class="op">*</span>(<span class="kw">log</span>(B_compl_post)<span class="op">-</span><span class="kw">log</span>(B_prior_compl)))
+
+<span class="co"># Specific Information</span>
+I_s_T_B &lt;-H_B_prior<span class="op">-</span>H_B_posterior
+
+<span class="co"># Summary of information analysis for the _gedankenexperiment_</span>
+Farmer_info_summary &lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(H_A_prior,H_A_posterior,D_KL_A,I_s_T_A,
+                               H_B_prior,H_B_posterior,D_KL_B,I_s_T_B), <span class="dt">nrow=</span><span class="dv">4</span>, <span class="dt">ncol=</span><span class="dv">2</span>) 
+<span class="kw">rownames</span>(Farmer_info_summary) &lt;-<span class="kw">c</span>(<span class="st">&quot;H_prior&quot;</span>,<span class="st">&quot;H_posterior&quot;</span>,<span class="st">&quot;Relative entropy&quot;</span>,<span class="st">&quot;Specicific information&quot;</span>)
+<span class="kw">colnames</span>(Farmer_info_summary) &lt;-<span class="kw">c</span>(<span class="st">&quot;Farmer A&quot;</span>, <span class="st">&quot;Farmer B&quot;</span>)
+Farmer_info_summary</code></pre></div>
+<pre><code>##                          Farmer A  Farmer B
+## H_prior                 0.5004024 0.5004024
+## H_posterior             0.6554818 0.1499949
+## Relative entropy        0.4498491 0.1209519
+## Specicific information -0.1550794 0.3504075</code></pre>
+<p>Summarizing the thought experiment informally in economic terms, if we were selling forecasts of disease as a service to the two farmers at the same fee per use, we can see that Farmer A has purchased more information than Farmer B (0.4498&gt;0.1209, the ratio is 3.72) but it has come at the price of greater, not less, certainty about disease status (<span class="math inline">\(I_{s}(T)\)</span>&lt;0 for Farmer A); Farmer B, in contrast has purchased more certainty (<span class="math inline">\(I_{s}(T)\)</span>&gt;0) with much less information. This effect happens whenever the outcome of a prediction moves the prior in the direction of its complement, but fails to reach it.</p>
+<p>In the analyses we have looked at up to this point we have assumed the existence of a forecasting system (i.e. a disease or disease risk predictor). In the final section of the workshop we give a brief introduction to the use of logistic regression to extract predictors from observational data, and we show how to interpret two of the common pseudo <span class="math inline">\(R^{2}\)</span> values reported for logistic regression analyses by using some information theoretic concepts.</p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

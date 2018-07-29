@@ -348,10 +348,14 @@ LR_{c}= \frac{Pr(T{c}|D_{c})}{Pr(T_{c}|D_{nc})}= \frac{TPP}{FPP}\]</span> Note t
 odds(E)= \frac{Pr(E)}{1-Pr(E)}\]</span> The corresponding transformation in the opposite direction is given by:<span class="math display">\[
 Pr(E)= \frac{odds(E)}{1+odds(E)}\]</span></p>
 <p>Suppose we use the spore trap/DNA detection system for an area where we have an existing estimate of the odds of downy mildew, <span class="math inline">\(odds(D_{c})\)</span>. The trap returns a prediction of disease, based on the pathogen DNA level, <span class="math inline">\(T_{c}\)</span>. According to Bayes theorem, the corresponding odds of disease given the prediction are: <span class="math display">\[
-odds(D_{c}|T_{c})=odds(D_{c}) \times LR_{c}\]</span> Taking logarithms of this results in: $$</p>
-<p>log(odds(D_{c}|T_{c}) ) = log( odds(D_{c}) +log (LR_{c} )$$</p>
-<p>Recalling that the <span class="math inline">\(odds()\)</span> are all ratios of probabilities, as is the <span class="math inline">\(LR\)</span>, and that we have already encountered the logarithms of ratios of probabilities in calculations of information quantities, you may be already seeing the Bayesian upadating equation in terms of information. To make it more explicit what the <span class="math inline">\(LR\)</span> is in information terms we can expand the previous equation and express it in terms of the probabilities involved as:$$</p>
-<p>log(Pr(D_{c}|T_{c}))-log(1-Pr(D_{c}|T_{c})) = log(Pr(D_{c}))-log(1-Pr(D_{c}))+log(Pr(T_{c}|D_{c}))-log(Pr(T_{c}|D_{nc}))$$ The following code illustrates some of the concepts just introduced.</p>
+odds(D_{c}|T_{c})=odds(D_{c}) \times LR_{c}\]</span> Taking logarithms of this results in:</p>
+<p><span class="math display">\[
+log\left(odds(D_{c}|T_{c}) \right) = log\left( odds(D_{c}\right) +log \left(LR_{c} \right)
+\]</span></p>
+<p>Recalling that the <span class="math inline">\(odds()\)</span> are all ratios of probabilities, as is the <span class="math inline">\(LR\)</span>, and that we have already encountered the logarithms of ratios of probabilities in calculations of information quantities, you may be already seeing the Bayesian upadating equation in terms of information. To make it more explicit what the <span class="math inline">\(LR\)</span> is in information terms we can expand the previous equation and express it in terms of the probabilities involved as:</p>
+<p><span class="math display">\[
+log(Pr(D_{c}|T_{c}))-log(1-Pr(D_{c}|T_{c})) = log(Pr(D_{c}))-log(1-Pr(D_{c}))+log(Pr(T_{c}|D_{c}))-log(Pr(T_{c}|D_{nc}))
+\]</span> The following code illustrates some of the concepts just introduced.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Copy the information from the downy mildew example</span>
 TP&lt;-<span class="dv">30</span>
 FN&lt;-<span class="dv">14</span>
@@ -376,7 +380,10 @@ LRneg_y&lt;-<span class="kw">c</span>(TPP,<span class="dv">1</span>)
   <span class="kw">points</span>(FPP,TPP, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">cex=</span><span class="dv">2</span>)
   <span class="kw">lines</span>(LRpos_x,LRpos_y, <span class="dt">lty=</span><span class="dv">1</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;black&quot;</span>)
   <span class="kw">lines</span>(LRneg_x,LRneg_y, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
-<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-1-1.png" width="672" /> #### Questions In the graph, what quantities do the slopes of the black and blue lines represent? For the blue line, what is the expression for the conditional probability corresponding to the slope?</p>
+<p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
+<p>In the graph, what quantities do the slopes of the black and blue lines represent? For the blue line, what is the expression for the conditional probability corresponding to the slope?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p&lt;-<span class="kw">seq</span>(<span class="fl">0.001</span>,<span class="fl">0.999</span>,<span class="fl">0.001</span>)
 odds_p&lt;-p<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>p)
 priors&lt;-<span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.1</span>,<span class="fl">0.25</span>,<span class="fl">0.5</span>,<span class="fl">0.75</span>,<span class="fl">0.8</span>)
@@ -410,6 +417,7 @@ req_LR&lt;-<span class="kw">exp</span>(log_req_LR)
 <span class="kw">plot</span>(low_priors,req_LR, <span class="dt">ty=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">1</span>, <span class="dt">xlab=</span><span class="st">&quot;prior probability&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;required LR&quot;</span>)
   <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">10</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="information_theory_workshop_2_files/figure-html/unnamed-chunk-3-1.png" width="672" /> The horizontal dashed line in the figure is drawn at <span class="math inline">\(LR=10\)</span>. All the prior values to the left of the intersection between the horizontal line and the LR curve would not reach the posterior probabilty of 0.8 required to trigger treatment. To put this in perspective, very few (if any) current disease forecasters based on typical risk factors have a positive LR as high as 10; they literally do not contain enough information to achieve the required effect in a single interaction with users in that range of priors.</p>
+</div>
 <div id="exercises" class="section level4">
 <h4>Exercises</h4>
 <ul>
