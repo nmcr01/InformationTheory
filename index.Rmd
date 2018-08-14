@@ -1,5 +1,5 @@
 ---
-title: "Welcome!"
+title: "Information Theory Workshop"
 ---
 
 ##Information Theory ICPP 2018 Workshop

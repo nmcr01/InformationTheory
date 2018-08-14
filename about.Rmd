@@ -5,25 +5,31 @@ title: "Further Readings"
 
 ##Books 
 
-*Applications of Information Theory to Epidemiology* by Dr. Gareth Hughes, https://apsjournals.apsnet.org/doi/book/10.1094/9780890544877
+[*Applications of Information Theory to Epidemiology*](https://apsjournals.apsnet.org/doi/book/10.1094/9780890544877) by Dr. Gareth Hughes 
 
 
 ##Papers (in no particular order)
 
-McRoberts, N., Hall, C., Madden, L. V., & Hughes, G. (2011). Perceptions of disease risk: from social construction of subjective judgments to rational decision making. Phytopathology, 101(6), 654-665.
+[Choudhury, R. A., Koike, S. T., Fox, A. D., Anchieta, A., Subbarao, K. V., Klosterman, S. J., & McRoberts, N. (2016). Season-long dynamics of spinach downy mildew determined by spore trapping and disease incidence. Phytopathology, 106(11), 1311-1318.](https://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO-12-15-0333-R) 
 
-Hughes, G., & McRoberts, N. (2014). The structure of diagnostic information. Australasian Plant Pathology, 43(3), 267-286.
+* The paper where we explore the spinach downy mildew (SDM) dataset, including the ROC curve that we re-create in the **SDM Predictivity**
 
-Gent, D. H., Mahaffee, W. F., McRoberts, N., & Pfender, W. F. (2013). The use and role of predictive systems in disease management. Annual review of phytopathology, 51, 267-289.
+* As of 2018-08-14, we are still updating the website to fix some typos and make things a bit nicer, thanks for your patience
 
-Newton, A. C., McRoberts, N., & Hughes, G. (2006). Information technology in plant disease epidemiology. In The Epidemiology of Plant Diseases (pp. 335-356). Springer, Dordrecht.
+[Choudhury, R. A., Koike, S. T., Fox, A. D., Anchieta, A., Subbarao, K. V., Klosterman, S. J., & Mcroberts, N. (2016). Spatiotemporal patterns in the airborne dispersal of spinach downy mildew. Phytopathology, 107(1), 50-58.](https://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO-04-16-0162-R) 
 
-Hughes, G., McRoberts, N., & Burnett, F. J. (2015). Information graphs for binary predictors. Phytopathology, 105(1), 9-17.
+[Gent, D. H., Mahaffee, W. F., McRoberts, N., & Pfender, W. F. (2013). The use and role of predictive systems in disease management. Annual review of phytopathology, 51, 267-289.](https://www.annualreviews.org/doi/abs/10.1146/annurev-phyto-082712-102356)
 
-Hughes, G., & Burnett, F. J. (2017). Evaluation of probabilistic disease forecasts. Phytopathology, 107(10), 1136-1143.
+[Hughes, G. (2017). The evidential basis of decision making in plant disease management. Annual review of phytopathology, 55, 41-59.](https://www.annualreviews.org/doi/abs/10.1146/annurev-phyto-080516-035342)
 
-Yuen, J. E., & Hughes, G. (2002). Bayesian analysis of plant disease prediction. Plant Pathology, 51(4), 407-412.
+[Hughes, G., & Burnett, F. J. (2017). Evaluation of probabilistic disease forecasts. Phytopathology, 107(10), 1136-1143.](https://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO-01-17-0023-FI)
 
-Hughes, G. (2017). The evidential basis of decision making in plant disease management. Annual review of phytopathology, 55, 41-59.
+[Hughes, G., McRoberts, N., & Burnett, F. J. (2015). Information graphs for binary predictors. Phytopathology, 105(1), 9-17.](https://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO-02-14-0044-R)
 
+[Hughes, G., & McRoberts, N. (2014). The structure of diagnostic information. Australasian Plant Pathology, 43(3), 267-286.](https://link.springer.com/article/10.1007/s13313-013-0267-2)
 
+[Newton, A. C., McRoberts, N., & Hughes, G. (2006). Information technology in plant disease epidemiology. In The Epidemiology of Plant Diseases (pp. 335-356). Springer, Dordrecht.](https://link.springer.com/content/pdf/10.1007/1-4020-4581-6_12.pdf) **EXTERNAL PDF WARNING**
+
+[McRoberts, N., Hall, C., Madden, L. V., & Hughes, G. (2011). Perceptions of disease risk: from social construction of subjective judgments to rational decision making. Phytopathology, 101(6), 654-665.](https://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO-04-10-0126)
+
+[Yuen, J. E., & Hughes, G. (2002). Bayesian analysis of plant disease prediction. Plant Pathology, 51(4), 407-412.](https://onlinelibrary.wiley.com/doi/abs/10.1046/j.0032-0862.2002.00741.x)
