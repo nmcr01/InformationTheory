@@ -1,7 +1,11 @@
 2018-07-27
 To make the information theory github page that i added to robchoudhury.github.io/InformationTheory
 
--clone Kelsey's 6905 github repository
+-settings tab in Github
+-Scroll down to 'Github Pages'
+-Change Source
+-From NONE to Master Branch
+-fork?/clone Kelsey's 6905 github repository
 -rename it
 -open new session
 -create new project SELECT VERSION CONTROL

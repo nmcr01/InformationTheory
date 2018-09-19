@@ -1,0 +1,96 @@
+---
+title: "Information Theory Responses"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Information Theory in Plant Pathology: How did people like the workshop?
+
+We conducted an online survey after the workshop, we had 8 respondants of ~40 participants (~20% response rate), and we wanted to know
+
+1) was the workshop clear and useful?
+2) would they recommend it to others?
+3) what did they like and what can be improved?
+
+```{r}
+library(tidyverse)
+data=read_csv("data/responses.csv") %>%
+  rename(useful=`Overall, how useful was the information theory workshop?`,
+         organization=`Please rate the overall organization of the material`,
+         clarity=`Please rate the overall clarity of the material`,
+         recommend=`Would you recommend this workshop to others?`,
+         liked=`What were things that you liked about the workshop?`,
+         improve=`What are ways that we can improve the workshop?`) %>%
+  mutate(date=lubridate::mdy_hms(Timestamp)) 
+
+```
+
+## `Overall, how useful was the information theory workshop? (scale 1-10)`
+
+```{r}
+ggplot(data, aes(useful))+
+  geom_density(size=2)+
+  theme_minimal() +
+  xlim(0, 10)
+```
+
+Looks like most people found it somewhat useful.
+
+## `Please rate the overall organization of the material` (scale 1-10)
+
+```{r}
+ggplot(data, aes(organization))+
+  geom_density(size=2)+
+  theme_minimal() +
+  xlim(0, 10)
+```
+
+Some people weren't fond of the organization, but overall people seemed to like it.
+
+## `Please rate the overall clarity of the material` (scale 1-10)
+
+```{r}
+ggplot(data, aes(clarity))+
+  geom_density(size=2)+
+  theme_minimal() +
+  xlim(0, 10)
+```
+
+Again, some people thought it wasn't very clear, but others were fairly happy.
+
+## `Would you recommend this workshop to others?` (No/Maybe/Yes)
+
+```{r}
+ggplot(data, aes(recommend)) +
+  stat_count() +
+  theme_minimal()
+```
+
+Most people would recommend it to others, but some are hesitant.
+
+## `What were things that you liked about the workshop?` (free response)
+
+```{r}
+print(data$liked)
+```
+
+Some people weren't fond of my section (I tend to be a bit frantic during meetings, blame it on lack of sleep), but overall people seemed to like it.
+
+## `What are ways that we can improve the workshop?`
+
+```{r}
+print(data$improve)
+```
+
+We probably should have made the material available sooner, that was my failing, I was still learning how to do websites with Github.
+
+## Conclusion
+
+Overall, it seems like the workshop was well received, and that people found it useful. Now that the materials are prepared, it would be fairly straightforward to do another workshop in a similar vein.
+
+## R Session Information
+
+```{r}
+sessionInfo()
+```
