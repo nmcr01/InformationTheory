@@ -326,7 +326,7 @@ div.tocify {
   <a href="SDM_Pseudo_R2.html">SDM Predictivity</a>
 </li>
 <li>
-  <a href="about.html">Further Readings</a>
+  <a href="about.html">Readings</a>
 </li>
 <li>
   <a href="responses.html">Responses</a>
@@ -348,8 +348,8 @@ div.tocify {
 </div>
 
 
-<div id="information-theory-in-plant-pathology-how-did-people-like-the-workshop" class="section level2">
-<h2>Information Theory in Plant Pathology: How did people like the workshop?</h2>
+<div id="post-workshop-survey" class="section level1">
+<h1>Post-Workshop Survey</h1>
 <p>We conducted an online survey after the workshop, we had 8 respondants of ~40 participants (~20% response rate), and we wanted to know</p>
 <ol style="list-style-type: decimal">
 <li>was the workshop clear and useful?</li>
@@ -383,9 +383,9 @@ div.tocify {
 ##   `What were things that you liked about the workshop?` = col_character(),
 ##   `What are ways that we can improve the workshop?` = col_character()
 ## )</code></pre>
-</div>
-<div id="overall-how-useful-was-the-information-theory-workshop-scale-1-10" class="section level2">
-<h2><code>Overall, how useful was the information theory workshop? (scale 1-10)</code></h2>
+<div id="usefulness" class="section level2">
+<h2>Usefulness</h2>
+<p><code>Overall, how useful was the information theory workshop? (scale 1-10)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(useful))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span>
@@ -393,8 +393,9 @@ div.tocify {
 <p><img src="responses_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Looks like most people found it somewhat useful.</p>
 </div>
-<div id="please-rate-the-overall-organization-of-the-material-scale-1-10" class="section level2">
-<h2><code>Please rate the overall organization of the material</code> (scale 1-10)</h2>
+<div id="organization" class="section level2">
+<h2>Organization</h2>
+<p><code>Please rate the overall organization of the material (scale 1-10)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(organization))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span>
@@ -402,8 +403,9 @@ div.tocify {
 <p><img src="responses_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Some people weren’t fond of the organization, but overall people seemed to like it.</p>
 </div>
-<div id="please-rate-the-overall-clarity-of-the-material-scale-1-10" class="section level2">
-<h2><code>Please rate the overall clarity of the material</code> (scale 1-10)</h2>
+<div id="clarity" class="section level2">
+<h2>Clarity</h2>
+<p><code>Please rate the overall clarity of the material (scale 1-10)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(clarity))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span>
@@ -411,16 +413,18 @@ div.tocify {
 <p><img src="responses_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Again, some people thought it wasn’t very clear, but others were fairly happy.</p>
 </div>
-<div id="would-you-recommend-this-workshop-to-others-nomaybeyes" class="section level2">
-<h2><code>Would you recommend this workshop to others?</code> (No/Maybe/Yes)</h2>
+<div id="recommend" class="section level2">
+<h2>Recommend?</h2>
+<p><code>Would you recommend this workshop to others? (No/Maybe/Yes)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(recommend)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_count</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
 <p><img src="responses_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Most people would recommend it to others, but some are hesitant.</p>
 </div>
-<div id="what-were-things-that-you-liked-about-the-workshop-free-response" class="section level2">
-<h2><code>What were things that you liked about the workshop?</code> (free response)</h2>
+<div id="positives" class="section level2">
+<h2>Positives</h2>
+<p><code>What were things that you liked about the workshop? (free response)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(data<span class="op">$</span>liked)</code></pre></div>
 <pre><code>## [1] &quot;Visual interpretation of the graphs, example illustrating how more information could lead to more uncertainty&quot;                                                                                                                                                                                                                                                                                                                                                                                                                 
 ## [2] &quot;Presenter in direct contact with audience. Many questions possible. First part (Neil) was well presented. Second part (Robin) seemed very rushed and frantic.&quot;                                                                                                                                                                                                                                                                                                                                                                 
@@ -432,8 +436,9 @@ div.tocify {
 ## [8] &quot;Teaching the idea from the basics to the advanced level.&quot;</code></pre>
 <p>Some people weren’t fond of my section (I tend to be a bit frantic during meetings, blame it on lack of sleep), but overall people seemed to like it.</p>
 </div>
-<div id="what-are-ways-that-we-can-improve-the-workshop" class="section level2">
-<h2><code>What are ways that we can improve the workshop?</code></h2>
+<div id="to-improve" class="section level2">
+<h2>To Improve</h2>
+<p><code>What are ways that we can improve the workshop?</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(data<span class="op">$</span>improve)</code></pre></div>
 <pre><code>## [1] &quot;Pre-meeting access to the files would be nice, but it still worked well as it was&quot;                                                                                                                                                                                      
 ## [2] &quot;Better structure the order of the material. Not sure if R Markdown is necessary to present the material. If people are not familiar with Rmd it could be very distracting. As it does not add value to the material on InfTheo I would just show/execute the code in R.&quot;
@@ -486,6 +491,7 @@ div.tocify {
 ## [37] htmltools_0.3.6  rvest_0.3.2      assertthat_0.2.0 colorspace_1.3-2
 ## [41] labeling_0.3     stringi_1.2.4    lazyeval_0.2.1   munsell_0.5.0   
 ## [45] broom_0.5.0      crayon_1.3.4</code></pre>
+</div>
 </div>
 
 

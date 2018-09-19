@@ -5,7 +5,7 @@ output:
     df_print: paged
 ---
 
-## Information Theory in Plant Pathology: How did people like the workshop?
+# Post-Workshop Survey
 
 We conducted an online survey after the workshop, we had 8 respondants of ~40 participants (~20% response rate), and we wanted to know
 
@@ -26,7 +26,9 @@ data=read_csv("data/responses.csv") %>%
 
 ```
 
-## `Overall, how useful was the information theory workshop? (scale 1-10)`
+## Usefulness
+
+`Overall, how useful was the information theory workshop? (scale 1-10)`
 
 ```{r}
 ggplot(data, aes(useful))+
@@ -37,7 +39,9 @@ ggplot(data, aes(useful))+
 
 Looks like most people found it somewhat useful.
 
-## `Please rate the overall organization of the material` (scale 1-10)
+## Organization
+
+`Please rate the overall organization of the material (scale 1-10)`
 
 ```{r}
 ggplot(data, aes(organization))+
@@ -48,7 +52,9 @@ ggplot(data, aes(organization))+
 
 Some people weren't fond of the organization, but overall people seemed to like it.
 
-## `Please rate the overall clarity of the material` (scale 1-10)
+## Clarity
+
+`Please rate the overall clarity of the material (scale 1-10)`
 
 ```{r}
 ggplot(data, aes(clarity))+
@@ -59,7 +65,9 @@ ggplot(data, aes(clarity))+
 
 Again, some people thought it wasn't very clear, but others were fairly happy.
 
-## `Would you recommend this workshop to others?` (No/Maybe/Yes)
+## Recommend?
+
+`Would you recommend this workshop to others? (No/Maybe/Yes)`
 
 ```{r}
 ggplot(data, aes(recommend)) +
@@ -69,7 +77,9 @@ ggplot(data, aes(recommend)) +
 
 Most people would recommend it to others, but some are hesitant.
 
-## `What were things that you liked about the workshop?` (free response)
+## Positives
+
+`What were things that you liked about the workshop? (free response)`
 
 ```{r}
 print(data$liked)
@@ -77,7 +87,9 @@ print(data$liked)
 
 Some people weren't fond of my section (I tend to be a bit frantic during meetings, blame it on lack of sleep), but overall people seemed to like it.
 
-## `What are ways that we can improve the workshop?`
+## To Improve
+
+`What are ways that we can improve the workshop?`
 
 ```{r}
 print(data$improve)
