@@ -13,7 +13,7 @@
 
 <meta name="date" content="2018-09-19" />
 
-<title>Spinach Downy Mildew Case Study and Summary Statistic Comparisons</title>
+<title>Summary Measures of Predictive Power for Logistic Regression Models of Disease Risk</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -345,7 +345,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Spinach Downy Mildew Case Study and Summary Statistic Comparisons</h1>
+<h1 class="title toc-ignore">Summary Measures of Predictive Power for Logistic Regression Models of Disease Risk</h1>
 <h4 class="author"><em>Gareth Hughes, Robin Choudhury, Neil McRoberts</em></h4>
 <h4 class="date"><em>September 19, 2018</em></h4>
 
@@ -362,26 +362,23 @@ div.tocify {
 <pre><code>## -- Conflicts ----------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
-<span class="kw">library</span>(pROC)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pROC)</code></pre></div>
 <pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;pROC&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
 ##     cov, smooth, var</code></pre>
-<p>Calculation of pseudo Rsq statistics from logistic regression. Analyses associated with ICPP2018 workhshop on Information Theory and a Letter to the Editor of Phytopathology. Analyses here based on data and original work from two sources:<br />
-1.Choudhury et al. (2016). Logistic regression for disease incidence increase subsequent to catches of <em>Peronospora effusa</em> DNA detected on rotating arm spore traps. 2. De Wolf et al. (2003), also used in Madden (2006) and McRoberts et al, (2011). Early data set used in constructing predictors of fusarium head blight (FHB) in wheat.</p>
-<p>For the two datasets the same set of analyses will be carried out. First, a logistic regression will be performed with a binary disease state as the dependent variable and a single continuous variable as the predictor. In the first example, the predictor is the natural logarithm of the estimated pathogen DNA copy number measured on spore traps prior to observations of disease state. In the second and third examples the explanatory variable is a composite “risk” indicator constructed from a number of weather variables which individually correlate with disease incidence. In the third example, the dependent binary disease variable was constructed by collapsing the original 5-point (0 to 4) ordinal disease intensity variable to two categories by combining the original 0 and 1 classes into a “low” disease class (designated 0) and the remaning classes, 2,3 and 4, into a “high” disease class (designated 1).</p>
-<p>Diagnostic plots for each analysis were produced showing (1) the binary disase state and fitted probability values together against the explanatory variable, and (2) a histogram of the fitted probability values classified by the binary disease state and binned according to system defaults.</p>
-<p>The analyses were run on R 3.3.3 for Windows under R Studio running on a Windows virtual machine on a remote application server accessed via Parallels Client for Chrome OS [ref for Parallels].</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;DescTools&quot;) Remove hashtag to run if needed, only need to run this once</span>
-<span class="co"># library(&quot;DescTools&quot;) #nice, wish I had seen this sooner rac</span>
-
-<span class="co"># Analysis 1 SDM data from Choudhury et al 2016.</span>
+<div id="abstract" class="section level3">
+<h3>Abstract</h3>
+<p>For an ordinary least squares regression model, the coefficient of determination <span class="math inline">\(R^2\)</span> describes the proportion (or percentage) of variance of the response variable explained by the model, and is a widely-accepted summary measure of predictive power. A number of <span class="math inline">\(R^2\)</span>-analogues are available as summary measures of predictive power for logistic regression models, including models of disease risk. Tjur’s <span class="math inline">\(R^2\)</span> and McFadden’s <span class="math inline">\(R^2\)</span> are of particular interest in this context. Both these <span class="math inline">\(R^2\)</span>-analogues have transparent derivations, which reveal that they apply to different aspects of model evaluation. Tjur’s <span class="math inline">\(R^2\)</span> is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status) whereas McFadden’s <span class="math inline">\(R^2\)</span> is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). This clarifies their interpretation in the context of evaluation of logistic regression models of disease risk. In addition, versions of both Tjur’s <span class="math inline">\(R^2\)</span> and McFadden’s <span class="math inline">\(R^2\)</span> may be obtained from analyses of disease risk that are not preceded by logistic regression analysis.</p>
+<div id="additional-keywords" class="section level4">
+<h4>Additional Keywords</h4>
+<p>discrimination, resolution, Nagelkerke’s <span class="math inline">\(R^2\)</span>, logarithmic scoring rule</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Analysis of SDM data from Choudhury et al 2016.</span>
 <span class="co"># Get the data and take a look at the top of the data file</span>
 
-data&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;data/roc.test.csv&quot;</span>) <span class="co">#read.csv was throwing out some weird errors for me, so im using read_csv from the readr package contained within tidyverse</span></code></pre></div>
+data&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;data/roc.test.csv&quot;</span>) </code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Disease = col_integer(),
@@ -396,15 +393,13 @@ data&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;data/roc.test.c
 ##   `Spore-8` = col_double(),
 ##   `Spore-9` = col_double()
 ## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(data)
-<span class="kw">head</span>(data)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(data)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Disease"],"name":[1],"type":["int"],"align":["right"]},{"label":["Spore"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Spore-1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Spore-2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Spore-3"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Spore-4"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Spore-5"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Spore-6"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Spore-7"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Spore-8"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Spore-9"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"6.537430","3":"7.035893","4":"5.437927","5":"0.000000","6":"5.869424","7":"5.272307","8":"6.195007","9":"4.363799","10":"7.061326","11":"6.854497"},{"1":"1","2":"8.891759","3":"11.473769","4":"6.197309","5":"6.537430","6":"7.035893","7":"5.437927","8":"0.000000","9":"5.869424","10":"5.272307","11":"6.195007"},{"1":"1","2":"7.677910","3":"9.731590","4":"8.331837","5":"10.220110","6":"8.199024","7":"8.891759","8":"11.473769","9":"6.197309","10":"6.537430","11":"7.035893"},{"1":"1","2":"9.195537","3":"11.229594","4":"10.395754","5":"7.677910","6":"9.731590","7":"8.331837","8":"10.220110","9":"8.199024","10":"8.891759","11":"11.473769"},{"1":"1","2":"6.091219","3":"8.259370","4":"7.538378","5":"7.692036","6":"8.510132","7":"6.708603","8":"4.847567","9":"5.291142","10":"5.104247","11":"8.013057"},{"1":"1","2":"10.430875","3":"NA","4":"9.099595","5":"7.769757","6":"8.944169","7":"7.204131","8":"4.593401","9":"6.091219","10":"8.259370","11":"7.538378"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit the basic logistic regression on Disease using Spore.4</span>
-
 dismodel1 &lt;-<span class="st"> </span><span class="kw">glm</span>(Disease<span class="op">~</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span>,<span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>), <span class="dt">data =</span> data) <span class="co">#I needed to put tics (`) around Spore-4 because when i loaded it with read_csv it read it as &#39;Spore-4&#39;, not &#39;Spore.4&#39; rac</span>
 <span class="kw">summary</span>(dismodel1)</code></pre></div>
 <pre><code>## 
@@ -431,28 +426,24 @@ dismodel1 &lt;-<span class="st"> </span><span class="kw">glm</span>(Disease<span
 ## AIC: 112.55
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(dismodel1) <span class="co">#rac tidy() and glance() are nice functions when you want to look at cleaner output</span></code></pre></div>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.2192972","3":"0.62024074","4":"-1.965845","5":"0.04931652"},{"1":"`Spore-4`","2":"0.1927855","3":"0.08197352","4":"2.351803","5":"0.01868268"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
 </div>
-<p>The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state. Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal.</p>
-<div id="logistic-regression" class="section level3">
-<h3>Logistic Regression</h3>
+</div>
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
+<p>The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state. Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal. This is the sort of situation where having a richer diagnosis of what the fitted model is doing would be useful.</p>
+<p>To that end, we ask for McFadden’s and Tjur’s pseudo Rsq values for the model. Looking at the two values together tells us that the model has low discrimination capacity (Tjur) and would (consequently?) have a modest impact in probability updating (McFadden). We can look at the diagnostic plots to look at data, fitted model and “Tjur” histogram of the fitted probabilities.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Take a look at the fitted probability values from the regression.</span>
 fits1&lt;-<span class="kw">as.numeric</span>(dismodel1<span class="op">$</span>fitted.values) <span class="co"># need this because fitted.values is a list and while hist understands what</span>
                                            <span class="co"># to do with it if you don&#39;t monkey about with it, asking it to sub-divide</span>
                                            <span class="co"># the vector of values using the logical == confuses it, so we have to </span>
                                            <span class="co"># pull the numerical bit out of the list.</span>
-dis_state&lt;-<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">46</span>),<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">37</span>))
-dis_state2=dismodel1<span class="op">$</span>model<span class="op">$</span>Disease <span class="co">#this pulls it directly from the model rac</span>
-spore4_rac=dismodel1<span class="op">$</span>model<span class="op">$</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span> <span class="co">#this pulls it directly from the model rac</span>
+dis_state2&lt;-dismodel1<span class="op">$</span>model<span class="op">$</span>Disease <span class="co">#this pulls it directly from the model rac</span>
+spore4_rac&lt;-dismodel1<span class="op">$</span>model<span class="op">$</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span> <span class="co">#this pulls it directly from the model rac</span>
 
 <span class="co">#I&#39;m going to redo this in ggplot/tidyr feel free to ignore RAC</span>
-SDM_rac=<span class="kw">data.frame</span>(<span class="dt">fits1=</span>fits1, <span class="dt">disease=</span>dis_state2, <span class="dt">spore4=</span>spore4_rac)
-SDM_rac1=SDM_rac <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(.,<span class="dt">status=</span><span class="kw">ifelse</span>(disease<span class="op">==</span><span class="dv">0</span>, <span class="st">&quot;Non-cases&quot;</span>, <span class="st">&quot;Cases&quot;</span>))
+SDM_rac&lt;-<span class="kw">data.frame</span>(<span class="dt">fits1=</span>fits1, <span class="dt">disease=</span>dis_state2, <span class="dt">spore4=</span>spore4_rac)
+SDM_rac1&lt;-SDM_rac <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(.,<span class="dt">status=</span><span class="kw">ifelse</span>(disease<span class="op">==</span><span class="dv">0</span>, <span class="st">&quot;Non-cases&quot;</span>, <span class="st">&quot;Cases&quot;</span>)) 
 
 SDM_rac1<span class="op">$</span>status &lt;-<span class="st"> </span><span class="kw">factor</span>(SDM_rac1<span class="op">$</span>status, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Cases&quot;</span>,<span class="st">&quot;Non-cases&quot;</span>))
 
@@ -471,31 +462,13 @@ SDM_rac1<span class="op">$</span>status &lt;-<span class="st"> </span><span clas
         <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
         <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Figure 1&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Status&quot;</span>))</code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ggsave(filename = &quot;figures/sdm_dot_hist_facet.png&quot;)</span>
-
-
-  <span class="kw">ggplot</span>(SDM_rac1, <span class="kw">aes</span>(fits1, <span class="dt">fill=</span>status))<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha=</span><span class="fl">0.4</span>, <span class="dt">position=</span><span class="st">&quot;identity&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="op">+</span>
-<span class="st">  </span><span class="co">#facet_grid(~status)+ </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Probability&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Counts&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of Fitted Probabilities, SDM Data&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">15</span>,.<span class="dv">8</span>),
-        <span class="dt">legend.background =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face=</span><span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">16</span>),
-        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),
-        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
-        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
-        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
-        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
-<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Status&quot;</span>))</code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co"># ggsave(filename = &quot;figures/sdm_hist_identity.png&quot;)</span></code></pre></div>
+<p><img src="SDM_Pseudo_R2_files/figure-html/tjur%20histogram-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&quot;figures/sdm_dot_hist_facet.png&quot;</span>)</code></pre></div>
+<pre><code>## Saving 7 x 5 in image
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co"># Generate a plot of binary disease variable and fitted probabilities</span>
 <span class="co"># There are four NA values corresponding to zeros in the data.  Dump</span>
 <span class="co"># the NA values and make a reduced vector for plotting the results</span>
@@ -521,45 +494,121 @@ SDM_rac_spore_melt=SDM_rac <span class="op">%&gt;%</span>
         <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Estimate Type&quot;</span>))<span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Disease Incidence&quot;</span>,<span class="st">&quot;Fitted Disease Data&quot;</span>))</code></pre></div>
-<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#ggsave(filename = &quot;figures/sdm_real_fit.png&quot;)</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#build an ROC for the SDM data</span>
-sdm_data&lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/roc.test.csv&quot;</span>)</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   Disease = col_integer(),
-##   Spore = col_double(),
-##   `Spore-1` = col_double(),
-##   `Spore-2` = col_double(),
-##   `Spore-3` = col_double(),
-##   `Spore-4` = col_double(),
-##   `Spore-5` = col_double(),
-##   `Spore-6` = col_double(),
-##   `Spore-7` = col_double(),
-##   `Spore-8` = col_double(),
-##   `Spore-9` = col_double()
-## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sdm_roc=<span class="kw">roc</span>(sdm_data<span class="op">$</span>Disease, sdm_data<span class="op">$</span>Spore<span class="op">-</span><span class="dv">4</span>)
-<span class="kw">summary</span>(sdm_roc)</code></pre></div>
-<pre><code>##                    Length Class  Mode     
-## percent             1     -none- logical  
-## sensitivities      79     -none- numeric  
-## specificities      79     -none- numeric  
-## thresholds         79     -none- numeric  
-## direction           1     -none- character
-## cases              45     -none- numeric  
-## controls           40     -none- numeric  
-## fun.sesp            1     -none- function 
-## auc                 1     auc    numeric  
-## call                3     -none- call     
-## original.predictor 87     -none- numeric  
-## original.response  87     -none- numeric  
-## predictor          85     -none- numeric  
-## response           85     -none- numeric  
-## levels              2     -none- character</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sdm_roc)</code></pre></div>
-<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>The difference between pROC and other software (e.g. - ROCR) can lead to differences between output ROCs.</p>
+<p><img src="SDM_Pseudo_R2_files/figure-html/logistic%20regression%20plot-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&quot;figures/sdm_real_fit.png&quot;</span>)</code></pre></div>
+<pre><code>## Saving 7 x 5 in image</code></pre>
+<div id="calculating-tjurs-r2" class="section level4">
+<h4>Calculating Tjur’s <span class="math inline">\(R^2\)</span></h4>
+<p>Tjur (2009) quantifies this separation in terms of the coefficient of discrimination, <span class="math inline">\(D\)</span>, where <span class="math inline">\(D=\bar{\hat{p}}_{c}-\bar{\hat{p}}_{nc}\)</span> in which <span class="math inline">\(\bar{\hat{p}}_{c}\)</span> and <span class="math inline">\(\bar{\hat{p}}_{nc}\)</span> denote the means of the histograms characterizing the frequency distributions of fitted probabilities for the case and non-case groups, respectively, and <span class="math inline">\(0 &lt; D &lt; 1\)</span>. Thus <span class="math inline">\(D\)</span> characterizes the predictive power of a logistic regression model in terms of the separation between predictions for the case and non-case groups, on a probability scale (i.e., discrimination). We calculate D on the basis of the fitted probability values for individual subjects as calculated in the model output, not as binned for Figure 1.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pc&lt;-<span class="kw">mean</span>(<span class="kw">subset</span>(SDM_rac, disease <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)<span class="op">$</span>fits1)
+pnc&lt;-<span class="kw">mean</span>(<span class="kw">subset</span>(SDM_rac, disease <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)<span class="op">$</span>fits1)
+d=pc<span class="op">-</span>pnc
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Tjur&#39;s coefficient of discrimination is&quot;</span>, <span class="kw">round</span>(d,<span class="dv">4</span>)))</code></pre></div>
+<pre><code>## [1] &quot;Tjur&#39;s coefficient of discrimination is 0.0735&quot;</code></pre>
+</div>
+<div id="visualizing-tjurs-r2-coefficient" class="section level4">
+<h4>Visualizing Tjur’s <span class="math inline">\(R^2\)</span> Coefficient</h4>
+<p>While the histogram displayed in figure 1 matches the format from Tjur (2009), linking the histogram to the Tjur’s <span class="math inline">\(R^2\)</span> coefficient can help to visualize this value. Now we can more easily see how Tjur’s D relates to the predicted cases and non-cases.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(SDM_rac1, <span class="kw">aes</span>(fits1, <span class="dt">fill=</span>status))<span class="op">+</span>
+<span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="op">+</span>
+<span class="st">   </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span>pc, <span class="dt">color=</span><span class="st">&quot;#002C6AFF&quot;</span>)<span class="op">+</span>
+<span class="st">   </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span>pnc, <span class="dt">color=</span><span class="st">&quot;#CBBA69FF&quot;</span>)<span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> pnc<span class="op">+</span>(pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">200</span>, <span class="dt">y =</span> <span class="fl">9.2</span>, <span class="dt">xend =</span> pc<span class="op">-</span>(pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">200</span>, <span class="dt">yend =</span> <span class="fl">9.2</span>),  <span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> pc<span class="op">-</span>(pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">200</span>, <span class="dt">y =</span> <span class="fl">9.2</span><span class="op">+</span><span class="fl">0.2</span>, <span class="dt">xend =</span> pc<span class="op">-</span>(pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">200</span>, <span class="dt">yend =</span> <span class="fl">9.2</span><span class="op">-</span><span class="fl">0.2</span>), <span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> pnc<span class="op">+</span>(pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">200</span>, <span class="dt">y =</span> <span class="fl">9.2</span><span class="op">+</span><span class="fl">0.2</span>, <span class="dt">xend =</span> pnc<span class="op">+</span>(pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">200</span>, <span class="dt">yend =</span> <span class="fl">9.2</span><span class="op">-</span><span class="fl">0.2</span>), <span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;italic(D)&quot;</span>, <span class="dt">parse=</span>T, <span class="dt">x =</span> (pc<span class="op">+</span>pnc)<span class="op">/</span><span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">10</span>, <span class="dt">size =</span> <span class="dv">8</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Fitted Probability Value&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#002C6AFF&quot;</span>, <span class="st">&quot;#CBBA69FF&quot;</span>))<span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">2</span>, .<span class="dv">8</span>),
+        <span class="dt">legend.background =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face=</span><span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),
+        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
+        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>),
+        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Figure 1 Visualizing Tjur&#39;s Coefficient of Discrimination (&quot;</span>, <span class="kw">italic</span>(<span class="st">&quot;D&quot;</span>), <span class="st">&quot;)&quot;</span>)))<span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Status&quot;</span>))</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="SDM_Pseudo_R2_files/figure-html/tjur%20histogram%20coefficient-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&quot;figures/sdm_dot_hist_facet.png&quot;</span>)</code></pre></div>
+<pre><code>## Saving 7 x 5 in image
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div id="roc-analysis-and-calculating-youdens-j" class="section level4">
+<h4>ROC analysis and Calculating Youden’s <span class="math inline">\(J\)</span></h4>
+<p>Completing a Receiver Operating Characteristic (ROC) analysis can help to highlight useful thresholds for binary predictors. One commonly used statistic to assess the diagnostic test is the Youden’s index (commonly referred to as the Youden’s <span class="math inline">\(J\)</span>). This value ranges between 0 and 1, and is calculated as <span class="math inline">\(J=sensitivity + speficifity - 1\)</span>, where sensitivity is written as <span class="math inline">\(\hat{p}_{+|c}\)</span>, and specificity is <span class="math inline">\(\hat{p}_{-|nc}\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">roc_<span class="dv">4</span>&lt;-<span class="kw">roc</span>(data<span class="op">$</span>Disease, data<span class="op">$</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span>)
+youden_j&lt;-<span class="kw">data.frame</span>(<span class="kw">as.list</span>(<span class="kw">coords</span>(roc_<span class="dv">4</span>, <span class="dt">x=</span><span class="st">&quot;best&quot;</span>, <span class="dt">input=</span><span class="st">&quot;threshold&quot;</span>, <span class="dt">best.method=</span><span class="st">&quot;youden&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">inv_spec=</span><span class="dv">1</span><span class="op">-</span>specificity,
+         <span class="dt">youden_j=</span>sensitivity<span class="op">+</span>specificity<span class="op">-</span><span class="dv">1</span>);youden_j</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["threshold"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["specificity"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sensitivity"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["inv_spec"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["youden_j"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"7.68561","2":"0.6923077","3":"0.6818182","4":"0.3076923","5":"0.3741259"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggroc</span>(roc_<span class="dv">4</span>, <span class="dt">legacy.axes =</span> T)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>youden_j, <span class="kw">aes</span>(inv_spec, sensitivity), <span class="dt">shape=</span><span class="dv">21</span>, <span class="dt">size=</span><span class="dv">4</span>, <span class="dt">fill=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Youdens J&quot;</span>,<span class="dt">x =</span> youden_j<span class="op">$</span>inv_spec, <span class="dt">y =</span> youden_j<span class="op">$</span>sensitivity<span class="op">+</span><span class="fl">0.1</span>, <span class="dt">size=</span><span class="dv">8</span> )</code></pre></div>
+<p><img src="SDM_Pseudo_R2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SDM_rac2&lt;-<span class="st"> </span>SDM_rac1 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">status_pred_youden =</span> <span class="kw">ifelse</span>(spore4<span class="op">&gt;</span>youden_j<span class="op">$</span>threshold, <span class="st">&quot;Cases&quot;</span>, <span class="st">&quot;Non-cases&quot;</span>),
+         <span class="dt">status_pred_count =</span> <span class="kw">ifelse</span>(spore4<span class="op">&gt;</span>youden_j<span class="op">$</span>threshold, <span class="dv">1</span>, <span class="dv">0</span>),
+         <span class="dt">status_pred_count_test =</span> <span class="kw">ifelse</span>(fits1<span class="op">&gt;</span><span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>))
+case_prior=<span class="st"> </span><span class="kw">sum</span>(SDM_rac2<span class="op">$</span>disease)<span class="op">/</span><span class="kw">nrow</span>(SDM_rac2)
+control_prior=<span class="dv">1</span><span class="op">-</span>case_prior
+
+p_c_plus&lt;-SDM_rac2 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(status_pred_youden <span class="op">==</span><span class="st"> &quot;Cases&quot;</span>)
+p_c_plus&lt;-<span class="kw">sum</span>(p_c_plus<span class="op">$</span>disease)<span class="op">/</span><span class="kw">nrow</span>(p_c_plus)
+p_nc_plus&lt;-<span class="dv">1</span><span class="op">-</span>p_c_plus
+
+p_c_minus&lt;-SDM_rac2 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(status_pred_youden <span class="op">==</span><span class="st"> &quot;Non-cases&quot;</span>)
+p_c_minus&lt;-<span class="kw">sum</span>(p_c_minus<span class="op">$</span>disease)<span class="op">/</span><span class="kw">nrow</span>(p_c_minus)
+p_nc_minus&lt;-<span class="dv">1</span><span class="op">-</span>p_c_minus</code></pre></div>
+</div>
+<div id="calculating-mcfaddens-r2" class="section level4">
+<h4>Calculating McFadden’s <span class="math inline">\(R^2\)</span></h4>
+<p>Whereas Tjur’s <span class="math inline">\(R^2\)</span> is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status), McFadden’s <span class="math inline">\(R^2\)</span> is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). In other words, Tjur’s <span class="math inline">\(R^2\)</span> is a discrimination metric, and McFadden’s <span class="math inline">\(R^2\)</span> is a resolution metric, defined conditionally on the disease forecast.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">case_count&lt;-<span class="kw">sum</span>(SDM_rac2<span class="op">$</span>disease)
+control_count&lt;-<span class="kw">nrow</span>(SDM_rac2)<span class="op">-</span>case_count
+
+log_score_case_prior&lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log</span>(case_prior)
+log_score_control_prior&lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log</span>(control_prior)
+
+S0&lt;-log_score_case_prior<span class="op">*</span>case_count <span class="op">+</span><span class="st"> </span>log_score_control_prior<span class="op">*</span>control_count
+
+log_p_c_plus&lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log</span>(p_c_plus)
+log_p_nc_plus&lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log</span>(p_nc_plus)
+log_p_c_minus&lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log</span>(p_c_minus)
+log_p_nc_minus&lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log</span>(p_nc_minus)
+
+p_nc_pred_count&lt;-SDM_rac2 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(status_pred_youden <span class="op">==</span><span class="st"> &quot;Non-cases&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(status)
+
+p_c_pred_count&lt;-SDM_rac2 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(status_pred_youden <span class="op">==</span><span class="st"> &quot;Cases&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(status)
+
+S&lt;-log_p_c_plus<span class="op">*</span>p_c_pred_count[<span class="dv">1</span>,<span class="dv">2</span>] <span class="op">+</span>
+<span class="st">  </span>log_p_nc_plus<span class="op">*</span>p_c_pred_count[<span class="dv">2</span>,<span class="dv">2</span>] <span class="op">+</span>
+<span class="st">  </span>log_p_c_minus<span class="op">*</span>p_nc_pred_count[<span class="dv">1</span>,<span class="dv">2</span>] <span class="op">+</span>
+<span class="st">  </span>log_p_nc_minus<span class="op">*</span>p_nc_pred_count[<span class="dv">2</span>,<span class="dv">2</span>]
+
+mcfaddens&lt;-<span class="dv">1</span><span class="op">-</span>(S<span class="op">/</span>S0)
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;McFadden&#39;s coefficient of discrimination is&quot;</span>, <span class="kw">round</span>(mcfaddens,<span class="dv">4</span>)))</code></pre></div>
+<pre><code>## [1] &quot;McFadden&#39;s coefficient of discrimination is 0.1034&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">maddala&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="dv">2</span><span class="op">/</span><span class="kw">nrow</span>(SDM_rac2))<span class="op">*</span>(S0<span class="op">-</span>S))
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Maddala&#39;s R^2 is&quot;</span>, <span class="kw">round</span>(maddala,<span class="dv">4</span>)))</code></pre></div>
+<pre><code>## [1] &quot;Maddala&#39;s R^2 is 0.1332&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nagelkerke&lt;-<span class="st"> </span>maddala <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="dv">2</span><span class="op">/</span><span class="kw">nrow</span>(SDM_rac2))<span class="op">*</span>(S0)))
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Nagelkerke&#39;s R^2 is&quot;</span>, <span class="kw">round</span>(nagelkerke,<span class="dv">4</span>)))</code></pre></div>
+<pre><code>## [1] &quot;Nagelkerke&#39;s R^2 is 0.1778&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
@@ -578,9 +627,9 @@ sdm_data&lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cla
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2.2  pROC_1.12.1     broom_0.5.0     forcats_0.3.0  
-##  [5] stringr_1.3.1   dplyr_0.7.6     purrr_0.2.5     readr_1.1.1    
-##  [9] tidyr_0.8.1     tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1
+##  [1] bindrcpp_0.2.2  pROC_1.12.1     forcats_0.3.0   stringr_1.3.1  
+##  [5] dplyr_0.7.6     purrr_0.2.5     readr_1.1.1     tidyr_0.8.1    
+##  [9] tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.18     cellranger_1.1.0 pillar_1.3.0     compiler_3.5.1  
@@ -594,7 +643,8 @@ sdm_data&lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cla
 ## [33] reshape2_1.4.3   modelr_0.1.2     magrittr_1.5     backports_1.1.2 
 ## [37] scales_1.0.0     htmltools_0.3.6  rvest_0.3.2      assertthat_0.2.0
 ## [41] colorspace_1.3-2 labeling_0.3     stringi_1.2.4    lazyeval_0.2.1  
-## [45] munsell_0.5.0    crayon_1.3.4</code></pre>
+## [45] munsell_0.5.0    broom_0.5.0      crayon_1.3.4</code></pre>
+</div>
 </div>
 
 

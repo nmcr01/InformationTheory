@@ -1,5 +1,5 @@
 ---
-title: Spinach Downy Mildew Case Study and Summary Statistic Comparisons
+title: Summary Measures of Predictive Power for Logistic Regression Models of Disease Risk
 author: "Gareth Hughes, Robin Choudhury, Neil McRoberts"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output:
@@ -7,67 +7,51 @@ output:
     df_print: paged
 ---
 
+
 ```{r setup, include=T}
 knitr::opts_chunk$set(echo = TRUE) #change this to FALSE to suppress printing the code
 library(tidyverse)
-library(broom)
 library(pROC)
 ```
 
-Calculation of pseudo Rsq statistics from logistic regression. Analyses associated with ICPP2018 workhshop on Information Theory and a Letter to the Editor of Phytopathology. Analyses here based on data and original work from two sources:  
-1.Choudhury et al. (2016). Logistic regression for disease incidence increase subsequent to catches of *Peronospora effusa* DNA detected on rotating arm spore traps.
-2. De Wolf et al. (2003), also used in Madden (2006) and McRoberts et al, (2011).  Early data set used in constructing predictors of fusarium head blight (FHB) in wheat.
+###Abstract
 
+For an ordinary least squares regression model, the coefficient of determination $R^2$ describes the proportion (or percentage) of variance of the response variable explained by the model, and is a widely-accepted summary measure of predictive power. A number of $R^2$-analogues are available as summary measures of predictive power for logistic regression models, including models of disease risk. Tjur’s $R^2$ and McFadden’s $R^2$ are of particular interest in this context. Both these $R^2$-analogues have transparent derivations, which reveal that they apply to different aspects of model evaluation. Tjur’s $R^2$ is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status) whereas McFadden’s $R^2$ is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). This clarifies their interpretation in the context of evaluation of logistic regression models of disease risk. In addition, versions of both Tjur’s $R^2$ and McFadden’s $R^2$ may be obtained from analyses of disease risk that are not preceded by logistic regression analysis.
 
-For the two datasets the same set of analyses will be carried out. First, a logistic regression will be performed with a binary disease state as the dependent variable and a single continuous variable as the predictor.  In the first example, the predictor is the natural logarithm of the estimated pathogen DNA copy number measured on spore traps prior to observations of disease state.  In the second and third examples the explanatory variable is a composite "risk" indicator constructed from a number of weather variables which individually correlate with disease incidence.  In the third example, the dependent binary disease variable was constructed by collapsing the original 5-point (0 to 4) ordinal disease intensity variable to two categories by combining the original 0 and 1 classes into a "low" disease class (designated 0) and the remaning classes, 2,3 and 4, into a "high" disease class (designated 1).
+####Additional Keywords
 
-
-Diagnostic plots for each analysis were produced showing (1) the binary disase state and fitted probability values together against the explanatory variable, and (2) a histogram of the fitted probability values classified by the binary disease state and binned according to system defaults.
-
-
-The analyses were run on R 3.3.3 for Windows under R Studio running on a Windows virtual machine on a remote application server accessed via Parallels Client for Chrome OS [ref for Parallels].  
-
+discrimination, resolution, Nagelkerke’s $R^2$, logarithmic scoring rule
 
 ```{r}
-# install.packages("DescTools") Remove hashtag to run if needed, only need to run this once
-# library("DescTools") #nice, wish I had seen this sooner rac
-
-# Analysis 1 SDM data from Choudhury et al 2016.
+# Analysis of SDM data from Choudhury et al 2016.
 # Get the data and take a look at the top of the data file
 
-data<-read_csv("data/roc.test.csv") #read.csv was throwing out some weird errors for me, so im using read_csv from the readr package contained within tidyverse
-attach(data)
+data<-read_csv("data/roc.test.csv") 
 head(data)
-
 # Fit the basic logistic regression on Disease using Spore.4
-
 dismodel1 <- glm(Disease~`Spore-4`,family=binomial(link='logit'), data = data) #I needed to put tics (`) around Spore-4 because when i loaded it with read_csv it read it as 'Spore-4', not 'Spore.4' rac
 summary(dismodel1)
-tidy(dismodel1) #rac tidy() and glance() are nice functions when you want to look at cleaner output
 ```
 
+###Introduction
+The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state.  Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal.  This is the sort of situation where having a richer diagnosis of what the fitted model is doing would be useful.  
 
-The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state.  Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal.  
-
-
-###Logistic Regression
-
+To that end, we ask for McFadden's and Tjur's pseudo Rsq values for the model. Looking at the two values together tells us that the model has low discrimination capacity (Tjur) and would (consequently?) have a modest impact in probability updating (McFadden). We can look at the diagnostic plots to look at data, fitted model and "Tjur" histogram of the fitted probabilities.
 
 
-```{r}
+```{r tjur histogram}
 # Take a look at the fitted probability values from the regression.
 fits1<-as.numeric(dismodel1$fitted.values) # need this because fitted.values is a list and while hist understands what
                                            # to do with it if you don't monkey about with it, asking it to sub-divide
                                            # the vector of values using the logical == confuses it, so we have to 
                                            # pull the numerical bit out of the list.
-dis_state<-c(rep(1,46),rep(0,37))
-dis_state2=dismodel1$model$Disease #this pulls it directly from the model rac
-spore4_rac=dismodel1$model$`Spore-4` #this pulls it directly from the model rac
+dis_state2<-dismodel1$model$Disease #this pulls it directly from the model rac
+spore4_rac<-dismodel1$model$`Spore-4` #this pulls it directly from the model rac
 
 #I'm going to redo this in ggplot/tidyr feel free to ignore RAC
-SDM_rac=data.frame(fits1=fits1, disease=dis_state2, spore4=spore4_rac)
-SDM_rac1=SDM_rac %>%
-  mutate(.,status=ifelse(disease==0, "Non-cases", "Cases"))
+SDM_rac<-data.frame(fits1=fits1, disease=dis_state2, spore4=spore4_rac)
+SDM_rac1<-SDM_rac %>%
+  mutate(.,status=ifelse(disease==0, "Non-cases", "Cases")) 
 
 SDM_rac1$status <- factor(SDM_rac1$status, levels = c("Cases","Non-cases"))
 
@@ -86,32 +70,14 @@ ggplot(SDM_rac1, aes(fits1, fill=status))+
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 14),
         plot.title = element_text(size = 16, face = "bold"))+
+  ggtitle("Figure 1")+
   guides(fill=guide_legend(title = "Status"))
  
-#ggsave(filename = "figures/sdm_dot_hist_facet.png")
+ggsave(filename = "figures/sdm_dot_hist_facet.png")
 
-
-  ggplot(SDM_rac1, aes(fits1, fill=status))+
-  geom_histogram(alpha=0.4, position="identity")+
-  scale_x_continuous(limits=c(0,1))+
-  #facet_grid(~status)+ 
-  xlab("Probability")+
-  ylab("Counts")+
-  ggtitle("Histogram of Fitted Probabilities, SDM Data")+
-  theme(legend.position = c(.15,.8),
-        legend.background = element_blank(),
-        strip.text = element_text(face="bold", size = 16),
-        axis.title = element_text(size = 16),
-        axis.text = element_text(size = 14),
-        legend.text = element_text(size = 12),
-        legend.title = element_text(size = 14),
-        plot.title = element_text(size = 16, face = "bold"))+
-  guides(fill=guide_legend(title = "Status"))
-  
- # ggsave(filename = "figures/sdm_hist_identity.png")
 ```
 
-```{r}
+```{r logistic regression plot}
   # Generate a plot of binary disease variable and fitted probabilities
 # There are four NA values corresponding to zeros in the data.  Dump
 # the NA values and make a reduced vector for plotting the results
@@ -137,23 +103,134 @@ ggplot(SDM_rac_spore_melt, aes(spore4, disease, color=est.type))+
         plot.title = element_text(size = 16, face = "bold"))+
   guides(color=guide_legend(title = "Estimate Type"))+
   scale_color_discrete(labels=c("Disease Incidence","Fitted Disease Data"))
-  #ggsave(filename = "figures/sdm_real_fit.png")
+  ggsave(filename = "figures/sdm_real_fit.png")
 
 
 ```
 
-```{r}
-#build an ROC for the SDM data
-sdm_data<- read_csv("data/roc.test.csv")
-sdm_roc=roc(sdm_data$Disease, sdm_data$Spore-4)
-summary(sdm_roc)
-plot(sdm_roc)
+####Calculating Tjur's $R^2$
+
+Tjur (2009) quantifies this separation in terms of the coefficient of discrimination, $D$, where
+$D=\bar{\hat{p}}_{c}-\bar{\hat{p}}_{nc}$ 
+in which $\bar{\hat{p}}_{c}$ and $\bar{\hat{p}}_{nc}$ denote the means of the histograms characterizing the frequency distributions of fitted probabilities for the case and non-case groups, respectively, and $0 < D < 1$. Thus $D$ characterizes the predictive power of a logistic regression model in terms of the separation between predictions for the case and non-case groups, on a probability scale (i.e., discrimination). We calculate D on the basis of the fitted probability values for individual subjects as calculated in the model output, not as binned for Figure 1. 
+
+```{r tjurs coefficient}
+pc<-mean(subset(SDM_rac, disease == 1)$fits1)
+pnc<-mean(subset(SDM_rac, disease == 0)$fits1)
+d=pc-pnc
+print(paste("Tjur's coefficient of discrimination is", round(d,4)))
 ```
 
-The difference between pROC and other software (e.g. - ROCR) can lead to differences between output ROCs.
+####Visualizing Tjur's $R^2$ Coefficient
 
+While the histogram displayed in figure 1 matches the format from Tjur (2009), linking the histogram to the Tjur's $R^2$ coefficient can help to visualize this value. Now we can more easily see how Tjur's D relates to the predicted cases and non-cases.
+```{r tjur histogram coefficient}
+ggplot(SDM_rac1, aes(fits1, fill=status))+
+ geom_histogram(color="black", position = "identity", alpha=0.5)+
+  scale_x_continuous(limits=c(0,1))+
+   geom_vline(xintercept =pc, color="#002C6AFF")+
+   geom_vline(xintercept =pnc, color="#CBBA69FF")+ 
+  geom_segment(aes(x = pnc+(pc+pnc)/200, y = 9.2, xend = pc-(pc+pnc)/200, yend = 9.2),  size=2)+
+  geom_segment(aes(x = pc-(pc+pnc)/200, y = 9.2+0.2, xend = pc-(pc+pnc)/200, yend = 9.2-0.2), size=2)+
+    geom_segment(aes(x = pnc+(pc+pnc)/200, y = 9.2+0.2, xend = pnc+(pc+pnc)/200, yend = 9.2-0.2), size=2)+
+  annotate("text", label = "italic(D)", parse=T, x = (pc+pnc)/2, y = 10, size = 8)+
+  xlab("Fitted Probability Value")+
+  scale_fill_manual(values = c("#002C6AFF", "#CBBA69FF"))+
+    theme_bw()+
+  theme(legend.position = c(.2, .8),
+        legend.background = element_blank(),
+        strip.text = element_text(face="bold", size = 16),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 16, face = "bold"))+
+  ggtitle(expression(paste("Figure 1 Visualizing Tjur's Coefficient of Discrimination (", italic("D"), ")")))+
+  guides(fill=guide_legend(title = "Status"))
+ 
+ggsave(filename = "figures/sdm_dot_hist_facet.png")
+```
+ 
+####ROC analysis and Calculating Youden's $J$
+
+Completing a Receiver Operating Characteristic (ROC) analysis can help to highlight useful thresholds for binary predictors. One commonly used statistic to assess the diagnostic test is the Youden's index (commonly referred to as the Youden's $J$). This value ranges between 0 and 1, and is calculated as $J=sensitivity + speficifity - 1$, where sensitivity is written as $\hat{p}_{+|c}$, and specificity is $\hat{p}_{-|nc}$. 
 
 ```{r}
+roc_4<-roc(data$Disease, data$`Spore-4`)
+youden_j<-data.frame(as.list(coords(roc_4, x="best", input="threshold", best.method="youden"))) %>%
+  mutate(inv_spec=1-specificity,
+         youden_j=sensitivity+specificity-1);youden_j
+ggroc(roc_4, legacy.axes = T)+
+  geom_abline(slope = 1) +
+  geom_point(data=youden_j, aes(inv_spec, sensitivity), shape=21, size=4, fill="red") +
+  annotate("text", label = "Youdens J",x = youden_j$inv_spec, y = youden_j$sensitivity+0.1, size=8 )
+```
+
+```{r bayes}
+
+SDM_rac2<- SDM_rac1 %>%
+  mutate(status_pred_youden = ifelse(spore4>youden_j$threshold, "Cases", "Non-cases"),
+         status_pred_count = ifelse(spore4>youden_j$threshold, 1, 0),
+         status_pred_count_test = ifelse(fits1>0.5, 1, 0))
+case_prior= sum(SDM_rac2$disease)/nrow(SDM_rac2)
+control_prior=1-case_prior
+
+p_c_plus<-SDM_rac2 %>%
+  filter(status_pred_youden == "Cases")
+p_c_plus<-sum(p_c_plus$disease)/nrow(p_c_plus)
+p_nc_plus<-1-p_c_plus
+
+p_c_minus<-SDM_rac2 %>%
+  filter(status_pred_youden == "Non-cases")
+p_c_minus<-sum(p_c_minus$disease)/nrow(p_c_minus)
+p_nc_minus<-1-p_c_minus
+```
+
+
+
+####Calculating McFadden's $R^2$
+
+Whereas Tjur’s $R^2$ is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status), McFadden’s $R^2$ is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). In other words, Tjur’s $R^2$ is a discrimination metric, and McFadden’s $R^2$ is a resolution metric, defined conditionally on the disease forecast.  
+
+```{r mcfaddens}
+case_count<-sum(SDM_rac2$disease)
+control_count<-nrow(SDM_rac2)-case_count
+
+log_score_case_prior<- -log(case_prior)
+log_score_control_prior<- -log(control_prior)
+
+S0<-log_score_case_prior*case_count + log_score_control_prior*control_count
+
+log_p_c_plus<- -log(p_c_plus)
+log_p_nc_plus<- -log(p_nc_plus)
+log_p_c_minus<- -log(p_c_minus)
+log_p_nc_minus<- -log(p_nc_minus)
+
+p_nc_pred_count<-SDM_rac2 %>%
+  filter(status_pred_youden == "Non-cases") %>%
+  count(status)
+
+p_c_pred_count<-SDM_rac2 %>%
+  filter(status_pred_youden == "Cases") %>%
+  count(status)
+
+S<-log_p_c_plus*p_c_pred_count[1,2] +
+  log_p_nc_plus*p_c_pred_count[2,2] +
+  log_p_c_minus*p_nc_pred_count[1,2] +
+  log_p_nc_minus*p_nc_pred_count[2,2]
+
+mcfaddens<-1-(S/S0)
+print(paste("McFadden's coefficient of discrimination is", round(mcfaddens,4)))
+maddala<-1-exp(-(2/nrow(SDM_rac2))*(S0-S))
+print(paste("Maddala's R^2 is", round(maddala,4)))
+
+nagelkerke<- maddala / (1-exp(-(2/nrow(SDM_rac2))*(S0)))
+print(paste("Nagelkerke's R^2 is", round(nagelkerke,4)))
+
+```
+
+
+```{r sessionInfo}
 sessionInfo()
 ```
 
