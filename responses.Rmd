@@ -97,7 +97,7 @@ print(data$improve)
 
 We probably should have made the material available sooner, that was my failing, I was still learning how to do websites with Github.
 
-## Conclusion
+# Conclusion
 
 Overall, it seems like the workshop was well received, and that people found it useful. Now that the materials are prepared, it would be fairly straightforward to do another workshop in a similar vein.
 
