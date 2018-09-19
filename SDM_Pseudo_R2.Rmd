@@ -7,18 +7,17 @@ output:
     df_print: paged
 ---
 
-
 ```{r setup, include=T}
 knitr::opts_chunk$set(echo = TRUE) #change this to FALSE to suppress printing the code
 library(tidyverse)
 library(pROC)
 ```
 
-###Abstract
+# Abstract
 
 For an ordinary least squares regression model, the coefficient of determination $R^2$ describes the proportion (or percentage) of variance of the response variable explained by the model, and is a widely-accepted summary measure of predictive power. A number of $R^2$-analogues are available as summary measures of predictive power for logistic regression models, including models of disease risk. Tjur’s $R^2$ and McFadden’s $R^2$ are of particular interest in this context. Both these $R^2$-analogues have transparent derivations, which reveal that they apply to different aspects of model evaluation. Tjur’s $R^2$ is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status) whereas McFadden’s $R^2$ is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). This clarifies their interpretation in the context of evaluation of logistic regression models of disease risk. In addition, versions of both Tjur’s $R^2$ and McFadden’s $R^2$ may be obtained from analyses of disease risk that are not preceded by logistic regression analysis.
 
-####Additional Keywords
+## Additional Keywords
 
 discrimination, resolution, Nagelkerke’s $R^2$, logarithmic scoring rule
 
@@ -33,7 +32,7 @@ dismodel1 <- glm(Disease~`Spore-4`,family=binomial(link='logit'), data = data) #
 summary(dismodel1)
 ```
 
-###Introduction
+# Introduction
 The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state.  Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal.  This is the sort of situation where having a richer diagnosis of what the fitted model is doing would be useful.  
 
 To that end, we ask for McFadden's and Tjur's pseudo Rsq values for the model. Looking at the two values together tells us that the model has low discrimination capacity (Tjur) and would (consequently?) have a modest impact in probability updating (McFadden). We can look at the diagnostic plots to look at data, fitted model and "Tjur" histogram of the fitted probabilities.
@@ -108,7 +107,7 @@ ggplot(SDM_rac_spore_melt, aes(spore4, disease, color=est.type))+
 
 ```
 
-####Calculating Tjur's $R^2$
+## Calculating Tjur's $R^2$
 
 Tjur (2009) quantifies this separation in terms of the coefficient of discrimination, $D$, where
 $D=\bar{\hat{p}}_{c}-\bar{\hat{p}}_{nc}$ 
@@ -121,7 +120,7 @@ d=pc-pnc
 print(paste("Tjur's coefficient of discrimination is", round(d,4)))
 ```
 
-####Visualizing Tjur's $R^2$ Coefficient
+## Visualizing Tjur's $R^2$ Coefficient
 
 While the histogram displayed in figure 1 matches the format from Tjur (2009), linking the histogram to the Tjur's $R^2$ coefficient can help to visualize this value. Now we can more easily see how Tjur's D relates to the predicted cases and non-cases.
 ```{r tjur histogram coefficient}
@@ -151,7 +150,7 @@ ggplot(SDM_rac1, aes(fits1, fill=status))+
 ggsave(filename = "figures/sdm_dot_hist_facet.png")
 ```
  
-####ROC analysis and Calculating Youden's $J$
+## ROC analysis and Calculating Youden's $J$
 
 Completing a Receiver Operating Characteristic (ROC) analysis can help to highlight useful thresholds for binary predictors. One commonly used statistic to assess the diagnostic test is the Youden's index (commonly referred to as the Youden's $J$). This value ranges between 0 and 1, and is calculated as $J=sensitivity + speficifity - 1$, where sensitivity is written as $\hat{p}_{+|c}$, and specificity is $\hat{p}_{-|nc}$. 
 
@@ -188,7 +187,7 @@ p_nc_minus<-1-p_c_minus
 
 
 
-####Calculating McFadden's $R^2$
+## Calculating McFadden's $R^2$
 
 Whereas Tjur’s $R^2$ is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status), McFadden’s $R^2$ is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). In other words, Tjur’s $R^2$ is a discrimination metric, and McFadden’s $R^2$ is a resolution metric, defined conditionally on the disease forecast.  
 
@@ -222,10 +221,8 @@ S<-log_p_c_plus*p_c_pred_count[1,2] +
 mcfaddens<-1-(S/S0)
 print(paste("McFadden's coefficient of discrimination is", round(mcfaddens,4)))
 maddala<-1-exp(-(2/nrow(SDM_rac2))*(S0-S))
-print(paste("Maddala's R^2 is", round(maddala,4)))
 
 nagelkerke<- maddala / (1-exp(-(2/nrow(SDM_rac2))*(S0)))
-print(paste("Nagelkerke's R^2 is", round(nagelkerke,4)))
 
 ```
 
@@ -233,5 +230,3 @@ print(paste("Nagelkerke's R^2 is", round(nagelkerke,4)))
 ```{r sessionInfo}
 sessionInfo()
 ```
-
-

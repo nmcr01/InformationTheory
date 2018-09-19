@@ -369,11 +369,11 @@ div.tocify {
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
 ##     cov, smooth, var</code></pre>
-<div id="abstract" class="section level3">
-<h3>Abstract</h3>
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
 <p>For an ordinary least squares regression model, the coefficient of determination <span class="math inline">\(R^2\)</span> describes the proportion (or percentage) of variance of the response variable explained by the model, and is a widely-accepted summary measure of predictive power. A number of <span class="math inline">\(R^2\)</span>-analogues are available as summary measures of predictive power for logistic regression models, including models of disease risk. Tjur’s <span class="math inline">\(R^2\)</span> and McFadden’s <span class="math inline">\(R^2\)</span> are of particular interest in this context. Both these <span class="math inline">\(R^2\)</span>-analogues have transparent derivations, which reveal that they apply to different aspects of model evaluation. Tjur’s <span class="math inline">\(R^2\)</span> is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status) whereas McFadden’s <span class="math inline">\(R^2\)</span> is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). This clarifies their interpretation in the context of evaluation of logistic regression models of disease risk. In addition, versions of both Tjur’s <span class="math inline">\(R^2\)</span> and McFadden’s <span class="math inline">\(R^2\)</span> may be obtained from analyses of disease risk that are not preceded by logistic regression analysis.</p>
-<div id="additional-keywords" class="section level4">
-<h4>Additional Keywords</h4>
+<div id="additional-keywords" class="section level2">
+<h2>Additional Keywords</h2>
 <p>discrimination, resolution, Nagelkerke’s <span class="math inline">\(R^2\)</span>, logarithmic scoring rule</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Analysis of SDM data from Choudhury et al 2016.</span>
 <span class="co"># Get the data and take a look at the top of the data file</span>
@@ -428,8 +428,8 @@ dismodel1 &lt;-<span class="st"> </span><span class="kw">glm</span>(Disease<span
 ## Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
-<div id="introduction" class="section level3">
-<h3>Introduction</h3>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
 <p>The Spore trap DNA count lagged by 4 observation periods (roughly 8-12 days) does have some positive association with subsequent disease state. Although the estimated effect of lagged spore trap signal is unlikely to be due to chance alone the odds of disease do not increase strongly with increase in the signal. This is the sort of situation where having a richer diagnosis of what the fitted model is doing would be useful.</p>
 <p>To that end, we ask for McFadden’s and Tjur’s pseudo Rsq values for the model. Looking at the two values together tells us that the model has low discrimination capacity (Tjur) and would (consequently?) have a modest impact in probability updating (McFadden). We can look at the diagnostic plots to look at data, fitted model and “Tjur” histogram of the fitted probabilities.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Take a look at the fitted probability values from the regression.</span>
@@ -497,8 +497,8 @@ SDM_rac_spore_melt=SDM_rac <span class="op">%&gt;%</span>
 <p><img src="SDM_Pseudo_R2_files/figure-html/logistic%20regression%20plot-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&quot;figures/sdm_real_fit.png&quot;</span>)</code></pre></div>
 <pre><code>## Saving 7 x 5 in image</code></pre>
-<div id="calculating-tjurs-r2" class="section level4">
-<h4>Calculating Tjur’s <span class="math inline">\(R^2\)</span></h4>
+<div id="calculating-tjurs-r2" class="section level2">
+<h2>Calculating Tjur’s <span class="math inline">\(R^2\)</span></h2>
 <p>Tjur (2009) quantifies this separation in terms of the coefficient of discrimination, <span class="math inline">\(D\)</span>, where <span class="math inline">\(D=\bar{\hat{p}}_{c}-\bar{\hat{p}}_{nc}\)</span> in which <span class="math inline">\(\bar{\hat{p}}_{c}\)</span> and <span class="math inline">\(\bar{\hat{p}}_{nc}\)</span> denote the means of the histograms characterizing the frequency distributions of fitted probabilities for the case and non-case groups, respectively, and <span class="math inline">\(0 &lt; D &lt; 1\)</span>. Thus <span class="math inline">\(D\)</span> characterizes the predictive power of a logistic regression model in terms of the separation between predictions for the case and non-case groups, on a probability scale (i.e., discrimination). We calculate D on the basis of the fitted probability values for individual subjects as calculated in the model output, not as binned for Figure 1.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pc&lt;-<span class="kw">mean</span>(<span class="kw">subset</span>(SDM_rac, disease <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)<span class="op">$</span>fits1)
 pnc&lt;-<span class="kw">mean</span>(<span class="kw">subset</span>(SDM_rac, disease <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)<span class="op">$</span>fits1)
@@ -506,8 +506,8 @@ d=pc<span class="op">-</span>pnc
 <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Tjur&#39;s coefficient of discrimination is&quot;</span>, <span class="kw">round</span>(d,<span class="dv">4</span>)))</code></pre></div>
 <pre><code>## [1] &quot;Tjur&#39;s coefficient of discrimination is 0.0735&quot;</code></pre>
 </div>
-<div id="visualizing-tjurs-r2-coefficient" class="section level4">
-<h4>Visualizing Tjur’s <span class="math inline">\(R^2\)</span> Coefficient</h4>
+<div id="visualizing-tjurs-r2-coefficient" class="section level2">
+<h2>Visualizing Tjur’s <span class="math inline">\(R^2\)</span> Coefficient</h2>
 <p>While the histogram displayed in figure 1 matches the format from Tjur (2009), linking the histogram to the Tjur’s <span class="math inline">\(R^2\)</span> coefficient can help to visualize this value. Now we can more easily see how Tjur’s D relates to the predicted cases and non-cases.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(SDM_rac1, <span class="kw">aes</span>(fits1, <span class="dt">fill=</span>status))<span class="op">+</span>
 <span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)<span class="op">+</span>
@@ -537,8 +537,8 @@ d=pc<span class="op">-</span>pnc
 <pre><code>## Saving 7 x 5 in image
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
-<div id="roc-analysis-and-calculating-youdens-j" class="section level4">
-<h4>ROC analysis and Calculating Youden’s <span class="math inline">\(J\)</span></h4>
+<div id="roc-analysis-and-calculating-youdens-j" class="section level2">
+<h2>ROC analysis and Calculating Youden’s <span class="math inline">\(J\)</span></h2>
 <p>Completing a Receiver Operating Characteristic (ROC) analysis can help to highlight useful thresholds for binary predictors. One commonly used statistic to assess the diagnostic test is the Youden’s index (commonly referred to as the Youden’s <span class="math inline">\(J\)</span>). This value ranges between 0 and 1, and is calculated as <span class="math inline">\(J=sensitivity + speficifity - 1\)</span>, where sensitivity is written as <span class="math inline">\(\hat{p}_{+|c}\)</span>, and specificity is <span class="math inline">\(\hat{p}_{-|nc}\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">roc_<span class="dv">4</span>&lt;-<span class="kw">roc</span>(data<span class="op">$</span>Disease, data<span class="op">$</span><span class="st">`</span><span class="dt">Spore-4</span><span class="st">`</span>)
 youden_j&lt;-<span class="kw">data.frame</span>(<span class="kw">as.list</span>(<span class="kw">coords</span>(roc_<span class="dv">4</span>, <span class="dt">x=</span><span class="st">&quot;best&quot;</span>, <span class="dt">input=</span><span class="st">&quot;threshold&quot;</span>, <span class="dt">best.method=</span><span class="st">&quot;youden&quot;</span>))) <span class="op">%&gt;%</span>
@@ -571,8 +571,8 @@ p_c_minus&lt;-SDM_rac2 <span class="op">%&gt;%</span>
 p_c_minus&lt;-<span class="kw">sum</span>(p_c_minus<span class="op">$</span>disease)<span class="op">/</span><span class="kw">nrow</span>(p_c_minus)
 p_nc_minus&lt;-<span class="dv">1</span><span class="op">-</span>p_c_minus</code></pre></div>
 </div>
-<div id="calculating-mcfaddens-r2" class="section level4">
-<h4>Calculating McFadden’s <span class="math inline">\(R^2\)</span></h4>
+<div id="calculating-mcfaddens-r2" class="section level2">
+<h2>Calculating McFadden’s <span class="math inline">\(R^2\)</span></h2>
 <p>Whereas Tjur’s <span class="math inline">\(R^2\)</span> is a measure of separation between (known) actual states (e.g., gold standard determinations of “healthy” or “diseased” status), McFadden’s <span class="math inline">\(R^2\)</span> is a measure of separation between predicted states (e.g., forecasts of disease status based on models of disease risk). In other words, Tjur’s <span class="math inline">\(R^2\)</span> is a discrimination metric, and McFadden’s <span class="math inline">\(R^2\)</span> is a resolution metric, defined conditionally on the disease forecast.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">case_count&lt;-<span class="kw">sum</span>(SDM_rac2<span class="op">$</span>disease)
 control_count&lt;-<span class="kw">nrow</span>(SDM_rac2)<span class="op">-</span>case_count
@@ -604,11 +604,8 @@ mcfaddens&lt;-<span class="dv">1</span><span class="op">-</span>(S<span class="o
 <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;McFadden&#39;s coefficient of discrimination is&quot;</span>, <span class="kw">round</span>(mcfaddens,<span class="dv">4</span>)))</code></pre></div>
 <pre><code>## [1] &quot;McFadden&#39;s coefficient of discrimination is 0.1034&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">maddala&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="dv">2</span><span class="op">/</span><span class="kw">nrow</span>(SDM_rac2))<span class="op">*</span>(S0<span class="op">-</span>S))
-<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Maddala&#39;s R^2 is&quot;</span>, <span class="kw">round</span>(maddala,<span class="dv">4</span>)))</code></pre></div>
-<pre><code>## [1] &quot;Maddala&#39;s R^2 is 0.1332&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nagelkerke&lt;-<span class="st"> </span>maddala <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="dv">2</span><span class="op">/</span><span class="kw">nrow</span>(SDM_rac2))<span class="op">*</span>(S0)))
-<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Nagelkerke&#39;s R^2 is&quot;</span>, <span class="kw">round</span>(nagelkerke,<span class="dv">4</span>)))</code></pre></div>
-<pre><code>## [1] &quot;Nagelkerke&#39;s R^2 is 0.1778&quot;</code></pre>
+
+nagelkerke&lt;-<span class="st"> </span>maddala <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="dv">2</span><span class="op">/</span><span class="kw">nrow</span>(SDM_rac2))<span class="op">*</span>(S0)))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
