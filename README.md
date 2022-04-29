@@ -1,2 +1,2 @@
 # README
-I cloned this from Kelsey's data science course, it is a website built for the 2018 ICPP meeting workshop designed by Neil and Gareth
+The repo structure is cloned (via Robin's Github repo) from Kelsey Anderson Onofre's data science course.  Like Kelsey's class, the materials here were developed for the 2018 ICPP meeting.  In this case the workshop was based on material first developed by Gareth Hughes for his book Applications of Information Theory to Epidemiology (APS Press) and subsequently adapted by me (with input from Robin) for the workshop.
